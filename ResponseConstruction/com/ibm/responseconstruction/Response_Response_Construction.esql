@@ -1,0 +1,29 @@
+BROKER SCHEMA com.ibm.responseconstruction
+
+
+CREATE COMPUTE MODULE Response_Response_Construction
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		-- CALL CopyMessageHeaders();
+--		 CALL CopyEntireMessage();
+--	
+--		DECLARE inMsgBlob BLOB InputRoot.BLOB.BLOB;
+--		DECLARE inMsgChar CHARACTER CAST(inMsgBlob AS CHARACTER CCSID 1208 ENCODING 548 );
+--		
+--            CREATE LASTCHILD OF OutputRoot DOMAIN 'JSON';
+--			
+            SET OutputRoot.JSON.Data.details.personalInfo.name = InputRoot.XMLNSC.employeeInfo.AlInfo.name;
+             SET OutputRoot.JSON.Data.details.personalInfo.location = InputRoot.XMLNSC.employeeInfo.AlInfo.native_location;
+             SET OutputRoot.JSON.Data.details.JobInfo.job = InputRoot.XMLNSC.employeeInfo.AlInfo.job;
+             SET OutputRoot.JSON.Data.details.JobInfo.location = InputRoot.XMLNSC.employeeInfo.AlInfo.Job_location;
+             
+             
+--			SET OutputRoot.JSON.Data.Res_Desc='Data Retrieved Succesfully';
+--			SET OutputRoot.JSON.Data.Lan_NO=Environment.TFSINDATA.Lan_NO;
+--			SET OutputRoot.JSON.Data.Mobile_Number=Environment.TFSINDATA.Mobile_Number;
+--			SET OutputRoot.JSON.Data.Email_ID=Environment.TFSINDATA.Email_ID;
+			
+			RETURN TRUE;
+
+	END;
+END MODULE;
