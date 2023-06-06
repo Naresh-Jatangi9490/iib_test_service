@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "Transaction_ID": {
+      "type": "string"
+    },
+    "Date": {
+      "type": "string"
+    },
+    "Lan_NO": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true,
+  "required": [
+    "Transaction_ID",
+    "Date",
+    "Lan_NO"
+  ]
+}

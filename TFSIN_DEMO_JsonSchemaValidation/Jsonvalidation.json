@@ -1,0 +1,415 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "integer"
+    },
+    "message": {
+      "type": "string"
+    },
+    "employee_data": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "employee_id": {
+              "type": "string"
+            },
+            "first_name": {
+              "type": "string"
+            },
+            "last_name": {
+              "type": "string"
+            },
+            "department_name": {
+              "type": "string"
+            },
+            "direct_manager_employee_id": {
+              "type": "string"
+            },
+            "designation_name": {
+              "type": "string"
+            },
+            "office_country": {
+              "type": "string"
+            },
+            "date_of_joining": {
+              "type": "string"
+            },
+            "date_of_exit": {
+              "type": "string"
+            },
+            "employee_type": {
+              "type": "string"
+            },
+            "company_email_id": {
+              "type": "string"
+            },
+            "office_mobile_no": {
+              "type": "string"
+            },
+            "middle_name": {
+              "type": "string"
+            },
+            "l2_manager_employee_id": {
+              "type": "string"
+            },
+            "grade": {
+              "type": "string"
+            },
+            "band": {
+              "type": "string"
+            },
+            "office_area": {
+              "type": "string"
+            },
+            "date_of_activation": {
+              "type": "string"
+            },
+            "latest_modified_any_attribute": {
+              "type": "string"
+            },
+            "confirmation_status": {
+              "type": "string"
+            },
+            "personal_mobile_no": {
+              "type": "string"
+            },
+            "current_state": {
+              "type": "string"
+            },
+            "current_country": {
+              "type": "string"
+            },
+            "current_city": {
+              "type": "string"
+            },
+            "emergency_address": {
+              "type": "string"
+            },
+            "current_pin_code": {
+              "type": "string"
+            },
+            "current_address": {
+              "type": "string"
+            },
+            "cost_center": {
+              "type": "string"
+            },
+            "hod_employee_id": {
+              "type": "string"
+            },
+            "date_of_birth": {
+              "type": "string"
+            },
+            "attendance_shift": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "employee_id",
+            "first_name",
+            "last_name",
+            "department_name",
+            "direct_manager_employee_id",
+            "designation_name",
+            "office_country",
+            "date_of_joining",
+            "date_of_exit",
+            "employee_type",
+            "company_email_id",
+            "office_mobile_no",
+            "middle_name",
+            "l2_manager_employee_id",
+            "grade",
+            "band",
+            "office_area",
+            "date_of_activation",
+            "latest_modified_any_attribute",
+            "confirmation_status",
+            "personal_mobile_no",
+            "current_state",
+            "current_country",
+            "current_city",
+            "emergency_address",
+            "current_pin_code",
+            "current_address",
+            "cost_center",
+            "hod_employee_id",
+            "date_of_birth",
+            "attendance_shift"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "employee_id": {
+              "type": "string"
+            },
+            "first_name": {
+              "type": "string"
+            },
+            "last_name": {
+              "type": "string"
+            },
+            "department_name": {
+              "type": "string"
+            },
+            "direct_manager_employee_id": {
+              "type": "string"
+            },
+            "designation_name": {
+              "type": "string"
+            },
+            "office_country": {
+              "type": "string"
+            },
+            "date_of_joining": {
+              "type": "string"
+            },
+            "date_of_exit": {
+              "type": "string"
+            },
+            "employee_type": {
+              "type": "string"
+            },
+            "company_email_id": {
+              "type": "string"
+            },
+            "office_mobile_no": {
+              "type": "string"
+            },
+            "middle_name": {
+              "type": "string"
+            },
+            "l2_manager_employee_id": {
+              "type": "string"
+            },
+            "grade": {
+              "type": "string"
+            },
+            "band": {
+              "type": "string"
+            },
+            "office_area": {
+              "type": "string"
+            },
+            "date_of_activation": {
+              "type": "string"
+            },
+            "latest_modified_any_attribute": {
+              "type": "string"
+            },
+            "confirmation_status": {
+              "type": "string"
+            },
+            "personal_mobile_no": {
+              "type": "string"
+            },
+            "current_state": {
+              "type": "string"
+            },
+            "current_country": {
+              "type": "string"
+            },
+            "current_city": {
+              "type": "string"
+            },
+            "emergency_address": {
+              "type": "string"
+            },
+            "current_pin_code": {
+              "type": "string"
+            },
+            "current_address": {
+              "type": "string"
+            },
+            "cost_center": {
+              "type": "string"
+            },
+            "hod_employee_id": {
+              "type": "string"
+            },
+            "date_of_birth": {
+              "type": "string"
+            },
+            "attendance_shift": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "employee_id",
+            "first_name",
+            "last_name",
+            "department_name",
+            "direct_manager_employee_id",
+            "designation_name",
+            "office_country",
+            "date_of_joining",
+            "date_of_exit",
+            "employee_type",
+            "company_email_id",
+            "office_mobile_no",
+            "middle_name",
+            "l2_manager_employee_id",
+            "grade",
+            "band",
+            "office_area",
+            "date_of_activation",
+            "latest_modified_any_attribute",
+            "confirmation_status",
+            "personal_mobile_no",
+            "current_state",
+            "current_country",
+            "current_city",
+            "emergency_address",
+            "current_pin_code",
+            "current_address",
+            "cost_center",
+            "hod_employee_id",
+            "date_of_birth",
+            "attendance_shift"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "employee_id": {
+              "type": "string"
+            },
+            "first_name": {
+              "type": "string"
+            },
+            "last_name": {
+              "type": "string"
+            },
+            "department_name": {
+              "type": "string"
+            },
+            "direct_manager_employee_id": {
+              "type": "string"
+            },
+            "designation_name": {
+              "type": "string"
+            },
+            "office_country": {
+              "type": "string"
+            },
+            "date_of_joining": {
+              "type": "string"
+            },
+            "date_of_exit": {
+              "type": "string"
+            },
+            "employee_type": {
+              "type": "string"
+            },
+            "company_email_id": {
+              "type": "string"
+            },
+            "office_mobile_no": {
+              "type": "string"
+            },
+            "middle_name": {
+              "type": "string"
+            },
+            "l2_manager_employee_id": {
+              "type": "string"
+            },
+            "grade": {
+              "type": "string"
+            },
+            "band": {
+              "type": "string"
+            },
+            "office_area": {
+              "type": "string"
+            },
+            "date_of_activation": {
+              "type": "string"
+            },
+            "latest_modified_any_attribute": {
+              "type": "string"
+            },
+            "confirmation_status": {
+              "type": "string"
+            },
+            "personal_mobile_no": {
+              "type": "string"
+            },
+            "current_state": {
+              "type": "string"
+            },
+            "current_country": {
+              "type": "string"
+            },
+            "current_city": {
+              "type": "string"
+            },
+            "emergency_address": {
+              "type": "string"
+            },
+            "current_pin_code": {
+              "type": "string"
+            },
+            "current_address": {
+              "type": "string"
+            },
+            "cost_center": {
+              "type": "string"
+            },
+            "hod_employee_id": {
+              "type": "string"
+            },
+            "date_of_birth": {
+              "type": "string"
+            },
+            "attendance_shift": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "employee_id",
+            "first_name",
+            "last_name",
+            "department_name",
+            "direct_manager_employee_id",
+            "designation_name",
+            "office_country",
+            "date_of_joining",
+            "date_of_exit",
+            "employee_type",
+            "company_email_id",
+            "office_mobile_no",
+            "middle_name",
+            "l2_manager_employee_id",
+            "grade",
+            "band",
+            "office_area",
+            "date_of_activation",
+            "latest_modified_any_attribute",
+            "confirmation_status",
+            "personal_mobile_no",
+            "current_state",
+            "current_country",
+            "current_city",
+            "emergency_address",
+            "current_pin_code",
+            "current_address",
+            "cost_center",
+            "hod_employee_id",
+            "date_of_birth",
+            "attendance_shift"
+          ]
+        }
+      ]
+    }
+  },
+  "required": [
+    "status",
+    "message",
+    "employee_data"
+  ]
+}

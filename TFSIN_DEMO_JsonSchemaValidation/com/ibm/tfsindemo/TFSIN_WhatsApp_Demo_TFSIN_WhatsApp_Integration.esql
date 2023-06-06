@@ -1,0 +1,135 @@
+
+BROKER SCHEMA com.ibm.tfsindemo
+
+
+CREATE COMPUTE MODULE TFSIN_WhatsApp_Demo_TFSIN_WhatsApp_Integration
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		-- CALL CopyMessageHeaders();
+		-- CALL CopyEntireMessage();
+		
+		
+--		DECLARE inREF reference to InputRoot.JSON.Data;
+--		SET Environment.TFSINDATA[] = SELECT * FROM Database.dbo.TFSINDEMO AS A WHERE A.Transaction_ID= inREF.Transaction_ID AND A.Lan_NO=inREF.Lan_NO AND A.Date=inREF.Date;
+--		
+--		IF EXISTS(Environment.TFSINDATA[]) THEN
+--			CREATE LASTCHILD OF OutputRoot DOMAIN 'JSON';
+--			SET OutputRoot.JSON.Data.Transaction_ID=Environment.TFSINDATA.Transaction_ID;
+--			SET OutputRoot.JSON.Data.Res_Code='1';
+--			SET OutputRoot.JSON.Data.Res_Desc='Data Retrieved Succesfully';
+--			SET OutputRoot.JSON.Data.Lan_NO=Environment.TFSINDATA.Lan_NO;
+--			SET OutputRoot.JSON.Data.Mobile_Number=Environment.TFSINDATA.Mobile_Number;
+--			SET OutputRoot.JSON.Data.Email_ID=Environment.TFSINDATA.Email_ID;
+--			SET OutputRoot.JSON.Data.Residence_Address=Environment.TFSINDATA.Residence_Address;
+--			SET OutputRoot.JSON.Data.Permanent_Address=Environment.TFSINDATA.Permanent_Address;
+--			SET OutputRoot.JSON.Data.Correspondence_Address=Environment.TFSINDATA.Correspondence_Address;
+--			SET OutputRoot.JSON.Data.Customer_Salutation=Environment.TFSINDATA.Customer_Salutation;
+--			
+--		ELSEIF NOT EXISTS(Environment.TFSINDATA[]) THEN
+--			CREATE LASTCHILD OF OutputRoot DOMAIN 'JSON';
+--			SET OutputRoot.JSON.Data.Transaction_ID=inREF.Transaction_ID;
+--			SET OutputRoot.JSON.Data.Res_Code='2';
+--			SET OutputRoot.JSON.Data.Res_Desc='Data Not Found';
+--		ELSE
+--			
+--		END IF;
+--		
+--		RETURN TRUE;
+--	END;
+	
+		DECLARE inREF reference to InputRoot.JSON.Data;
+----		 IF LENGTH(inREF.TRANSACTION_ID)<='30' OR LENGTH(inREF.Lan_NO)<='30' then
+----		 	IF EXISTS(inREF.TRANSACTION_ID[])AND EXISTS(inREF.DATE[])AND EXITS(inREF._NO)then
+		 		IF EXISTS(inREF.Transaction_ID[]) AND EXISTS(inREF.Lan_NO[]) AND EXISTS(inREF.Date[])  THEN
+		SET Environment.TFSINDATA[] = SELECT * FROM Database.dbo.TFSINDEMO AS A WHERE A.Transaction_ID= inREF.Transaction_ID AND A.Lan_NO=inREF.Lan_NO AND A.Date=inREF.Date;
+		 		
+		IF EXISTS(Environment.TFSINDATA[]) THEN
+			CREATE LASTCHILD OF OutputRoot DOMAIN 'JSON';
+			SET OutputRoot.JSON.Data.Transaction_ID=Environment.TFSINDATA.Transaction_ID;
+			SET OutputRoot.JSON.Data.Res_Code='1';
+			SET OutputRoot.JSON.Data.Res_Desc='Data Retrieved Succesfully';
+			SET OutputRoot.JSON.Data.Lan_NO=Environment.TFSINDATA.Lan_NO;
+			SET OutputRoot.JSON.Data.Mobile_Number=Environment.TFSINDATA.Mobile_Number;
+			SET OutputRoot.JSON.Data.Email_ID=Environment.TFSINDATA.Email_ID;
+			SET OutputRoot.JSON.Data.Residence_Address=Environment.TFSINDATA.Residence_Address;
+			SET OutputRoot.JSON.Data.Permanent_Address=Environment.TFSINDATA.Permanent_Address;
+			SET OutputRoot.JSON.Data.Correspondence_Address=Environment.TFSINDATA.Correspondence_Address;
+			SET OutputRoot.JSON.Data.Customer_Salutation=Environment.TFSINDATA.Customer_Salutation;
+			SET OutputRoot.JSON.Data.Customer_Full_Name=Environment.TFSINDATA.Customer_Full_Name;
+			SET OutputRoot.JSON.Data.Customer_Type=Environment.TFSINDATA.Customer_Type;
+			
+		ELSEIF NOT EXISTS(Environment.TFSINDATA[]) THEN
+			CREATE LASTCHILD OF OutputRoot DOMAIN 'JSON';
+			SET OutputRoot.JSON.Data.Transaction_ID=inREF.Transaction_ID;
+			SET OutputRoot.JSON.Data.Res_Code='2';
+			SET OutputRoot.JSON.Data.Res_Desc='Data Not Found';
+		ELSE
+			
+--		 SET Environment.TFSINDATA_NEW[] 	=SELECT * FROM Database.dbo.TFSINDEMO_NEW  WHERE b.Transaction_ID= inREF.Transaction_ID AND b.Lan_NO=inREF.Lan_NO AND b.Date=inREF.Date;
+--		 IF EXISTS(Environment.TFSINDATA_NEW[]) THEN
+--			CREATE LASTCHILD OF OutputRoot DOMAIN 'JSON';
+--			SET OutputRoot.JSON.Data.Transaction_ID=Environment.TFSINDATA_NEW.Transaction_ID;
+--			SET OutputRoot.JSON.Data.Res_Code='1';
+--			SET OutputRoot.JSON.Data.Res_Desc='Data Retrieved Succesfully';
+--			SET OutputRoot.JSON.Data.Lan_NO=Environment.TFSINDATA_NEW.Lan_NO;
+--			SET OutputRoot.JSON.Data.Mobile_Number=Environment.TFSINDATA_NEW.Mobile_Number;
+--			SET OutputRoot.JSON.Data.Email=Environment.TFSINDATA_NEW.Email;
+--			SET OutputRoot.JSON.Data.Residence_Address=Environment.TFSINDATA_NEW.Residence_Address;
+--			SET OutputRoot.JSON.Data.Permanent_Address=Environment.TFSINDATA_NEW.Permanent_Address;
+--			SET OutputRoot.JSON.Data.Correspondence_Address=Environment.TFSINDATA_NEW.Correspondence_Address;
+--			SET OutputRoot.JSON.Data.Customer_Salutation=Environment.TFSINDATA_NEW.Customer_Salutation;
+--			SET OutputRoot.JSON.Data.Customer_Full_Name=Environment.TFSINDATA_NEW.Customer_Full_Name;
+--			SET OutputRoot.JSON.Data.Customer_Type=Environment.TFSINDATA_NEW.Customer_Type;
+--			
+--		ELSEIF NOT EXISTS(Environment.TFSINDATA_NEW[]) THEN
+--			CREATE LASTCHILD OF OutputRoot DOMAIN 'JSON';
+--			SET OutputRoot.JSON.Data.Transaction_ID=inREF.Transaction_ID;
+--			SET OutputRoot.JSON.Data.Res_Code='2';
+--			SET OutputRoot.JSON.Data.Res_Desc='Data Not Found';
+--		END IF;
+		END IF;
+--		DECLARE TRANSACTIONID CHARACTER InputRoot.JSON.Data.Transaction_ID;
+--				DECLARE inputStringDate CHARACTER InputRoot.JSON.Data.Date;
+--				--DECLARE outputStringDate DATE;
+--				DECLARE patternInput CHARACTER 'dd-MM-yy';
+--				SET outputStringDate = CAST(inputStringDate AS DATE FORMAT patternInput);
+--				IF LENGTH(TRANSACTIONID)<='30' THEN
+--					IF LENGTH(InputRoot.JSON.Data.Lan_NO) <='30' THEN
+--						
+--						SET OutputRoot.JSON.Data.Transaction_ID	= Transaction_ID;
+--						SET OutputRoot.JSON.Data.Res_Code		= '1';
+--						SET OutputRoot.JSON.Data.Res_Desc		= 'valid request';
+--					ELSE	
+--		       		    SET OutputRoot.JSON.Data.Transaction_ID = Transaction_ID;
+--						SET OutputRoot.JSON.Data.Res_Code 		= '2';
+--						SET OutputRoot.JSON.Data.Res_Desc 		= 'Lan_NO should ot be more than 30 characters';
+--					END IF;		
+--				ELSE
+--					SET OutputRoot.JSON.Data.Transaction_ID = Transaction_ID;
+--					SET OutputRoot.JSON.Data.Res_Code 		= '2';
+--					SET OutputRoot.JSON.Data.Res_Desc 		= 'TRANSACTION ID should not be more than 30 characters';
+--				END IF;
+				ELSE 
+		SET OutputRoot.JSON.Data.Transaction_ID= InputRoot.JSON.Data.Transaction_ID;
+		SET OutputRoot.JSON.Data.Res_Code='0';
+		SET OutputRoot.JSON.Data.Res_Desc='Invalid request';
+		 
+		 END IF;
+	
+		RETURN TRUE;
+	END;
+
+--	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+--		DECLARE I INTEGER 1;
+--		DECLARE J INTEGER;
+--		SET J = CARDINALITY(InputRoot.*[]);
+--		WHILE I < J DO
+--			SET OutputRoot.*[I] = InputRoot.*[I];
+--			SET I = I + 1;
+--		END WHILE;
+--	END;
+--
+--	CREATE PROCEDURE CopyEntireMessage() BEGIN
+--		SET OutputRoot = InputRoot;
+--	END;
+END MODULE;
