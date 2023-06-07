@@ -1,0 +1,703 @@
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\StudentProfileMaintenance.msgflow.
+Successfully added file DTStudentProfileMaintenanceApp\StudentProfileMaintenance.msgflow to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\CommonProcedures.esql.
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\CommonProcedures.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\DBCalls.esql.
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\DBCalls.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\PBlockUser.esql.
+Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.
+
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\PBlockUser.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\PGetBlockedApps.esql.
+Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.
+
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\PGetBlockedApps.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\PGetTestPrepCurriculumDashboard.esql.
+Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.
+
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\PGetTestPrepCurriculumDashboard.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\PGetUGCurriculumDashboard.esql.
+Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.
+
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\PGetUGCurriculumDashboard.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\PPostEvent.esql.
+Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.
+
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\PPostEvent.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\PSignupResendOTP.esql.
+Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.
+
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\PSignupResendOTP.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\PSsetStudentCourse.esql.
+Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.
+
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\PSsetStudentCourse.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\PUpdateMissingInfo.esql.
+Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.
+
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\PUpdateMissingInfo.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessChangePassword.esql.
+Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/UTILS.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.
+
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessChangePassword.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessConfirmEmail.esql.
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessConfirmEmail.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessContactUs.esql.
+Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.
+
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessContactUs.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessDelete.esql.
+Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.
+
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessDelete.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessDeleteEvent.esql.
+Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.
+
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessDeleteEvent.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessEmailUnsubscribe.esql.
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessEmailUnsubscribe.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessForgotPassword.esql.
+Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.
+
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessForgotPassword.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessForgotPasswordPage.esql.
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessForgotPasswordPage.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessForgotPasswordPageVerify.esql.
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessForgotPasswordPageVerify.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessGetCalendarEventData.esql.
+Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.
+
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessGetCalendarEventData.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessGetColleges.esql.
+Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.
+
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessGetColleges.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessGetCountryStateCodes.esql.
+Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.
+
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessGetCountryStateCodes.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessGetStudentById.esql.
+Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.
+
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessGetStudentById.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessImageUpload.esql.
+Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.
+
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessImageUpload.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessInactive.esql.
+Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.
+
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessInactive.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessLogin.esql.
+Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.
+
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessLogin.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessLoginVerifyOtp.esql.
+Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.
+
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessLoginVerifyOtp.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessLogout.esql.
+Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.
+
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessLogout.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessResetAppToken.esql.
+Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.
+
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessResetAppToken.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessResetBookmarks.esql.
+Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.
+
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessResetBookmarks.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessResetPassword.esql.
+Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/UTILS.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.
+
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessResetPassword.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessResetQuestionBank.esql.
+Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.
+
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessResetQuestionBank.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessResetWebSessionToken.esql.
+Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.
+
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessResetWebSessionToken.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessSendEmailVerificaitonToken.esql.
+Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.
+
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessSendEmailVerificaitonToken.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessSingup.esql.
+Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/UTILS.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.
+
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessSingup.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessUpdateFirebaseToken.esql.
+Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.
+
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessUpdateFirebaseToken.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessUpdateMobileNo.esql.
+Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.
+
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessUpdateMobileNo.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessUpdateMobileSendOTP.esql.
+Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.
+
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessUpdateMobileSendOTP.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessUpdateProfile.esql.
+Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/UTILS.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.
+
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessUpdateProfile.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessUpdateProfileStatus.esql.
+Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.
+
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessUpdateProfileStatus.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessValidatePro.esql.
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessValidatePro.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessVerifyEmail.esql.
+Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.
+
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessVerifyEmail.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessloginSendOtp.esql.
+Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.
+
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessloginSendOtp.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\Router.esql.
+Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.
+
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\Router.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\SignupVerifyOtp.esql.
+Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.
+
+Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.
+
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\SignupVerifyOtp.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\UTILS.esql.
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\UTILS.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\getAPIResultCode.esql.
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\getAPIResultCode.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\getCountryCode.esql.
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\getCountryCode.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\inBoundAuditReq.esql.
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\inBoundAuditReq.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\inBoundAuditRes.esql.
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\inBoundAuditRes.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\processGeoLocationReq.esql.
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\processGeoLocationReq.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\Procedures\processGeoLocationResp.esql.
+Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.
+
+Successfully added file DTStudentProfileMaintenanceApp\Procedures\processGeoLocationResp.esql to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\application.descriptor.
+Successfully added file DTStudentProfileMaintenanceApp\application.descriptor to BAR file.
+Elapsed time: 0 second(s).
+
+Successfully added file DTStudentProfileMaintenanceApp\application.descriptor to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file DTStudentProfileMaintenanceApp\application.descriptor.
+Successfully added file DTStudentProfileMaintenanceApp\application.descriptor to BAR file.
+Elapsed time: 0 second(s).
+
+Successfully added file DTStudentProfileMaintenanceApp\application.descriptor to BAR file.
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file AesEncDec\.classpath.
+Successfully added file AesEncDec\.classpath to BAR file.
+Elapsed time: 0.009 second(s).
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file AesEncDec\aws-java-sdk-core-1.11.65.jar.
+Successfully added file AesEncDec\aws-java-sdk-core-1.11.65.jar to BAR file.
+Elapsed time: 0.001 second(s).
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file AesEncDec\aws-java-sdk-s3-1.11.65.jar.
+Successfully added file AesEncDec\aws-java-sdk-s3-1.11.65.jar to BAR file.
+Elapsed time: 0.001 second(s).
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file AesEncDec\commons-codec-1.10.jar.
+Successfully added file AesEncDec\commons-codec-1.10.jar to BAR file.
+Elapsed time: 0 second(s).
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file AesEncDec\gson-2.9.0.jar.
+Successfully added file AesEncDec\gson-2.9.0.jar to BAR file.
+Elapsed time: 0 second(s).
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file AesEncDec\httpclient-4.5.2.jar.
+Successfully added file AesEncDec\httpclient-4.5.2.jar to BAR file.
+Elapsed time: 0.001 second(s).
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file AesEncDec\httpcore-4.4.4.jar.
+Successfully added file AesEncDec\httpcore-4.4.4.jar to BAR file.
+Elapsed time: 0 second(s).
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file AesEncDec\jedis-4.2.3.jar.
+Successfully added file AesEncDec\jedis-4.2.3.jar to BAR file.
+Elapsed time: 0 second(s).
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file AesEncDec\jersey-client-1.17.jar.
+Successfully added file AesEncDec\jersey-client-1.17.jar to BAR file.
+Elapsed time: 0 second(s).
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file AesEncDec\jersey-core-1.17.jar.
+Successfully added file AesEncDec\jersey-core-1.17.jar to BAR file.
+Elapsed time: 0 second(s).
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file AesEncDec\joda-convert-1.2.jar.
+Successfully added file AesEncDec\joda-convert-1.2.jar to BAR file.
+Elapsed time: 0 second(s).
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file AesEncDec\joda-time-2.9.4.jar.
+Successfully added file AesEncDec\joda-time-2.9.4.jar to BAR file.
+Elapsed time: 0.001 second(s).
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file AesEncDec\org.apache.commons.io.jar.
+Successfully added file AesEncDec\org.apache.commons.io.jar to BAR file.
+Elapsed time: 0 second(s).
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file AesEncDec\slf4j-api-1.7.36.jar.
+Successfully added file AesEncDec\slf4j-api-1.7.36.jar to BAR file.
+Elapsed time: 0 second(s).
+
+==============================================
+
+!Sun Jan 22 20:27:20 IST 2023
+
+Processing file AesEncDec\slf4j-simple-1.7.36.jar.
+Successfully added file AesEncDec\slf4j-simple-1.7.36.jar to BAR file.
+Elapsed time: 0 second(s).

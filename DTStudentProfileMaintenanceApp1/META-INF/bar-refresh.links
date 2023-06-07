@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deploy:Deploy xmlns:deploy="http://www.ibm.com/xmlns/prod/wmb/deploy/6.0.0" overrideConfigurableProperties="true" includeESQL="false">
+  <deployables>
+    <deployable deployed="true" barResourceTimeStamp="1662834690198" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/CommonProcedures.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\CommonProcedures.esql.&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\CommonProcedures.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\CommonProcedures.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1673587696986" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/DBCalls.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\DBCalls.esql.&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\DBCalls.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\DBCalls.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1671194913168" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/PBlockUser.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\PBlockUser.esql.&#xA;Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.&#xA;&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\PBlockUser.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\PBlockUser.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1669351543998" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/PGetBlockedApps.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\PGetBlockedApps.esql.&#xA;Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.&#xA;&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\PGetBlockedApps.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\PGetBlockedApps.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1662998447210" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/PGetTestPrepCurriculumDashboard.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\PGetTestPrepCurriculumDashboard.esql.&#xA;Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.&#xA;&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\PGetTestPrepCurriculumDashboard.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\PGetTestPrepCurriculumDashboard.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1662998434921" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/PGetUGCurriculumDashboard.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\PGetUGCurriculumDashboard.esql.&#xA;Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.&#xA;&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\PGetUGCurriculumDashboard.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\PGetUGCurriculumDashboard.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1671194362043" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/PPostEvent.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\PPostEvent.esql.&#xA;Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.&#xA;&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\PPostEvent.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\PPostEvent.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1670392494528" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/PSignupResendOTP.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\PSignupResendOTP.esql.&#xA;Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.&#xA;&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\PSignupResendOTP.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\PSignupResendOTP.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1669350653426" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/PSsetStudentCourse.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\PSsetStudentCourse.esql.&#xA;Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.&#xA;&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\PSsetStudentCourse.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\PSsetStudentCourse.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1672217032204" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/PUpdateMissingInfo.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\PUpdateMissingInfo.esql.&#xA;Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.&#xA;&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\PUpdateMissingInfo.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\PUpdateMissingInfo.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1667129361906" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/ProcessChangePassword.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessChangePassword.esql.&#xA;Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/UTILS.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.&#xA;&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessChangePassword.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\ProcessChangePassword.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1669709723064" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/ProcessConfirmEmail.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessConfirmEmail.esql.&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessConfirmEmail.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\ProcessConfirmEmail.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1662834690258" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/ProcessContactUs.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessContactUs.esql.&#xA;Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.&#xA;&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessContactUs.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\ProcessContactUs.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1662834690427" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/ProcessDelete.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessDelete.esql.&#xA;Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.&#xA;&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessDelete.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\ProcessDelete.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1666768564704" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/ProcessDeleteEvent.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessDeleteEvent.esql.&#xA;Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.&#xA;&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessDeleteEvent.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\ProcessDeleteEvent.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1662834690216" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/ProcessEmailUnsubscribe.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessEmailUnsubscribe.esql.&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessEmailUnsubscribe.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\ProcessEmailUnsubscribe.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1670392570201" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/ProcessForgotPassword.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessForgotPassword.esql.&#xA;Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.&#xA;&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessForgotPassword.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\ProcessForgotPassword.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1669711358531" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/ProcessForgotPasswordPage.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessForgotPasswordPage.esql.&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessForgotPasswordPage.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\ProcessForgotPasswordPage.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1669711012070" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/ProcessForgotPasswordPageVerify.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessForgotPasswordPageVerify.esql.&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessForgotPasswordPageVerify.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\ProcessForgotPasswordPageVerify.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1668585697081" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/ProcessGetCalendarEventData.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessGetCalendarEventData.esql.&#xA;Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.&#xA;&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessGetCalendarEventData.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\ProcessGetCalendarEventData.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1672044788269" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/ProcessGetColleges.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessGetColleges.esql.&#xA;Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.&#xA;&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessGetColleges.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\ProcessGetColleges.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1671781175162" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/ProcessGetCountryStateCodes.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessGetCountryStateCodes.esql.&#xA;Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.&#xA;&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessGetCountryStateCodes.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\ProcessGetCountryStateCodes.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1673587905544" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/ProcessGetStudentById.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessGetStudentById.esql.&#xA;Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.&#xA;&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessGetStudentById.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\ProcessGetStudentById.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1662834690393" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/ProcessImageUpload.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessImageUpload.esql.&#xA;Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.&#xA;&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessImageUpload.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\ProcessImageUpload.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1662834690244" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/ProcessInactive.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessInactive.esql.&#xA;Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.&#xA;&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessInactive.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\ProcessInactive.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1673587925336" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/ProcessLogin.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessLogin.esql.&#xA;Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.&#xA;&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessLogin.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\ProcessLogin.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1673587933459" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/ProcessLoginVerifyOtp.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessLoginVerifyOtp.esql.&#xA;Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.&#xA;&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessLoginVerifyOtp.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\ProcessLoginVerifyOtp.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1662834690532" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/ProcessLogout.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessLogout.esql.&#xA;Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.&#xA;&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessLogout.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\ProcessLogout.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1662834690191" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/ProcessResetAppToken.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessResetAppToken.esql.&#xA;Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.&#xA;&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessResetAppToken.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\ProcessResetAppToken.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1673518892384" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/ProcessResetBookmarks.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessResetBookmarks.esql.&#xA;Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.&#xA;&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessResetBookmarks.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\ProcessResetBookmarks.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1662834690452" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/ProcessResetPassword.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessResetPassword.esql.&#xA;Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/UTILS.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.&#xA;&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessResetPassword.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\ProcessResetPassword.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1670317840339" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/ProcessResetQuestionBank.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessResetQuestionBank.esql.&#xA;Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.&#xA;&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessResetQuestionBank.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\ProcessResetQuestionBank.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1662834690385" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/ProcessResetWebSessionToken.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessResetWebSessionToken.esql.&#xA;Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.&#xA;&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessResetWebSessionToken.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\ProcessResetWebSessionToken.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1673027370060" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/ProcessSendEmailVerificaitonToken.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessSendEmailVerificaitonToken.esql.&#xA;Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.&#xA;&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessSendEmailVerificaitonToken.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\ProcessSendEmailVerificaitonToken.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1672216152508" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/ProcessSingup.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessSingup.esql.&#xA;Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/UTILS.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.&#xA;&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessSingup.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\ProcessSingup.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1669709671157" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/ProcessUpdateFirebaseToken.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessUpdateFirebaseToken.esql.&#xA;Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.&#xA;&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessUpdateFirebaseToken.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\ProcessUpdateFirebaseToken.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1662834690516" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/ProcessUpdateMobileNo.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessUpdateMobileNo.esql.&#xA;Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.&#xA;&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessUpdateMobileNo.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\ProcessUpdateMobileNo.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1670392483396" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/ProcessUpdateMobileSendOTP.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessUpdateMobileSendOTP.esql.&#xA;Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.&#xA;&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessUpdateMobileSendOTP.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\ProcessUpdateMobileSendOTP.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1672216210758" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/ProcessUpdateProfile.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessUpdateProfile.esql.&#xA;Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/UTILS.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.&#xA;&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessUpdateProfile.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\ProcessUpdateProfile.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1662834690507" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/ProcessUpdateProfileStatus.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessUpdateProfileStatus.esql.&#xA;Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.&#xA;&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessUpdateProfileStatus.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\ProcessUpdateProfileStatus.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1669710974848" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/ProcessValidatePro.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessValidatePro.esql.&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessValidatePro.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\ProcessValidatePro.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1662834690554" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/ProcessVerifyEmail.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessVerifyEmail.esql.&#xA;Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.&#xA;&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessVerifyEmail.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\ProcessVerifyEmail.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1670392413183" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/ProcessloginSendOtp.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\ProcessloginSendOtp.esql.&#xA;Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.&#xA;&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\ProcessloginSendOtp.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\ProcessloginSendOtp.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1672214639141" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/Router.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\Router.esql.&#xA;Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.&#xA;&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\Router.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\Router.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1673880751337" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/SignupVerifyOtp.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\SignupVerifyOtp.esql.&#xA;Dependent ESQL file Procedures/CommonProcedures.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/DBCalls.esql is added to the BAR file.&#xA;&#xA;Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.&#xA;&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\SignupVerifyOtp.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\SignupVerifyOtp.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1668418008412" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/UTILS.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\UTILS.esql.&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\UTILS.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\UTILS.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1672215825905" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/getAPIResultCode.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\getAPIResultCode.esql.&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\getAPIResultCode.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\getAPIResultCode.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1662834690409" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/getCountryCode.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\getCountryCode.esql.&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\getCountryCode.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\getCountryCode.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1662834690229" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/inBoundAuditReq.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\inBoundAuditReq.esql.&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\inBoundAuditReq.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\inBoundAuditReq.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1662834690237" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/inBoundAuditRes.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\inBoundAuditRes.esql.&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\inBoundAuditRes.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\inBoundAuditRes.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1662834690326" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/processGeoLocationReq.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\processGeoLocationReq.esql.&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\processGeoLocationReq.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\processGeoLocationReq.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1662834690401" workspaceResource="/DTStudentProfileMaintenanceApp/Procedures/processGeoLocationResp.esql">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\Procedures\processGeoLocationResp.esql.&#xA;Dependent ESQL file Procedures/getAPIResultCode.esql is added to the BAR file.&#xA;&#xA;Successfully added file DTStudentProfileMaintenanceApp\Procedures\processGeoLocationResp.esql to BAR file.&#xA;" severity="0"/>
+      <barEntry name="Procedures\processGeoLocationResp.esql"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1672216250067" workspaceResource="/DTStudentProfileMaintenanceApp/StudentProfileMaintenance.msgflow">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\StudentProfileMaintenance.msgflow.&#xA;Successfully added file DTStudentProfileMaintenanceApp\StudentProfileMaintenance.msgflow to BAR file.&#xA;" severity="0"/>
+      <barEntry name="StudentProfileMaintenance.msgflow"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1662834690600" workspaceResource="/DTStudentProfileMaintenanceApp/application.descriptor">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file DTStudentProfileMaintenanceApp\application.descriptor.&#xA;Successfully added file DTStudentProfileMaintenanceApp\application.descriptor to BAR file.&#xA;Elapsed time: 0 second(s).&#xA;&#xA;Successfully added file DTStudentProfileMaintenanceApp\application.descriptor to BAR file.&#xA;" severity="0"/>
+      <barEntry name="application.descriptor"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1662834703924" workspaceResource="/AesEncDec/.classpath">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file AesEncDec\.classpath.&#xA;Successfully added file AesEncDec\.classpath to BAR file.&#xA;Elapsed time: 0.009 second(s).&#xA;" severity="0"/>
+      <barEntry name="AesEncDec.jar"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1662834703916" workspaceResource="/AesEncDec/aws-java-sdk-core-1.11.65.jar">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file AesEncDec\aws-java-sdk-core-1.11.65.jar.&#xA;Successfully added file AesEncDec\aws-java-sdk-core-1.11.65.jar to BAR file.&#xA;Elapsed time: 0.001 second(s).&#xA;" severity="0"/>
+      <barEntry name="aws-java-sdk-core-1.11.65.jar"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1662834703895" workspaceResource="/AesEncDec/aws-java-sdk-s3-1.11.65.jar">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file AesEncDec\aws-java-sdk-s3-1.11.65.jar.&#xA;Successfully added file AesEncDec\aws-java-sdk-s3-1.11.65.jar to BAR file.&#xA;Elapsed time: 0.001 second(s).&#xA;" severity="0"/>
+      <barEntry name="aws-java-sdk-s3-1.11.65.jar"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1662834704113" workspaceResource="/AesEncDec/commons-codec-1.10.jar">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file AesEncDec\commons-codec-1.10.jar.&#xA;Successfully added file AesEncDec\commons-codec-1.10.jar to BAR file.&#xA;Elapsed time: 0 second(s).&#xA;" severity="0"/>
+      <barEntry name="commons-codec-1.10.jar"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1662834702766" workspaceResource="/AesEncDec/gson-2.9.0.jar">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file AesEncDec\gson-2.9.0.jar.&#xA;Successfully added file AesEncDec\gson-2.9.0.jar to BAR file.&#xA;Elapsed time: 0 second(s).&#xA;" severity="0"/>
+      <barEntry name="gson-2.9.0.jar"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1662834703883" workspaceResource="/AesEncDec/httpclient-4.5.2.jar">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file AesEncDec\httpclient-4.5.2.jar.&#xA;Successfully added file AesEncDec\httpclient-4.5.2.jar to BAR file.&#xA;Elapsed time: 0.001 second(s).&#xA;" severity="0"/>
+      <barEntry name="httpclient-4.5.2.jar"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1662834703948" workspaceResource="/AesEncDec/httpcore-4.4.4.jar">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file AesEncDec\httpcore-4.4.4.jar.&#xA;Successfully added file AesEncDec\httpcore-4.4.4.jar to BAR file.&#xA;Elapsed time: 0 second(s).&#xA;" severity="0"/>
+      <barEntry name="httpcore-4.4.4.jar"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1662834704096" workspaceResource="/AesEncDec/jedis-4.2.3.jar">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file AesEncDec\jedis-4.2.3.jar.&#xA;Successfully added file AesEncDec\jedis-4.2.3.jar to BAR file.&#xA;Elapsed time: 0 second(s).&#xA;" severity="0"/>
+      <barEntry name="jedis-4.2.3.jar"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1662834704103" workspaceResource="/AesEncDec/jersey-client-1.17.jar">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file AesEncDec\jersey-client-1.17.jar.&#xA;Successfully added file AesEncDec\jersey-client-1.17.jar to BAR file.&#xA;Elapsed time: 0 second(s).&#xA;" severity="0"/>
+      <barEntry name="jersey-client-1.17.jar"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1662834702776" workspaceResource="/AesEncDec/jersey-core-1.17.jar">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file AesEncDec\jersey-core-1.17.jar.&#xA;Successfully added file AesEncDec\jersey-core-1.17.jar to BAR file.&#xA;Elapsed time: 0 second(s).&#xA;" severity="0"/>
+      <barEntry name="jersey-core-1.17.jar"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1662834703939" workspaceResource="/AesEncDec/joda-convert-1.2.jar">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file AesEncDec\joda-convert-1.2.jar.&#xA;Successfully added file AesEncDec\joda-convert-1.2.jar to BAR file.&#xA;Elapsed time: 0 second(s).&#xA;" severity="0"/>
+      <barEntry name="joda-convert-1.2.jar"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1662834703872" workspaceResource="/AesEncDec/joda-time-2.9.4.jar">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file AesEncDec\joda-time-2.9.4.jar.&#xA;Successfully added file AesEncDec\joda-time-2.9.4.jar to BAR file.&#xA;Elapsed time: 0.001 second(s).&#xA;" severity="0"/>
+      <barEntry name="joda-time-2.9.4.jar"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1662834703931" workspaceResource="/AesEncDec/org.apache.commons.io.jar">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file AesEncDec\org.apache.commons.io.jar.&#xA;Successfully added file AesEncDec\org.apache.commons.io.jar to BAR file.&#xA;Elapsed time: 0 second(s).&#xA;" severity="0"/>
+      <barEntry name="org.apache.commons.io.jar"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1662834703902" workspaceResource="/AesEncDec/slf4j-api-1.7.36.jar">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file AesEncDec\slf4j-api-1.7.36.jar.&#xA;Successfully added file AesEncDec\slf4j-api-1.7.36.jar to BAR file.&#xA;Elapsed time: 0 second(s).&#xA;" severity="0"/>
+      <barEntry name="slf4j-api-1.7.36.jar"/>
+    </deployable>
+    <deployable deployed="true" barResourceTimeStamp="1662834704150" workspaceResource="/AesEncDec/slf4j-simple-1.7.36.jar">
+      <deployableStatus code="0" key="DEPLOYABLE_LAST_COMPILE_STATUS" message="&#xA;Processing file AesEncDec\slf4j-simple-1.7.36.jar.&#xA;Successfully added file AesEncDec\slf4j-simple-1.7.36.jar to BAR file.&#xA;Elapsed time: 0 second(s).&#xA;" severity="0"/>
+      <barEntry name="slf4j-simple-1.7.36.jar"/>
+    </deployable>
+  </deployables>
+</deploy:Deploy>

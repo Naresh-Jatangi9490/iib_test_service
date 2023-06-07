@@ -1,0 +1,85 @@
+BROKER SCHEMA Procedures
+/******************************************************************************
+ *  Student Profile Maintenance	    				 	 prepareAuditMessage  *
+ *                                                                            *
+ *        Author          				   Version             COMMENTS       * 
+ *  DocTutorials EdutTech Pvt Ltd     V1.0 (11/06/202)    created the module  *
+ ******************************************************************************
+ *  Mofication HISTORY                      			                      *    
+ *  DATE               			   USER  	                   COMMENTS       * 
+ *  ---                			   ---        		           ---            * 
+ ******************************************************************************/
+CREATE FUNCTION getEncrypted(IN message CHARACTER , IN password CHARACTER)
+RETURNS CHARACTER
+LANGUAGE JAVA
+EXTERNAL NAME "AES256.encrypt";
+
+CREATE FUNCTION getDecrypted(IN message CHARACTER , IN password CHARACTER)
+RETURNS CHARACTER
+LANGUAGE JAVA
+EXTERNAL NAME "AES256.decrypt";
+
+CREATE FUNCTION getOtp()
+RETURNS CHARACTER
+LANGUAGE JAVA
+EXTERNAL NAME "AES256.getOtp";
+
+CREATE FUNCTION sendSMSGupShup(IN userMobile CHARACTER , IN smsMessage CHARACTER)
+RETURNS CHARACTER
+LANGUAGE JAVA
+EXTERNAL NAME "AES256.sendSMSGupShup";
+
+CREATE FUNCTION generateSessionToken()
+RETURNS CHARACTER
+LANGUAGE JAVA
+EXTERNAL NAME "SesionToken.generateSessionToken";
+
+CREATE FUNCTION uploadImage(IN base64Str CHARACTER, IN docPath CHARACTER, IN imageName CHARACTER)
+RETURNS CHARACTER
+LANGUAGE JAVA
+EXTERNAL NAME "DocumentsUploadHandler.uploadImage";
+
+CREATE FUNCTION sendEmailContent(IN name CHARACTER, IN email CHARACTER, IN verificationToken CHARACTER)
+RETURNS CHARACTER
+LANGUAGE JAVA
+EXTERNAL NAME "SendVerificationEmail.sendEmailContent";
+
+CREATE FUNCTION sendAccountBlockedEmail(IN email CHARACTER)
+RETURNS CHARACTER
+LANGUAGE JAVA
+EXTERNAL NAME "SendAccountBlockedEmail.sendAccountBlockedEmail";
+
+CREATE FUNCTION sendAccountMobileChangedEmail(IN name CHARACTER, IN email CHARACTER)
+RETURNS CHARACTER
+LANGUAGE JAVA
+EXTERNAL NAME "SendAccountMobileChangedEmail.sendAccountMobileChangedEmail";
+
+CREATE FUNCTION sendAccountPasswordChangedEmail(IN name CHARACTER, IN email CHARACTER)
+RETURNS CHARACTER
+LANGUAGE JAVA
+EXTERNAL NAME "SendAccountPasswordChangedEmail.sendAccountPasswordChangedEmail";
+
+CREATE FUNCTION sendAccountProfileChangedEmail(IN name CHARACTER, IN email CHARACTER)
+RETURNS CHARACTER
+LANGUAGE JAVA
+EXTERNAL NAME "SendAccountProfileChangedEmail.sendAccountProfileChangedEmail";
+
+CREATE FUNCTION sendEmailOTPEmail(IN name CHARACTER, IN email CHARACTER, IN otp CHARACTER)
+RETURNS CHARACTER
+LANGUAGE JAVA
+EXTERNAL NAME "SendEmailOTPEmail.sendEmailOTPEmail";
+
+CREATE FUNCTION sendAccountDeletedEmail(IN email CHARACTER)
+RETURNS CHARACTER
+LANGUAGE JAVA
+EXTERNAL NAME "SendAccountDeletedEmail.sendAccountDeletedEmail";
+
+CREATE FUNCTION getRedisQB(IN keyStr CHARACTER)
+RETURNS CHARACTER
+LANGUAGE JAVA
+EXTERNAL NAME "AES256.getRedisQB";
+
+CREATE FUNCTION isValidEmail(IN emailStr CHARACTER)
+RETURNS BOOLEAN
+LANGUAGE JAVA
+EXTERNAL NAME "AES256.isValidEmail";

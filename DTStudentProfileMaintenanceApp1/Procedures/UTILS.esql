@@ -1,0 +1,520 @@
+BROKER SCHEMA Procedures
+
+CREATE FUNCTION validateMobileNo(IN isdCode INTEGER, mobileNo CHARACTER) RETURNS BOOLEAN BEGIN
+	  IF (isdCode = 91) THEN
+		 IF(LENGTH(mobileNo) = 10) THEN
+		 	IF LENGTH(TRANSLATE(mobileNo, '0123456789', '')) <> 0 THEN
+	   			RETURN FALSE;
+			ELSE
+	   			RETURN TRUE;
+			END IF;
+	  	 ELSE 
+		    RETURN FALSE;
+	  	 END IF;
+	  ELSE
+		 IF(LENGTH(mobileNo) >= 7 AND LENGTH(mobileNo) <= 10) THEN
+			IF LENGTH(TRANSLATE(mobileNo, '0123456789', '')) <> 0 THEN
+	   			RETURN FALSE;
+			ELSE
+	   			RETURN TRUE;
+			END IF;
+		 ELSE	     
+		    RETURN FALSE;
+	  	 END IF;		   
+	  END IF;			
+END;
+
+CREATE FUNCTION validatePassword(IN password CHARACTER) RETURNS BOOLEAN BEGIN
+	 IF(CONTAINS(password, ' ')) THEN
+	    RETURN FALSE;
+     END IF;
+	 IF(LENGTH(password) >= 6 AND LENGTH(password) <= 20) THEN
+   		RETURN TRUE;
+  	 ELSE
+	    RETURN FALSE;
+	 END IF;			
+END;
+
+CREATE FUNCTION validateName(IN name CHARACTER) RETURNS BOOLEAN BEGIN
+	 IF LENGTH(TRANSLATE(name, 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ', '')) <> 0 THEN
+	    RETURN FALSE;
+	 ELSE
+	    RETURN TRUE;
+	 END IF;	
+	 IF(LENGTH(name) >= 3 AND LENGTH(name) <= 45) THEN
+   		RETURN TRUE;
+  	 ELSE
+	    RETURN FALSE;
+	 END IF;			
+END;
+
+CREATE FUNCTION CurrentDateExtendedFormat(IN theValue CHAR) RETURNS CHAR BEGIN
+	DECLARE convertedValue CHAR;
+	DECLARE sysHour  	CHAR;
+	DECLARE sysMinute 	CHAR;
+	DECLARE sysSecond   CHAR;
+	DECLARE sysMilliSec CHAR;
+	DECLARE sysYear  	CHAR;
+	DECLARE sysMonth 	CHAR;
+	DECLARE sysDay   	CHAR;
+	
+	DECLARE currentTime CHAR;
+	DECLARE currentDate CHAR;
+	SET currentTime = CURRENT_TIME;
+	SET currentDate = CURRENT_DATE;
+	
+	SET sysHour  	= SUBSTRING(currentTime FROM 7 FOR 2);
+	SET sysMinute 	= SUBSTRING(currentTime FROM 10 FOR 2);
+	SET sysSecond   = SUBSTRING(currentTime FROM 13 FOR 2);
+	SET sysMilliSec = SUBSTRING(currentTime FROM 16 FOR 5);
+	
+	SET sysYear  	= SUBSTRING(currentDate FROM 7 FOR 4);
+	SET sysMonth 	= SUBSTRING(currentDate FROM 12 FOR 2);
+	SET sysDay   	= SUBSTRING(currentDate FROM 15 FOR 2);
+
+	SET convertedValue = SPACE(19);
+	SET convertedValue = OVERLAY(convertedValue PLACING sysYear   	FROM 1 	FOR 4);
+	SET convertedValue = OVERLAY(convertedValue PLACING sysMonth  	FROM 5 	FOR 2);
+	SET convertedValue = OVERLAY(convertedValue PLACING sysDay	 	FROM 7 	FOR 2);
+	SET convertedValue = OVERLAY(convertedValue PLACING sysHour   	FROM 9 	FOR 2);
+	SET convertedValue = OVERLAY(convertedValue PLACING sysMinute 	FROM 11 FOR 2);
+	SET convertedValue = OVERLAY(convertedValue PLACING sysSecond 	FROM 13 FOR 2);
+	SET convertedValue = OVERLAY(convertedValue PLACING sysMilliSec FROM 15 FOR 5);
+	
+	RETURN convertedValue;
+END;
+
+CREATE FUNCTION FormatSignedDecimalForDB2(IN sourceString CHAR) RETURNS CHAR BEGIN
+	DECLARE modifiedSourceString CHAR;
+	DECLARE negativeSign CHAR '-';
+	
+	SET modifiedSourceString = REPLACE(sourceString, negativeSign); --replaces negative with nothing
+	IF LENGTH(sourceString) > LENGTH(modifiedSourceString) THEN
+		SET modifiedSourceString = negativeSign || modifiedSourceString; --prefix with negative
+	END IF;
+	RETURN modifiedSourceString;
+END;	
+
+/*---------------------------------------------------------------------------------------------------
+* DESCRIPTION       : FUNCTION TO RETIEVE DATABASE SCHEMA NAME BASED ON BROKER 8th CHARACTER
+* INPUT PARAMETER   : BROKER NAME CHARACTER     : Input String
+* RETURN TYPE       : DATABASE SCHEMA CHARACTER : Output String
+*---------------------------------------------------------------------------------------------------*/
+CREATE FUNCTION buildSystemCodesCache() RETURNS CHAR BEGIN
+	DECLARE SystemCode 				CHARACTER;
+	DECLARE SystemCodeDEV 			CHARACTER 'T';
+	DECLARE SystemCodeINT 			CHARACTER 'I';
+	DECLARE SystemCodeQA 			CHARACTER 'Q';
+	DECLARE SystemCodeQAB 			CHARACTER 'B';
+	DECLARE SystemCodeQAC 			CHARACTER 'C';
+	DECLARE SystemCodePROD 			CHARACTER 'P';		
+	DECLARE CacheDatabaseQualifier 	CHARACTER;								
+	SET SystemCode = SUBSTRING(BrokerName FROM 8 FOR 1);
+	
+	CASE SystemCode
+		WHEN SystemCodeDEV THEN
+			SET CacheDatabaseQualifier = 'DB2TEST';
+			RETURN CacheDatabaseQualifier;
+			
+		WHEN SystemCodeINT THEN
+			SET CacheDatabaseQualifier = 'DB2INT';
+			RETURN CacheDatabaseQualifier;
+
+		WHEN SystemCodeQA THEN
+			SET CacheDatabaseQualifier = 'DB2QUAL';
+			RETURN CacheDatabaseQualifier;
+			
+		WHEN SystemCodeQAB THEN
+			SET CacheDatabaseQualifier = 'DB2Q2';
+			RETURN CacheDatabaseQualifier;
+			
+		WHEN SystemCodeQAC THEN
+			SET CacheDatabaseQualifier = 'DB2Q3';
+			RETURN CacheDatabaseQualifier;
+
+		WHEN SystemCodePROD THEN						
+			SET CacheDatabaseQualifier = 'DB2PROD';
+			RETURN CacheDatabaseQualifier;						
+	END CASE;			
+END;	
+
+
+
+/*---------------------------------------------------------------------------------------------------
+* DESCRIPTION       : FUNCTION TO RETIEVE ENVIRONMENT INFORMATION NAME BASED ON BROKER 8th CHARACTER
+* INPUT PARAMETER   : BROKER NAME CHARACTER     		: Input String
+* RETURN TYPE       : ENVIRONMENT INFORMATION CHARACTER : Output String
+*---------------------------------------------------------------------------------------------------*/
+CREATE FUNCTION buildSystemCodesEnv() RETURNS CHAR BEGIN
+	DECLARE SystemCode 					CHARACTER;
+		
+	DECLARE SystemCodeDEV 				CHARACTER 'T';
+	DECLARE SystemCodeINT 				CHARACTER 'I';
+	DECLARE SystemCodeQA 				CHARACTER 'Q';
+	DECLARE SystemCodeQAB 				CHARACTER 'B';
+	DECLARE SystemCodeQAC 				CHARACTER 'C';
+	DECLARE SystemCodePROD 				CHARACTER 'P';		
+	DECLARE CacheEvironmentDescription 	CHARACTER;								
+	SET SystemCode = SUBSTRING(BrokerName FROM 8 FOR 1);
+	
+		
+	CASE SystemCode
+		WHEN SystemCodeDEV THEN
+			SET CacheEvironmentDescription = 'DEV';
+			RETURN CacheEvironmentDescription;
+			
+		WHEN SystemCodeINT THEN
+			SET CacheEvironmentDescription = 'INT';
+			RETURN CacheEvironmentDescription;
+
+		WHEN SystemCodeQA THEN
+			SET CacheEvironmentDescription = 'QA';
+			RETURN CacheEvironmentDescription;
+			
+		WHEN SystemCodeQAB THEN
+			SET CacheEvironmentDescription = 'STG';
+			RETURN CacheEvironmentDescription;
+			
+		WHEN SystemCodeQAC THEN
+			SET CacheEvironmentDescription = 'QAC';
+			RETURN CacheEvironmentDescription;
+
+		WHEN SystemCodePROD THEN						
+			SET CacheEvironmentDescription = 'PROD';
+			RETURN CacheEvironmentDescription;						
+	END CASE;			
+END;
+
+
+-- Function to generate message ID
+CREATE FUNCTION getMessageID() RETURNS CHARACTER BEGIN
+	DECLARE Token CHAR UUIDASCHAR;
+	return Token;
+END;
+	
+-- Function to generate Transaction Number
+CREATE FUNCTION getTransactionNumber() RETURNS CHARACTER
+BEGIN
+	DECLARE Tran_Num ROW;
+
+	SET Tran_Num = PASSTHRU ('SELECT NEXT VALUE FOR ESBS.BROKER_SEQ AS TRANSNUM FROM SYSIBM.SYSDUMMY1');
+	DECLARE Tran_Num_char CHARACTER CAST(Tran_Num.TRANSNUM as CHARACTER);
+	RETURN(Tran_Num_char);
+END;
+
+/*---------------------------------------------------------------------------------------------------
+* DESCRIPTION       : Remove Leading zeros from a String
+* INPUT PARAMETER   : inValue CHARACTER 		: Input String
+* RETURN PARAMETER  : convertedValue CHARACTER  : Converted String
+*---------------------------------------------------------------------------------------------------*/
+CREATE FUNCTION RemoveLeadingZeroes(IN inValue CHAR) RETURNS CHAR BEGIN
+            DECLARE convertedValue CHAR;
+            DECLARE currentPosition INTEGER 1;
+            DECLARE extractedValue CHAR;
+            DECLARE flag INTEGER 0;
+            DECLARE strLength INTEGER LENGTH(inValue);
+
+            WHILE currentPosition <= strLength AND flag = 0 DO
+                  SET extractedValue = SUBSTRING (inValue FROM currentPosition FOR 1);
+                  IF NOT extractedValue = '0' THEN
+                        SET flag = 1;
+                  ELSE
+                      SET currentPosition  = currentPosition + 1;
+                  END IF;
+            END WHILE;
+        IF currentPosition-1 = strLength THEN
+            RETURN '';
+        ELSE
+            SET convertedValue = SUBSTRING(inValue FROM currentPosition for strLength);
+                  RETURN convertedValue;
+        END IF;
+END;
+
+/*---------------------------------------------------------------------------------------------------
+* DESCRIPTION       : Returns current date in yyyy-MM-dd-HH.mm.ss.SSSSSS Format 
+* INPUT PARAMETER   : NONE
+* RETURN PARAMETER  : Current Time : yyyy-MM-dd-HH.mm.ss.SSSSSS Format
+*---------------------------------------------------------------------------------------------------*/
+
+CREATE FUNCTION CurrentTimeStamp() RETURNS CHAR
+BEGIN
+      DECLARE timeFormat,CurrentTime CHARACTER;
+    SET timeFormat = 'yyyy-MM-dd-HH.mm.ss.SSSSSS';
+    SET CurrentTime = CAST(CURRENT_TIMESTAMP AS CHARACTER FORMAT timeFormat);
+    RETURN CurrentTime;
+END;
+
+/*---------------------------------------------------------------------------------------------------
+* DESCRIPTION       : PROCEDURE TO REPLACE COMMA WITH A SPACE
+* INPUT PARAMETER   : chr_InputData CHARACTER   : INPUT FIELD
+* OUTPUT PARAMETER  : chr_ReturnData CHARACTER  : RETURN
+*---------------------------------------------------------------------------------------------------*/
+CREATE FUNCTION FUNC_REPLACE_COMMA(IN chr_InputData CHAR)RETURNS CHAR
+BEGIN
+  DECLARE chr_ReturnData CHAR '';
+  SET chr_ReturnData = REPLACE(chr_InputData,',',SPACE(1));
+ RETURN chr_ReturnData;
+END;  
+
+/*---------------------------------------------------------------------------------------------------
+* DESCRIPTION       : Fill left place holders with padding Character Space for defined length. 
+* INPUT PARAMETER   : inValue CHARACTER   : Input String
+* INPUT PARAMETER   : int_length INTEGER  : Length of Padding Space
+* RETURN PARAMETER  : Converted String
+*---------------------------------------------------------------------------------------------------*/
+CREATE FUNCTION leftPadWithSpaces(IN inValue CHAR, IN int_length INT) RETURNS CHAR BEGIN
+	DECLARE zero CHAR ' ';
+	DECLARE zeros CHAR;
+	DECLARE convertedValue CHAR;
+	
+	SET inValue = TRIM(inValue);
+	
+	SET zeros = REPLICATE(zero, int_length);
+	SET convertedValue = SUBSTRING(zeros FROM 1 FOR int_length - LENGTH(CAST(inValue AS CHAR))) || CAST(inValue AS CHAR);
+	RETURN convertedValue;
+END;
+
+/*---------------------------------------------------------------------------------------------------
+* DESCRIPTION       : Fill right place holders with padding Character Space for defined length. 
+* INPUT PARAMETER   : inValue CHARACTER   : Input String
+* INPUT PARAMETER   : int_length INTEGER  : Length of Padding Space
+* RETURN PARAMETER  : Converted String
+*---------------------------------------------------------------------------------------------------*/
+CREATE FUNCTION rightPadWithSpaces(IN inValue CHAR, IN int_length INT) RETURNS CHAR BEGIN
+	DECLARE zero CHAR ' ';
+	DECLARE zeros CHAR;
+	DECLARE convertedValue CHAR;
+	
+	SET inValue = TRIM(inValue);
+	
+	SET zeros = REPLICATE(zero, int_length);
+	SET convertedValue = SUBSTRING(zeros FROM 1 FOR int_length - LENGTH(CAST(inValue AS CHAR))) || CAST(inValue AS CHAR);
+	RETURN convertedValue;
+END;
+/*---------------------------------------------------------------------------------------------------
+* DESCRIPTION       : Fill left place holders with padding zeroes for defined length. 
+* INPUT PARAMETER   : inValue CHARACTER   : Input String
+* INPUT PARAMETER   : int_length INTEGER  : Length of Padding Space
+* RETURN PARAMETER  : Converted String
+*---------------------------------------------------------------------------------------------------*/
+CREATE FUNCTION leftPadWithZeros(IN inValue CHAR, IN int_length INT) RETURNS CHAR BEGIN
+      DECLARE zero CHAR '0';
+      DECLARE zeros CHAR;
+      DECLARE convertedValue CHAR;
+      
+      SET inValue = TRIM(inValue);
+      
+      SET zeros = REPLICATE(zero, int_length);
+      SET convertedValue = SUBSTRING(zeros FROM 1 FOR int_length - LENGTH(CAST(inValue AS CHAR))) || CAST(inValue AS CHAR);
+      RETURN convertedValue;
+END;
+
+/*--------------------------------------------------------------------------------------------
+ * DESCRIPTION 	    : Prepare LOG Message
+ * INPUT PARAMETER  : inputRoot REFERENCE 			: IN PARAMETER OF INPUT ROOT
+ * INPUT PARAMETER  : eventLevel INTEGER  			: IN Event level
+ * INPUT PARAMETER  : sourceSystem	CHAR			: IN Source System Information
+ * INPUT PARAMETER  : sourceSubComp	CHAR			: IN Source SubComponent Information
+ * INPUT PARAMETER  : targetSystem	CHAR			: IN Target System Information
+ * INPUT PARAMETER  : targetSubComp	CHAR			: IN Target SubComponent Information
+ * INPUT PARAMETER  : appSubComp	CHAR			: IN Application SubComponent Information
+ * INPUT PARAMETER  : eventType		CHAR			: IN Event Type
+ * INPUT PARAMETER  : eventMsg		CHAR			: IN Event Message
+ * INPUT PARAMETER  : eventOccurence	CHAR		: IN Event Occurence
+ * INPUT PARAMETER  : eventTimestamp	TIMESTAMP	: IN Event TimeStamp
+ * INPUT PARAMETER  : msgID			CHAR			: IN Message Id
+ * OUTPUT PARAMETER : ref_outputRoot REFERENCE		: INOUT PARAMETER OF OUTPUT ROOT
+ *--------------------------------------------------------------------------------------------*/
+
+CREATE FUNCTION buildLoggingMessage(IN ref_InputRoot REFERENCE,
+                                                IN eventLevel INTEGER,
+                                                IN sourceSystem CHARACTER,
+                                                IN sourceSubComp CHARACTER,
+                                                IN targetSystem CHARACTER,
+                                                IN targetSubComp CHARACTER,
+                                                IN appSubComp CHARACTER,
+                                                IN eventType CHARACTER,
+                                                IN eventMsg CHARACTER,
+                                                IN eventOccurence CHARACTER,
+                                                IN eventTimestamp TIMESTAMP,
+                                                IN msgID CHARACTER,
+                                                INOUT ref_OutputRoot REFERENCE)
+BEGIN
+
+                  SET ref_OutputRoot.MQRFH2.usr.Archive.event_level = eventLevel;
+                  SET ref_OutputRoot.MQRFH2.usr.Archive.SOURCE_SYSTEM = sourceSystem;
+                  SET ref_OutputRoot.MQRFH2.usr.Archive.SOURCE_SYSTEM_SUBCOMPONENT = sourceSubComp;
+                  SET ref_OutputRoot.MQRFH2.usr.Archive.TARGET_SYSTEM = targetSystem;
+                  SET ref_OutputRoot.MQRFH2.usr.Archive.TARGET_SUB_COMPONENT = targetSubComp;
+                  SET ref_OutputRoot.MQRFH2.usr.Archive.APPLICATION_SUB_COMPONENT = appSubComp;
+	              SET ref_OutputRoot.MQRFH2.usr.Archive.EVENT_TYPE = eventType;
+                  SET ref_OutputRoot.MQRFH2.usr.Archive.EVENT_MSG = eventMsg;
+                  SET ref_OutputRoot.MQRFH2.usr.Archive.EVENT_OCCURENCE = eventOccurence;
+                  SET ref_OutputRoot.MQRFH2.usr.Archive.EVENT_TIMESTAMP = eventTimestamp;
+                  SET ref_OutputRoot.MQRFH2.usr.Archive.MESSAGE_ID = msgID;
+
+END;
+
+/*---------------------------------------------------------------------------------------------------
+* DESCRIPTION       : Normalize XML Fields
+* INPUT PARAMETER   : field CHARACTER  			: Input Field
+* RETURN PARAMETER  : normalizedField CHARACTER : Normalized XML Field
+*---------------------------------------------------------------------------------------------------*/
+CREATE FUNCTION NormalizeXMLFields (IN field CHARACTER) RETURNS CHARACTER
+BEGIN
+	
+	DECLARE normalizedField CHARACTER;
+	
+	SET normalizedField = REPLACE(field, '<', '&lt;');
+	SET normalizedField = REPLACE(normalizedField, '>', '&gt;');
+   	SET normalizedField = REPLACE(normalizedField, '&', '&amp;');
+	SET normalizedField = REPLACE(normalizedField, '''', '&apos;');
+	SET normalizedField = REPLACE(normalizedField, '"', '&quot;');
+	
+	RETURN normalizedField;
+END;
+
+/*---------------------------------------------------------------------------------------------------
+* DESCRIPTION       : PROCEDURE TO COPY MESSAGE HEADER FROM INPUT MESSAGE TO OUTPUT MESSGE
+* INPUT PARAMETER   : ref_InputRoot REFERENCE  : INPUT MESSAGE
+* OUTPUT PARAMETER  : ref_OutputRoot REFERENCE : OUTPUT MESSAGE
+*---------------------------------------------------------------------------------------------------*/
+CREATE PROCEDURE CopyMessageHeaders(IN ref_InputRoot REFERENCE, INOUT ref_OutputRoot REFERENCE) BEGIN
+	DECLARE I INTEGER;
+	DECLARE J INTEGER;
+	SET I = 1;
+	SET J = CARDINALITY(ref_InputRoot.*[]);
+	WHILE I < J DO
+		SET ref_OutputRoot.*[I] = ref_InputRoot.*[I];
+		SET I = I + 1;
+	END WHILE;
+END;
+
+/*---------------------------------------------------------------------------------------------------
+* DESCRIPTION       : PROCEDURE TO COPY ENTIRE INPUT MESSAGE TO OUTPUT MESSGE
+* INPUT PARAMETER   : ref_InputRoot REFERENCE  : INPUT MESSAGE
+* OUTPUT PARAMETER  : ref_OutputRoot REFERENCE : OUTPUT MESSAGE
+*---------------------------------------------------------------------------------------------------*/
+
+CREATE PROCEDURE CopyEntireMessage(IN ref_InputRoot REFERENCE, INOUT ref_OutputRoot REFERENCE) BEGIN
+	SET ref_OutputRoot = ref_InputRoot;
+END;
+
+/*---------------------------------------------------------------------------------------------------
+* DESCRIPTION       : PROCEDURE TO CONVERT RMS DATE FORMAT TO USER DEFINED FORMAT
+* INPUT PARAMETER   : chr_TimeStamp CHARACTER  : RMS TIMESTAMP
+* INPUT PARAMETER   : targetPattern CHARACTER  : TARGET PATTERN
+* OUTPUT PARAMETER  : NONE
+*---------------------------------------------------------------------------------------------------*/
+
+CREATE FUNCTION FUNC_RMSTIMESTAMP_FORMAT_CONV(IN chr_TimeStamp CHARACTER, IN targetPattern CHARACTER) RETURNS CHAR BEGIN
+	DECLARE chr_RetrunFormat CHARACTER '';
+	DECLARE timestamp_Input TIMESTAMP;
+	SET chr_TimeStamp = REPLACE(chr_TimeStamp, 'T', ' ');
+	--DECLARE chr_SourcePattern CHARACTER 'YYYY-MM-DD HH:mm:ss.sssTZD';
+	DECLARE chr_SourcePattern CHARACTER 'yyyy-MM-dd HH:mm:ss.SSSZZZ';
+	SET timestamp_Input = CAST(chr_TimeStamp AS TIMESTAMP FORMAT chr_SourcePattern);
+	IF(POSITION('C' IN targetPattern) <> 0) THEN
+		DECLARE chr_Century CHARACTER  '';
+		SET chr_Century = FUNC_GET_CENTURY_FIELD(timestamp_Input);
+		IF(targetPattern = 'CyyMMdd') THEN
+			SET targetPattern = SUBSTRING(targetPattern FROM 2);
+			SET chr_RetrunFormat = CAST(timestamp_Input AS CHARACTER FORMAT targetPattern);
+			SET chr_RetrunFormat = chr_Century || chr_RetrunFormat;
+		END IF;			
+	ELSE
+		SET chr_RetrunFormat = CAST(timestamp_Input AS CHARACTER FORMAT targetPattern);
+	END IF;
+	RETURN chr_RetrunFormat;
+END;
+
+CREATE FUNCTION FUNC_GET_CENTURY_FIELD(IN TimeStamp_Input TIMESTAMP) RETURNS CHAR BEGIN
+	DECLARE chr_pattern CHARACTER 'yyyyMMdd';
+	DECLARE chr_ConvFormat CHARACTER CAST(TimeStamp_Input AS CHARACTER FORMAT chr_pattern);
+	DECLARE int_div INTEGER FLOOR(CAST(chr_ConvFormat AS INTEGER)/1000000);
+	IF(MOD(int_div, 10) = 9) THEN
+ 		SET int_div = int_div + 1;
+	ELSE 
+		SET int_div = CAST(SUBSTRING(CAST(int_div AS CHARACTER) FROM 1 FOR 1) AS INTEGER) * 10;
+	END IF;
+	DECLARE chr_Cent CHARACTER  CAST(MOD((FLOOR(CAST(chr_ConvFormat AS INTEGER)/1000000) +1), int_div) AS CHARACTER);
+	RETURN chr_Cent;
+END;
+	
+/*---------------------------------------------------------------------------------------------------
+* DESCRIPTION       : FUNCTION TO TRUNCATE CHARACTER INPUT TO DEFINED LENGTH
+* INPUT PARAMETER   : chr_InputData CHARACTER  : INPUT FIELD
+* INPUT PARAMETER   : int_length INT  		   : CHARACTER FIELD LENGTH
+* OUTPUT PARAMETER  : chr_ReturnData CHARACTER : RETURN
+*---------------------------------------------------------------------------------------------------*/
+	
+CREATE FUNCTION FUNC_TRUNC_CHARFIELD(IN chr_InputData CHAR, IN int_length INT) RETURNS CHAR BEGIN
+		DECLARE chr_ReturnData CHAR '';
+		IF(LENGTH(chr_InputData) <= int_length) THEN
+			SET chr_ReturnData = chr_InputData;
+		ELSE
+			SET chr_ReturnData = SUBSTRING(chr_InputData FROM 1 FOR int_length);	
+	END IF;
+	
+	RETURN chr_ReturnData;
+END;		
+
+/*---------------------------------------------------------------------------------------------------
+* DESCRIPTION       : PROCEDURE TO TRUNCATE NUMERIC INPUT TO DEFINED LENGTH 
+* INPUT PARAMETER   : chr_InputData CHARACTER   : INPUT FIELD
+* INPUT PARAMETER   : int_length INTEGER  		: NUMERIC FIELD LENGTH
+* OUTPUT PARAMETER  : chr_ReturnData CHARACTER  : RETURN
+*---------------------------------------------------------------------------------------------------*/
+     
+CREATE FUNCTION FUNC_TRUNC_NUMFIELD(IN chr_InputData CHAR, IN int_length INT) RETURNS CHAR BEGIN
+	DECLARE chr_ReturnData CHAR '';
+	DECLARE int_dif INT;
+	IF(LENGTH(chr_InputData) <= int_length) THEN
+    	SET chr_ReturnData = chr_InputData;
+    ELSE
+       	SET int_dif = LENGTH(chr_InputData) - int_length + 1;
+        SET chr_ReturnData = SUBSTRING(chr_InputData FROM int_dif FOR int_length);    
+   END IF;
+      
+   RETURN chr_ReturnData;
+END;
+
+/*---------------------------------------------------------------------------------------------------
+* DESCRIPTION       : PROCEDURE TO ADJUST CHAR XML FIELD LENGTH FOR DEFINED LENGTH  
+* INPUT PARAMETER   : chr_InputData CHARACTER   : INPUT FIELD
+* INPUT PARAMETER   : int_length INTEGER  		: NUMERIC FIELD LENGTH
+* OUTPUT PARAMETER  : chr_ReturnData CHARACTER  : RETURN
+*---------------------------------------------------------------------------------------------------*/
+CREATE FUNCTION FUNC_XML_CHARFIELD_MOD(IN chr_InputData CHAR, IN int_length INT) RETURNS CHAR BEGIN
+	
+	DECLARE chr_ReturnData CHAR '';	
+	IF(LENGTH(chr_InputData) > 0 AND (LENGTH(chr_InputData) >= int_length)) THEN
+		SET chr_ReturnData = FUNC_TRUNC_CHARFIELD(chr_InputData, int_length);
+	ELSEIF(LENGTH(chr_InputData) > 0 AND (LENGTH(chr_InputData) < int_length)) THEN
+		DECLARE int_PadLength INTEGER int_length - LENGTH(chr_InputData);	
+		SET chr_ReturnData = TRIM(chr_InputData) || SPACE(int_PadLength) ;
+    ELSE
+		SET chr_ReturnData = '';
+	END IF;
+	RETURN chr_ReturnData;
+END;
+
+/*---------------------------------------------------------------------------------------------------
+* DESCRIPTION       : PROCEDURE TO ADJUST NUM XML FIELD LENGTH FOR DEFINED LENGTH 
+* INPUT PARAMETER   : chr_InputData CHARACTER   : INPUT FIELD
+* INPUT PARAMETER   : int_length INTEGER  		: NUMERIC FIELD LENGTH
+* OUTPUT PARAMETER  : chr_ReturnData CHARACTER  : RETURN
+*---------------------------------------------------------------------------------------------------*/
+CREATE FUNCTION FUNC_XML_NUMFIELD_MOD(IN chr_InputData CHAR, IN int_length INT) RETURNS CHAR BEGIN
+	
+	DECLARE chr_ReturnData CHAR '';
+	IF(LENGTH(chr_InputData) > 0 AND (LENGTH(chr_InputData) >= int_length)) THEN
+		SET chr_ReturnData = FUNC_TRUNC_NUMFIELD(chr_InputData, int_length);
+	ELSEIF(LENGTH(chr_InputData) > 0 AND (LENGTH(chr_InputData) < int_length)) THEN
+		DECLARE int_PadLength INTEGER int_length - LENGTH(chr_InputData);		
+		SET chr_ReturnData =  REPLICATE('0', int_PadLength) || TRIM(chr_InputData);  
+	ELSE
+		SET chr_ReturnData = '';
+	END IF;
+	RETURN chr_ReturnData;
+END;

@@ -1,0 +1,196 @@
+BROKER SCHEMA Procedures
+
+/******************************************************************************
+ *  Student Profile Maintenance	    				     ProcessLogin		  *
+ *                                                                            *
+ *        Author          				   Version             COMMENTS       * 
+ *  DocTutorials EdutTech Pvt Ltd     V1.0 (11/06/202)    created the module  *
+ ******************************************************************************
+ *  Mofication HISTORY                      			                      *    
+ *  DATE               			   USER  	                   COMMENTS       * 
+ *  ---                			   ---        		           ---            * 
+ ******************************************************************************/
+CREATE COMPUTE MODULE ProcessLogin
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		DECLARE inRef REFERENCE TO InputRoot.JSON.Data.gatewayRequest.request;
+		--DECLARE inRefHeader REFERENCE TO InputRoot.JSON.Data.gatewayRequest.header;
+
+		CREATE FIELD OutputRoot.JSON.Data.gatewayResponse;
+		DECLARE outRef REFERENCE TO OutputRoot.JSON.Data.gatewayResponse;
+
+		SET OutputRoot.HTTPResponseHeader."requestUUID" = Environment.audit.request_id;
+		SET OutputRoot.HTTPResponseHeader."timeStamp"   = CURRENT_TIMESTAMP;
+		SET OutputRoot.HTTPResponseHeader."Appversion"  = Environment.Variables.Appversion;
+		SET OutputRoot.HTTPResponseHeader."Serreqid"    = Environment.Variables.Serreqid;
+		SET OutputRoot.HTTPResponseHeader."Channelid"   = Environment.Variables.Channelid;
+		SET OutputRoot.HTTPResponseHeader."Deviceid"    = Environment.Variables.Deviceid;
+		SET OutputRoot.HTTPResponseHeader."Modelname"   = Environment.Variables.Modelname;
+		SET OutputRoot.HTTPResponseHeader."Os" 		    = Environment.Variables.Os;
+		SET OutputRoot.HTTPResponseHeader."Osversion"   = Environment.Variables.Osversion;
+		SET OutputRoot.HTTPResponseHeader."Location"    = Environment.Variables.Location;
+		SET OutputRoot.HTTPResponseHeader."Ipaddress"   = Environment.Variables.Ipaddress;
+		SET OutputRoot.HTTPResponseHeader."Ipaddress"   = Environment.Variables.Ipaddress;
+				
+		IF (inRef.email > '') THEN
+		ELSE
+			SET outRef.status.isSuccess 	 = false;
+			SET outRef.status.statusCode 	 = SUBSTRING(Procedures.getAPIResultCode('ER104') BEFORE '-');
+			SET outRef.status.message 	 	 = SUBSTRING(Procedures.getAPIResultCode('ER104') AFTER '-');
+			PROPAGATE TO LABEL 'sendHTTPReply';
+			RETURN FALSE;
+		END IF;
+		
+		IF (inRef.password > '') THEN
+		ELSE
+			SET outRef.status.isSuccess 	 = false;
+			SET outRef.status.statusCode 	 = SUBSTRING(Procedures.getAPIResultCode('ER103') BEFORE '-');
+			SET outRef.status.message 	 	 = SUBSTRING(Procedures.getAPIResultCode('ER103') AFTER '-');
+			PROPAGATE TO LABEL 'sendHTTPReply';
+			RETURN FALSE;
+		END IF;
+		
+		IF (Environment.Variables.Channelid = 'App') THEN
+			IF(inRef.deviceType > '') THEN
+			ELSE
+				SET outRef.status.isSuccess 	 = false;
+				SET outRef.status.statusCode 	 = SUBSTRING(Procedures.getAPIResultCode('ER121') BEFORE '-');
+				SET outRef.status.message 	 	 = SUBSTRING(Procedures.getAPIResultCode('ER121') AFTER '-');
+				PROPAGATE TO LABEL 'sendHTTPReply';
+				RETURN FALSE;
+			END IF;
+			/*IF (inRef.firebaseToken > '') THEN
+			ELSE
+				SET outRef.status.isSuccess 	 = false;
+				SET outRef.status.statusCode 	 = SUBSTRING(Procedures.getAPIResultCode('ER115') BEFORE '-');
+				SET outRef.status.message 	 	 = SUBSTRING(Procedures.getAPIResultCode('ER115') AFTER '-');
+				PROPAGATE TO LABEL 'sendHTTPReply';
+				RETURN FALSE;
+			END IF;*/			
+		END IF;
+		
+		DECLARE uniqueToken, collegeCountryCode, courseName, specialization, name, image, refreshToken, universityName, sessionToken, password, profileStatus, createdAt, updatedAt, mobileNo, email, education, college, state, o_result, encKey, decPassword, otpStr, resultStr CHARACTER;
+		DECLARE o_status, ios, emailVerified, android BOOLEAN;
+		DECLARE studentId, countryCode, studentIdOut, courseId, nextRotationAt, universityId, collegeId, stateId INTEGER;
+		
+		SET email = LCASE(inRef.email);
+		
+		/*Future encrypt this token with user unique login key*/
+		SET sessionToken = generateSessionToken();
+		SET refreshToken = generateSessionToken();
+		
+		/*get Token for password decryption*/
+		CALL dt_profile_create_student_sign_get_token(email,
+								   				      uniqueToken, --Out
+								       				  encKey,
+								       				  studentId,
+									   				  o_status,
+									   				  o_result);
+		IF (o_status = false) THEN
+			SET outRef.status.isSuccess 	 = o_status;
+			SET outRef.status.statusCode 	 = SUBSTRING(o_result BEFORE '-');
+			SET outRef.status.message 	 	 = SUBSTRING(o_result AFTER '-');
+			SET OutputRoot.HTTPResponseHeader."timeStamp"   = CURRENT_TIMESTAMP;
+			PROPAGATE TO LABEL 'sendHTTPReply';			
+			RETURN FALSE;
+		ELSE
+			--IF CONTAINS(o_result, 'ER000') THEN
+			   SET decPassword = getDecrypted(encKey, uniqueToken);
+			--ELSE   
+			--	SET outRef.status.isSuccess 	 = o_status;
+			--	SET outRef.status.statusCode 	 = SUBSTRING(o_result BEFORE '-');
+			--	SET outRef.status.message 	 	 = SUBSTRING(o_result AFTER '-');
+			--	SET OutputRoot.HTTPResponseHeader."timeStamp"   = CURRENT_TIMESTAMP;
+			--	PROPAGATE TO LABEL 'sendHTTPReply';			
+			--	RETURN FALSE;
+			--END IF;
+		END IF;										        
+		
+		IF (decPassword = inRef.password) THEN
+			 CALL dt_profile_signin_student_get_by_id(studentId,
+												      inRef.firebaseToken,
+												      Environment.Variables.Channelid,
+													  Environment.Variables.Location,
+												      Environment.Variables.IpAddress,
+												      inRef.deviceType,
+												  	  sessionToken,
+												  	  refreshToken,
+												  	  studentIdOut, -- Out
+												  	  name, 
+												  	  countryCode,
+												  	  mobileNo,
+												  	  email,
+												  	  education,
+												  	  state,
+												  	  college,
+												  	  profileStatus,
+												  	  emailVerified,
+												  	  createdAt,
+												  	  updatedAt,
+												  	  courseId,
+												  	  courseName,
+												  	  specialization,
+												  	  image,
+												  	  universityId,
+												  	  universityName,
+												  	  collegeId,
+												  	  stateId,												  	  
+												  	  nextRotationAt,
+												  	  collegeCountryCode,
+												  	  o_status,
+												  	  o_result);
+												  	  	
+			IF (o_status = false) THEN
+				SET outRef.status.isSuccess 	 = o_status;
+				SET outRef.status.statusCode 	 = SUBSTRING(o_result BEFORE '-');
+				SET outRef.status.message 	 	 = SUBSTRING(o_result AFTER '-');
+				SET OutputRoot.HTTPResponseHeader."timeStamp"   = CURRENT_TIMESTAMP;
+			ELSE
+				SET outRef.status.isSuccess 	 = o_status;
+				SET outRef.status.statusCode 	 = 'ER000';
+				SET outRef.status.message 	 	 = o_result;
+				CREATE FIELD OutputRoot.JSON.Data.gatewayResponse.response;
+				DECLARE respRef REFERENCE TO OutputRoot.JSON.Data.gatewayResponse.response;
+				SET respRef.studentId = studentId;
+				IF(studentId = 76270) THEN
+			  	   SET respRef.subscription = true;
+			  	   SET respRef.validUpTo    = '10-03-2025';
+			       SET respRef.invoice 	    = 'https://bvrinvoices.s3.ap-south-1.amazonaws.com/reports/Doctutorials_INV_10041.pdf';
+			    END IF;				
+				SET respRef.countryCode = countryCode;
+				SET respRef.mobileNo  = mobileNo;
+				SET respRef.email     = email;
+				SET respRef.name      = name;
+				SET respRef.education = education;
+				SET respRef.state     = state;
+				SET respRef.college   = college;
+				SET respRef.profileStatus = profileStatus;
+				SET respRef.emailVerified = emailVerified;
+				SET respRef.createdAt = createdAt;
+				SET respRef.updatedAt = updatedAt;
+				SET respRef.courseId = courseId;
+				SET respRef.courseName = courseName;
+				SET respRef.specialization = specialization;
+				SET respRef.image = image;
+				SET respRef.universityId = universityId;
+				SET respRef.collegeId 	 = collegeId;
+				SET respRef.stateId		 = stateId;				
+				SET respRef.universityName = universityName;				
+				SET respRef.sessionToken = sessionToken;
+				SET respRef.refreshToken = refreshToken;
+				SET respRef.collegeCountryCode = collegeCountryCode;
+				SET respRef.nextRotationAt = nextRotationAt;
+				SET OutputRoot.HTTPResponseHeader."timeStamp"   = CURRENT_TIMESTAMP;	
+			END IF;													  
+		ELSE
+			--Future add a stored procedure call to block the student if crossed 5 invalid attempts.
+			SET outRef.status.isSuccess 	 = false;
+			SET outRef.status.statusCode 	 = SUBSTRING(Procedures.getAPIResultCode('ER122') BEFORE '-');
+			SET outRef.status.message 	 	 = SUBSTRING(Procedures.getAPIResultCode('ER122') AFTER '-');
+			SET OutputRoot.HTTPResponseHeader."timeStamp"   = CURRENT_TIMESTAMP;		
+		END IF;
+		
+		PROPAGATE TO LABEL 'sendHTTPReply';			
+		RETURN FALSE;
+	END;
+END MODULE;

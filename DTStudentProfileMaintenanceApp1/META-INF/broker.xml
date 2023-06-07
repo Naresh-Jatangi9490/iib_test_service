@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?><Broker>
+<CompiledApplication>
+<ConfigurableProperty uri="startMode"/>
+</CompiledApplication>
+<CompiledMessageFlow name="StudentProfileMaintenance">
+<ConfigurableProperty uri="StudentProfileMaintenance#additionalInstances"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#notificationThresholdMsgsPerSec"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#maximumRateMsgsPerSec"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#processingTimeoutSec"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#processingTimeoutAction"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#wlmPolicy"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#commitCount"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#commitInterval"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#coordinatedTransaction"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#consumerPolicySet"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#providerPolicySet"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#consumerPolicySetBindings"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#providerPolicySetBindings"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#securityProfileName"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#monitoringProfile"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#startMode"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#startInstancesWhenFlowStarts"/>
+<ConfigurableProperty override="ESBDB" uri="StudentProfileMaintenance#dataSource2"/>
+<ConfigurableProperty override="ESBDB" uri="StudentProfileMaintenance#dataSource1"/>
+<ConfigurableProperty override="ESBDB" uri="StudentProfileMaintenance#dataSource"/>
+<ConfigurableProperty override="ESBDB" uri="StudentProfileMaintenance#dataSource3"/>
+<ConfigurableProperty override="ESBDB" uri="StudentProfileMaintenance#dataSource4"/>
+<ConfigurableProperty override="ESBDB" uri="StudentProfileMaintenance#dataSource5"/>
+<ConfigurableProperty override="ESBDB" uri="StudentProfileMaintenance#dataSource6"/>
+<ConfigurableProperty override="ESBDB" uri="StudentProfileMaintenance#dataSource7"/>
+<ConfigurableProperty override="ESBDB" uri="StudentProfileMaintenance#dataSource8"/>
+<ConfigurableProperty override="ESBDB" uri="StudentProfileMaintenance#dataSource9"/>
+<ConfigurableProperty override="ESBDB" uri="StudentProfileMaintenance#dataSource10"/>
+<ConfigurableProperty override="ESBDB" uri="StudentProfileMaintenance#dataSource11"/>
+<ConfigurableProperty override="ESBDB" uri="StudentProfileMaintenance#dataSource12"/>
+<ConfigurableProperty override="ESBDB" uri="StudentProfileMaintenance#dataSource13"/>
+<ConfigurableProperty override="ESBDB" uri="StudentProfileMaintenance#dataSource14"/>
+<ConfigurableProperty override="ESBDB" uri="StudentProfileMaintenance#dataSource15"/>
+<ConfigurableProperty override="ESBDB" uri="StudentProfileMaintenance#dataSource16"/>
+<ConfigurableProperty override="ESBDB" uri="StudentProfileMaintenance#dataSource17"/>
+<ConfigurableProperty override="ESBDB" uri="StudentProfileMaintenance#dataSource18"/>
+<ConfigurableProperty override="ESBDB" uri="StudentProfileMaintenance#dataSource19"/>
+<ConfigurableProperty override="ESBDB" uri="StudentProfileMaintenance#dataSource20"/>
+<ConfigurableProperty override="ESBDB" uri="StudentProfileMaintenance#dataSource21"/>
+<ConfigurableProperty override="ESBDB" uri="StudentProfileMaintenance#dataSource22"/>
+<ConfigurableProperty override="ESBDB" uri="StudentProfileMaintenance#dataSource23"/>
+<ConfigurableProperty override="ESBDB" uri="StudentProfileMaintenance#dataSource24"/>
+<ConfigurableProperty override="ESBDB" uri="StudentProfileMaintenance#dataSource25"/>
+<ConfigurableProperty override="ESBDB" uri="StudentProfileMaintenance#dataSource26"/>
+<ConfigurableProperty override="ESBDB" uri="StudentProfileMaintenance#dataSource27"/>
+<ConfigurableProperty override="ESBDB" uri="StudentProfileMaintenance#dataSource28"/>
+<ConfigurableProperty override="ESBDB" uri="StudentProfileMaintenance#dataSource29"/>
+<ConfigurableProperty override="ESBDB" uri="StudentProfileMaintenance#dataSource30"/>
+<ConfigurableProperty override="ESBDB" uri="StudentProfileMaintenance#dataSource31"/>
+<ConfigurableProperty override="ESBDB" uri="StudentProfileMaintenance#dataSource32"/>
+<ConfigurableProperty override="/student" uri="StudentProfileMaintenance#HTTP Input.URLSpecifier"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#HTTP Input.useHTTPS"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#HTTP Input.decompressInputMessage"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#HTTP Input.timeoutForClient"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#HTTP Input.faultFormat"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#HTTP Input.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#HTTP Input.securityProfileName"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#HTTP Reply.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#Router.dataSource"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#Router.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#Router.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#inBoundAuditReq.dataSource"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#inBoundAuditReq.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#inBoundAuditReq.validateMaster"/>
+<ConfigurableProperty override="DT_STUDENT_PROFILE_MAINTENANCE_AUDIT_IN_Q" uri="StudentProfileMaintenance#DT_STUDENT_PROFILE_MAINTENANCE_AUDIT_IN_Q.queueName"/>
+<ConfigurableProperty override="CLIENT" uri="StudentProfileMaintenance#DT_STUDENT_PROFILE_MAINTENANCE_AUDIT_IN_Q.connection"/>
+<ConfigurableProperty override="TESTQM" uri="StudentProfileMaintenance#DT_STUDENT_PROFILE_MAINTENANCE_AUDIT_IN_Q.destinationQueueManagerName"/>
+<ConfigurableProperty override="43.204.186.222" uri="StudentProfileMaintenance#DT_STUDENT_PROFILE_MAINTENANCE_AUDIT_IN_Q.queueManagerHostname"/>
+<ConfigurableProperty override="1414" uri="StudentProfileMaintenance#DT_STUDENT_PROFILE_MAINTENANCE_AUDIT_IN_Q.listenerPortNumber"/>
+<ConfigurableProperty override="TEST.SVRCONN" uri="StudentProfileMaintenance#DT_STUDENT_PROFILE_MAINTENANCE_AUDIT_IN_Q.channelName"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#DT_STUDENT_PROFILE_MAINTENANCE_AUDIT_IN_Q.securityIdentity"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#DT_STUDENT_PROFILE_MAINTENANCE_AUDIT_IN_Q.useSSL"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#DT_STUDENT_PROFILE_MAINTENANCE_AUDIT_IN_Q.SSLPeerName"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#DT_STUDENT_PROFILE_MAINTENANCE_AUDIT_IN_Q.SSLCipherSpec"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#DT_STUDENT_PROFILE_MAINTENANCE_AUDIT_IN_Q.SSLCertificateLabel"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#DT_STUDENT_PROFILE_MAINTENANCE_AUDIT_IN_Q.queueManagerName"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#DT_STUDENT_PROFILE_MAINTENANCE_AUDIT_IN_Q.replyToQMgr"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#DT_STUDENT_PROFILE_MAINTENANCE_AUDIT_IN_Q.replyToQ"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#DT_STUDENT_PROFILE_MAINTENANCE_AUDIT_IN_Q.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#DT_STUDENT_PROFILE_MAINTENANCE_AUDIT_IN_Q.securityProfileName"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#DT_STUDENT_PROFILE_MAINTENANCE_AUDIT_IN_Q.policyUrl"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#DT_STUDENT_PROFILE_MAINTENANCE_AUDIT_IN_Q.AddRequestToGroup"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#DT_STUDENT_PROFILE_MAINTENANCE_AUDIT_IN_Q.GroupRequestFolderName"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#DT_STUDENT_PROFILE_MAINTENANCE_AUDIT_IN_Q.GroupRequestTimeout"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#InBoundAuditResp.dataSource"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#InBoundAuditResp.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#InBoundAuditResp.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#ProcessSingup.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#ProcessSingup.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#ProcessLogin.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#ProcessLogin.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#processGeoLocationReq.dataSource"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#processGeoLocationReq.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#processGeoLocationReq.validateMaster"/>
+<ConfigurableProperty override="https://ipinfo.io/" uri="StudentProfileMaintenance#callGeoLocationServie.URLSpecifier"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#callGeoLocationServie.timeoutForServer"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#callGeoLocationServie.httpProxyLocation"/>
+<ConfigurableProperty override="1.1" uri="StudentProfileMaintenance#callGeoLocationServie.httpVersion"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#callGeoLocationServie.enableKeepAlive"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#callGeoLocationServie.requestCompressionType"/>
+<ConfigurableProperty override="TLS" uri="StudentProfileMaintenance#callGeoLocationServie.protocol"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#callGeoLocationServie.allowedCiphers"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#callGeoLocationServie.hostnameChecking"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#callGeoLocationServie.keyAlias"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#callGeoLocationServie.enableCRLCheck"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#callGeoLocationServie.acceptCompressedResponses"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#callGeoLocationServie.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#callGeoLocationServie.securityProfileName"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PGeoLocationResp.dataSource"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PGeoLocationResp.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PGeoLocationResp.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PSignupVerifyOtp.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PSignupVerifyOtp.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PloginSendOtp.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PloginSendOtp.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PLoginVerifyOtp.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PLoginVerifyOtp.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PUpdateFirebaseToken.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PUpdateFirebaseToken.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PSendEmailVerificaitonToken.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PSendEmailVerificaitonToken.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PForgotPassword.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PForgotPassword.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PGetCalendarEventData.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PGetCalendarEventData.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PResetPassword.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PResetPassword.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PDelete.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PDelete.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PImageUpload.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PImageUpload.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PInactive.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PInactive.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PVerifyEmail.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PVerifyEmail.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PupdateMobileSendOTP.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PupdateMobileSendOTP.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PUpdateProfileStatus.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PUpdateProfileStatus.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PConfirmEmail.dataSource"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PConfirmEmail.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PConfirmEmail.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PDeleteEvent.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PDeleteEvent.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PValidatePro.dataSource"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PValidatePro.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PValidatePro.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PUpdateMobileNo.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PUpdateMobileNo.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PPostEvent.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PPostEvent.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PChangePassword.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PChangePassword.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PUpdateProfile.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PUpdateProfile.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PLogout.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PLogout.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PGetCountryStateCodes.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PGetCountryStateCodes.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PGetColleges.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PGetColleges.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PRestAppToken.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PRestAppToken.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PRestWebSessionToken.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PRestWebSessionToken.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PBlockUser.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PBlockUser.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PGetStudentById.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PGetStudentById.validateMaster"/>
+<ConfigurableProperty override="ESBDB" uri="StudentProfileMaintenance#PLoadTestPrepDashboard.dataSource"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PLoadTestPrepDashboard.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PLoadTestPrepDashboard.validateMaster"/>
+<ConfigurableProperty override="ESBDB" uri="StudentProfileMaintenance#PLoadUGCurriculumDashboard.dataSource"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PLoadUGCurriculumDashboard.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PLoadUGCurriculumDashboard.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#ProcessContact.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#ProcessContact.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PSignupResendOTP.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PSignupResendOTP.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PResetQuestionBank.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PResetQuestionBank.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PResetBookmarks.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PResetBookmarks.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PForgotPasswordPageVerify.dataSource"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PForgotPasswordPageVerify.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PForgotPasswordPageVerify.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PForgotPasswordPage.dataSource"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PForgotPasswordPage.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PForgotPasswordPage.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PGetBlockedApps.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PGetBlockedApps.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PSsetStudentCourse.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PSsetStudentCourse.validateMaster"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PUpdateMissingInfo.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="StudentProfileMaintenance#PUpdateMissingInfo.validateMaster"/>
+</CompiledMessageFlow>
+</Broker>

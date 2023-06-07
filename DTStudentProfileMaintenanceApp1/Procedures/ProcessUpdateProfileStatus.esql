@@ -1,0 +1,118 @@
+BROKER SCHEMA Procedures
+
+/******************************************************************************
+ *  Student Profile Maintenance	    				 	 prepareAuditMessage  *
+ *                                                                            *
+ *        Author          				   Version             COMMENTS       * 
+ *  DocTutorials EdutTech Pvt Ltd     V1.0 (11/06/202)    created the module  *
+ ******************************************************************************
+ *  Mofication HISTORY                      			                      *    
+ *  DATE               			   USER  	                   COMMENTS       * 
+ *  ---                			   ---        		           ---            * 
+ ******************************************************************************/
+CREATE COMPUTE MODULE ProcessUpdateProfileStatus
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		--pass the secret token from the signup call response OTP_SIGNUP_TOKEN.
+		-- Not need and not done now: Set to another hidden value after the successful verification.
+		DECLARE inRef REFERENCE TO InputRoot.JSON.Data.gatewayRequest;
+		--sDECLARE inRefHeader REFERENCE TO InputRoot.JSON.Data.gatewayRequest.header;
+		
+		CREATE FIELD OutputRoot.JSON.Data.gatewayResponse;
+		DECLARE outRef REFERENCE TO OutputRoot.JSON.Data.gatewayResponse;
+				
+		IF (inRef.studentId > '') THEN
+		ELSE
+			SET outRef.status.isSuccess 	 = false;
+			SET outRef.status.statusCode 	 = SUBSTRING(Procedures.getAPIResultCode('ER201') BEFORE '-');
+			SET outRef.status.message 	 	 = SUBSTRING(Procedures.getAPIResultCode('ER201') AFTER '-');
+			PROPAGATE TO LABEL 'sendHTTPReply';
+			RETURN FALSE;
+		END IF;
+		
+		IF (inRef.otp > '') THEN
+		ELSE
+			SET outRef.status.isSuccess 	 = false;
+			SET outRef.status.statusCode 	 = SUBSTRING(Procedures.getAPIResultCode('ER202') BEFORE '-');
+			SET outRef.status.message 	 	 = SUBSTRING(Procedures.getAPIResultCode('ER202') AFTER '-');
+			PROPAGATE TO LABEL 'sendHTTPReply';
+			RETURN FALSE;
+		END IF;
+		
+		IF (inRef.token > '') THEN
+		ELSE
+			SET outRef.status.isSuccess 	 = false;
+			SET outRef.status.statusCode 	 = SUBSTRING(Procedures.getAPIResultCode('ER204') BEFORE '-');
+			SET outRef.status.message 	 	 = SUBSTRING(Procedures.getAPIResultCode('ER204') AFTER '-');
+			PROPAGATE TO LABEL 'sendHTTPReply';
+			RETURN FALSE;
+		END IF;
+		
+		DECLARE o_result, name, mobileNo, email, education, sessionToken, college, state, profileStatus, createdAt, updatedAt CHARACTER;
+		DECLARE o_status, ios, android BOOLEAN;
+		DECLARE studentId, courseId, countryCode INTEGER;
+		
+		/*Future encrypt this token*/
+		SET sessionToken = generateSessionToken(); 
+		
+		--https://stackoverflow.com/questions/6526883/base64encoder-cannot-be-resolved
+		--https://stackoverflow.com/questions/13992972/how-to-create-a-authentication-token-using-java
+		
+		/*Add all the validations
+		CALL dt_profile_create_student_verify_otp(CAST(inRef.studentId AS INTEGER),
+												  inRef.otp,
+												  inRef.location,
+												  inRef.ipAddress,
+												  sessionToken,
+												  inRef.firebaseToken,
+												  inRef.deviceType,
+												  inRef.token,
+												  Environment.Variables.Channelid,
+												  studentId,
+												  name,
+												  countryCode,
+												  mobileNo,
+												  email,
+												  education,
+												  college,
+												  state,
+												  ios,
+												  android,
+												  courseId,
+												  profileStatus,
+												  createdAt,
+												  updatedAt,
+												  o_status,
+												  o_result);****/												  
+		IF (o_status = false) THEN
+			SET outRef.status.isSuccess 	 = o_status;
+			SET outRef.status.statusCode 	 = SUBSTRING(o_result BEFORE '-');
+			SET outRef.status.message 	 	 = SUBSTRING(o_result AFTER '-');
+		ELSE
+			SET outRef.status.isSuccess 	 = o_status;
+			SET outRef.status.statusCode 	 = 'ER000';
+			SET outRef.status.message 	 	 = o_result;
+			CREATE FIELD OutputRoot.JSON.Data.gatewayResponse.response;
+			DECLARE respRef REFERENCE TO OutputRoot.JSON.Data.gatewayResponse.response;
+			SET OutputRoot.JSON.Data.gatewayRequest.header.timeStamp = CURRENT_TIMESTAMP;
+			SET respRef.studentId = studentId;
+			SET respRef.countryCode = countryCode;
+			SET respRef.mobileNo  = mobileNo;
+			SET respRef.email     = email;
+			SET respRef.name      = name;
+			SET respRef.education = education;
+			SET respRef.college   = college;
+			SET respRef.sessionToken = sessionToken;
+			SET respRef.state     = state;
+			SET respRef.profileStatus = profileStatus;
+			SET respRef.createdAt = createdAt;
+			SET respRef.updatedAt = updatedAt;
+			SET respRef.ios = ios;
+			SET respRef.android = android;
+			SET respRef.courseId = courseId;
+		END IF;
+		
+		PROPAGATE TO LABEL 'sendHTTPReply';			
+		RETURN FALSE;
+	END;
+END MODULE;

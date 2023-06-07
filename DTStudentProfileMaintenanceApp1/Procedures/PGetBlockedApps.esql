@@ -1,0 +1,76 @@
+BROKER SCHEMA Procedures
+
+
+/******************************************************************************
+ *  Student Profile Maintenance	    				 	 prepareAuditMessage  *
+ *                                                                            *
+ *        Author          				   Version             COMMENTS       * 
+ *  DocTutorials EdutTech Pvt Ltd     V1.0 (11/06/202)    created the module  *
+ ******************************************************************************
+ *  Mofication HISTORY                      			                      *    
+ *  DATE               			   USER  	                   COMMENTS       * 
+ *  ---                			   ---        		           ---            * 
+ ******************************************************************************/
+CREATE COMPUTE MODULE PGetBlockedApps
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+
+	DECLARE inRef REFERENCE TO InputRoot.JSON.Data.gatewayRequest.request;		
+		
+		CREATE FIELD OutputRoot.JSON.Data.gatewayResponse;
+		DECLARE outRef REFERENCE TO OutputRoot.JSON.Data.gatewayResponse;
+		
+		DECLARE sqlStmt CHARACTER;
+		DECLARE i INTEGER 1;
+				
+		IF (inRef.studentId > '') THEN
+		ELSE
+			SET outRef.status.isSuccess 	 = false;
+			SET outRef.status.statusCode 	 = SUBSTRING(Procedures.getAPIResultCode('ER112') BEFORE '-');
+			SET outRef.status.message 	 	 = SUBSTRING(Procedures.getAPIResultCode('ER112') AFTER '-');
+			PROPAGATE TO LABEL 'sendHTTPReply';
+			RETURN FALSE;
+		END IF;
+		
+		SET OutputRoot.HTTPResponseHeader."requestUUID" = Environment.audit.request_id;
+		SET OutputRoot.HTTPResponseHeader."timeStamp"   = CURRENT_TIMESTAMP;
+		SET OutputRoot.HTTPResponseHeader."Appversion"  = Environment.Variables.Appversion;
+		SET OutputRoot.HTTPResponseHeader."Serreqid"    = Environment.Variables.Serreqid;
+		SET OutputRoot.HTTPResponseHeader."Channelid"   = Environment.Variables.Channelid;
+		SET OutputRoot.HTTPResponseHeader."Deviceid"    = Environment.Variables.Deviceid;
+		SET OutputRoot.HTTPResponseHeader."Modelname"   = Environment.Variables.Modelname;
+		SET OutputRoot.HTTPResponseHeader."Os" 		    = Environment.Variables.Os;
+		SET OutputRoot.HTTPResponseHeader."Osversion"   = Environment.Variables.Osversion;
+		SET OutputRoot.HTTPResponseHeader."Location"    = Environment.Variables.Location;
+		SET OutputRoot.HTTPResponseHeader."Ipaddress"   = Environment.Variables.Ipaddress;
+		SET OutputRoot.HTTPResponseHeader."Ipaddress"   = Environment.Variables.Ipaddress;
+
+		DECLARE o_result, tokenStatus  CHARACTER;
+		DECLARE o_status BOOLEAN;
+		
+	    SET sqlStmt = 'SELECT ID, NAME, PACKAGE_NAME FROM BLOCKED_APPS WHERE IS_ACTIVE = 1'; 
+		SET Environment.Variables.Rec[] = PASSTHRU(sqlStmt, inRef.id);
+		
+		IF EXISTS(Environment.Variables.Rec[]) THEN
+			CREATE FIELD OutputRoot.JSON.Data.gatewayResponse.response IDENTITY(JSON.Array);
+			DECLARE outRefa REFERENCE TO OutputRoot.JSON.Data.gatewayResponse.response;			
+			FOR src as Environment.Variables.Rec[] DO
+				SET outRefa.item[i].id 			 = src.ID;
+				SET outRefa.item[i].appName		 = src.NAME;
+				SET outRefa.item[i].packageName  = src.PACKAGE_NAME;								
+				SET i = i + 1;
+			END FOR;
+			SET outRef.status.isSuccess = TRUE;
+			SET outRef.status.message = 'Success';
+			SET outRef.status.statusCode = 'ER000';
+		ELSE
+			SET outRef.status.isSuccess = FALSE;
+			SET outRef.status.message = 'Blocked Apps List was not found in the system!';
+			SET outRef.status.statusCode = 'ER099';
+		END IF;	
+		SET OutputRoot.HTTPResponseHeader."timeStamp"   = CURRENT_TIMESTAMP;
+		
+		PROPAGATE TO LABEL 'sendHTTPReply';			
+		RETURN FALSE;
+	END;
+END MODULE;

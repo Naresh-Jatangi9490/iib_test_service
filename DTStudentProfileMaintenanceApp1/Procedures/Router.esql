@@ -1,0 +1,428 @@
+BROKER SCHEMA Procedures
+
+/******************************************************************************
+ *  Student Profile Maintenance	    						    Router	      *
+ *                                                                            *
+ *        Author          				   Version             COMMENTS       * 
+ *  DocTutorials EdutTech Pvt Ltd     V1.0 (11/06/202)    created the module  *
+ ******************************************************************************
+ *  Mofication HISTORY                      			                      *    
+ *  DATE               			   USER  	                   COMMENTS       * 
+ *  ---                			   ---        		           ---            * 
+ ******************************************************************************/
+CREATE COMPUTE MODULE Router
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		--https://github.com/DAVEXACOM/IIB-MQ/blob/master/odbc.ini
+		--https://stackoverflow.com/questions/26777083/how-to-implement-rest-token-based-authentication-with-jax-rs-and-jersey
+		--https://www.devopsschool.com/blog/what-is-bearer-token-and-how-it-works/
+		SET OutputRoot.Properties	  				 = InputRoot.Properties;
+		SET Environment.audit.inbound.CodedCharSetId = InputRoot.Properties.CodedCharSetId;
+		SET Environment.audit.inbound.Encoding       = InputRoot.Properties.Encoding;
+		SET Environment.variables.reqData.header     = InputRoot.JSON.Data.gatewayRequest.header;
+		SET Environment.variables.auditQueue         = 'DT_STUDENT_PROFILE_MAINTENANCE_AUDIT_IN_Q';		
+		
+		DECLARE inRef REFERENCE TO InputRoot.JSON.Data.gatewayRequest;		
+		DECLARE httpHeader REFERENCE TO InputRoot.HTTPInputHeader;
+		
+		/*--Web Header Fields--*
+			•	"Channelid": "Web”, (This must be Hardcoded to Web)
+			•	"Apiversion": "1.0.0.0",( must be configurable)
+			•	"Serreqid": "/signup”, (This must be set to the request URI)
+			•	"Appversion": "1.0.0.0”, (This must be set to the deployed App Version---must be configurable)
+			•	“Browser”: “Chrome”, (only need to be passed in signup and login)
+			•	"Location": "abc internet services”, (only need to be passed in signup and login)
+			•	"Ipaddress": "1.1.1.1" (only need to be passed in signup and login)
+		*/
+		
+		/*--App Header Fields--*
+			•	"Channelid": "App",(This must be Hardcoded to App)
+			•	"Apiversion": "1.0.0.0",(Must be configurable)
+			•	"Serreqid": "/signup”, (This must be set to the request URI)
+			•	"Appversion": "1.0.0.0”, (This must be set to the deployed App Version---must be configurable)
+			•	"Deviceid": "E1A31A83-D4DC-421E-8338-1FBFE7C573B7”, (This is User APP Device ID---only need to be passed in signup and login)
+			•	"Modelname": "iPhone X, Motorola XT1022”, (This is User APP Device ID---only need to be passed in signup and login)
+			•	"Os": "iOS, Android”, (This is User APP Device ID---only need to be passed in signup and login)
+			•	"Osversion": "11.2”, (This is User APP Device ID---only need to be passed in signup and login)
+			•	"Location": "ABC internet services”, (only need to be passed in signup and login)
+			•	"Ipaddress": "1.1.1.1” (only need to be passed in signup and login).			
+		*/
+		
+		SET OutputRoot.HTTPResponseHeader."requestUUID" = Environment.audit.request_id;
+		SET OutputRoot.HTTPResponseHeader."timeStamp"   = CURRENT_TIMESTAMP;		
+		SET OutputRoot.HTTPResponseHeader."Serreqid"    = httpHeader."Serreqid";
+		SET OutputRoot.HTTPResponseHeader."Channelid"   = httpHeader."Channelid";
+		
+		-- Below not need in case of header validation Issues--
+		--SET OutputRoot.HTTPResponseHeader."Appversion"  = httpHeader."Appversion";
+		--SET OutputRoot.HTTPResponseHeader."Deviceid"    = httpHeader."Deviceid";
+		--SET OutputRoot.HTTPResponseHeader."Modelname"   = httpHeader."Modelname";
+		--SET OutputRoot.HTTPResponseHeader."Os" 		    = httpHeader."Os";
+		--SET OutputRoot.HTTPResponseHeader."Osversion"   = httpHeader."Osversion";
+		--SET OutputRoot.HTTPResponseHeader."Location"    = httpHeader."Location";
+		--SET OutputRoot.HTTPResponseHeader."Ipaddress"   = httpHeader."Ipaddress";
+		
+		IF (httpHeader."Channelid" > '') THEN
+			SET Environment.Variables.Channelid = httpHeader."Channelid"; 
+		ELSE
+			CREATE FIELD OutputRoot.JSON.Data.gatewayResponse;
+			DECLARE outRef REFERENCE TO OutputRoot.JSON.Data.gatewayResponse;
+			SET outRef.status.isSuccess 	 = false;
+			SET outRef.status.statusCode 	 = SUBSTRING(Procedures.getAPIResultCode('ER001') BEFORE '-');
+			SET outRef.status.message 	 	 = SUBSTRING(Procedures.getAPIResultCode('ER001') AFTER '-');
+			PROPAGATE TO LABEL 'sendHTTPReply';
+			RETURN FALSE;
+		END IF;
+		
+		IF (httpHeader."Apiversion" > '') THEN
+			SET Environment.Variables.Apiversion = httpHeader."Apiversion";
+		ELSE
+			CREATE FIELD OutputRoot.JSON.Data.gatewayResponse;
+			DECLARE outRef REFERENCE TO OutputRoot.JSON.Data.gatewayResponse;
+			SET outRef.status.isSuccess 	 = false;
+			SET outRef.status.statusCode 	 = SUBSTRING(Procedures.getAPIResultCode('ER007') BEFORE '-');
+			SET outRef.status.message 	 	 = SUBSTRING(Procedures.getAPIResultCode('ER007') AFTER '-');
+			PROPAGATE TO LABEL 'sendHTTPReply';
+			RETURN FALSE;
+		END IF;
+		
+		IF (httpHeader."Serreqid" > '') THEN
+			SET Environment.Variables.Serreqid = httpHeader."Serreqid";
+		ELSE
+			CREATE FIELD OutputRoot.JSON.Data.gatewayResponse;
+			DECLARE outRef REFERENCE TO OutputRoot.JSON.Data.gatewayResponse;
+			SET outRef.status.isSuccess = false;
+			SET outRef.status.statusCode = SUBSTRING(Procedures.getAPIResultCode('ER003') BEFORE '-');
+			SET outRef.status.message = SUBSTRING(Procedures.getAPIResultCode('ER003') AFTER '-');
+			PROPAGATE TO LABEL 'sendHTTPReply';
+			RETURN FALSE;
+		END IF;
+		
+		IF (httpHeader."Appversion" > '') THEN
+			SET Environment.Variables.Appversion = httpHeader."Appversion";
+		ELSE
+			CREATE FIELD OutputRoot.JSON.Data.gatewayResponse;
+			DECLARE outRef REFERENCE TO OutputRoot.JSON.Data.gatewayResponse;
+			SET outRef.status.isSuccess = false;
+			SET outRef.status.statusCode = SUBSTRING(Procedures.getAPIResultCode('ER008') BEFORE '-');
+			SET outRef.status.message = SUBSTRING(Procedures.getAPIResultCode('ER008') AFTER '-');
+			PROPAGATE TO LABEL 'sendHTTPReply';
+			RETURN FALSE;
+		END IF;
+		
+		IF (httpHeader."Channelid" = 'Web') THEN
+			SET Environment.Variables.Browser = httpHeader."Browser";
+		END IF;
+		
+		IF (httpHeader."Channelid" = 'App') THEN
+			SET Environment.Variables.Deviceid  = httpHeader."Deviceid";
+			SET Environment.Variables.Modelname = httpHeader."Modelname";
+			SET Environment.Variables.Os 		= httpHeader."Os";
+			SET Environment.Variables.Osversion = httpHeader."Osversion";
+		END IF;
+				
+		--Blow set below in the valid requestes
+		--SET Environment.Variables.Location  = httpHeader."Location";
+		--SET Environment.Variables.Ipaddress = httpHeader."Ipaddress";
+		
+		--App Fields (In Header)
+		/*IF (httpHeader."Channelid" = 'App') THEN
+			IF (httpHeader."Deviceid" > '') THEN
+			ELSE
+				CREATE FIELD OutputRoot.JSON.Data.gatewayResponse;
+				DECLARE outRef REFERENCE TO OutputRoot.JSON.Data.gatewayResponse;
+				SET outRef.status.isSuccess = false;
+				SET outRef.status.statusCode = SUBSTRING(Procedures.getAPIResultCode('ER009') BEFORE '-');
+				SET outRef.status.message = SUBSTRING(Procedures.getAPIResultCode('ER009') AFTER '-');
+				PROPAGATE TO LABEL 'sendHTTPReply';
+				RETURN FALSE;
+			END IF;
+			
+			IF (httpHeader."Modelname" > '') THEN
+			ELSE
+				CREATE FIELD OutputRoot.JSON.Data.gatewayResponse;
+				DECLARE outRef REFERENCE TO OutputRoot.JSON.Data.gatewayResponse;
+				SET outRef.status.isSuccess = false;
+				SET outRef.status.statusCode = SUBSTRING(Procedures.getAPIResultCode('ER010') BEFORE '-');
+				SET outRef.status.message = SUBSTRING(Procedures.getAPIResultCode('ER010') AFTER '-');
+				PROPAGATE TO LABEL 'sendHTTPReply';
+				RETURN FALSE;
+			END IF;
+			
+			IF (httpHeader."Os" > '') THEN
+			ELSE
+				CREATE FIELD OutputRoot.JSON.Data.gatewayResponse;
+				DECLARE outRef REFERENCE TO OutputRoot.JSON.Data.gatewayResponse;
+				SET outRef.status.isSuccess = false;
+				SET outRef.status.statusCode = SUBSTRING(Procedures.getAPIResultCode('ER011') BEFORE '-');
+				SET outRef.status.message = SUBSTRING(Procedures.getAPIResultCode('ER011') AFTER '-');
+				PROPAGATE TO LABEL 'sendHTTPReply';
+				RETURN FALSE;
+			END IF;
+			
+			IF (httpHeader."Osversion" > '') THEN
+			ELSE
+				CREATE FIELD OutputRoot.JSON.Data.gatewayResponse;
+				DECLARE outRef REFERENCE TO OutputRoot.JSON.Data.gatewayResponse;
+				SET outRef.status.isSuccess = false;
+				SET outRef.status.statusCode = SUBSTRING(Procedures.getAPIResultCode('ER012') BEFORE '-');
+				SET outRef.status.message = SUBSTRING(Procedures.getAPIResultCode('ER012') AFTER '-');
+				PROPAGATE TO LABEL 'sendHTTPReply';
+				RETURN FALSE;
+			END IF;
+			
+			IF (httpHeader."Location" > '') THEN
+			ELSE
+				CREATE FIELD OutputRoot.JSON.Data.gatewayResponse;
+				DECLARE outRef REFERENCE TO OutputRoot.JSON.Data.gatewayResponse;
+				SET outRef.status.isSuccess = false;
+				SET outRef.status.statusCode = SUBSTRING(Procedures.getAPIResultCode('ER014') BEFORE '-');
+				SET outRef.status.message = SUBSTRING(Procedures.getAPIResultCode('ER014') AFTER '-');
+				PROPAGATE TO LABEL 'sendHTTPReply';
+				RETURN FALSE;
+			END IF;
+			
+			IF (httpHeader."Ipaddress" > '') THEN
+			ELSE
+				CREATE FIELD OutputRoot.JSON.Data.gatewayResponse;
+				DECLARE outRef REFERENCE TO OutputRoot.JSON.Data.gatewayResponse;
+				SET outRef.status.isSuccess = false;
+				SET outRef.status.statusCode = SUBSTRING(Procedures.getAPIResultCode('ER015') BEFORE '-');
+				SET outRef.status.message = SUBSTRING(Procedures.getAPIResultCode('ER015') AFTER '-');
+				PROPAGATE TO LABEL 'sendHTTPReply';
+				RETURN FALSE;
+			END IF;
+		END IF;*/
+		
+		--WebSite Fields (In Header)
+		/*IF (httpHeader."Channelid" = 'Web') THEN
+			IF (httpHeader."Browser" > '') THEN
+			ELSE
+				CREATE FIELD OutputRoot.JSON.Data.gatewayResponse;
+				DECLARE outRef REFERENCE TO OutputRoot.JSON.Data.gatewayResponse;
+				SET outRef.status.isSuccess = false;
+				SET outRef.status.statusCode = SUBSTRING(Procedures.getAPIResultCode('ER013') BEFORE '-');
+				SET outRef.status.message = SUBSTRING(Procedures.getAPIResultCode('ER013') AFTER '-');
+				PROPAGATE TO LABEL 'sendHTTPReply';
+				RETURN FALSE;
+			END IF;
+			
+			IF (httpHeader."Location" > '') THEN
+			ELSE
+				CREATE FIELD OutputRoot.JSON.Data.gatewayResponse;
+				DECLARE outRef REFERENCE TO OutputRoot.JSON.Data.gatewayResponse;
+				SET outRef.status.isSuccess = false;
+				SET outRef.status.statusCode = SUBSTRING(Procedures.getAPIResultCode('ER014') BEFORE '-');
+				SET outRef.status.message = SUBSTRING(Procedures.getAPIResultCode('ER014') AFTER '-');
+				PROPAGATE TO LABEL 'sendHTTPReply';
+				RETURN FALSE;
+			END IF;
+			
+			IF (httpHeader."Ipaddress" > '') THEN
+			ELSE
+				CREATE FIELD OutputRoot.JSON.Data.gatewayResponse;
+				DECLARE outRef REFERENCE TO OutputRoot.JSON.Data.gatewayResponse;
+				SET outRef.status.isSuccess = false;
+				SET outRef.status.statusCode = SUBSTRING(Procedures.getAPIResultCode('ER015') BEFORE '-');
+				SET outRef.status.message = SUBSTRING(Procedures.getAPIResultCode('ER015') AFTER '-');
+				PROPAGATE TO LABEL 'sendHTTPReply';
+				RETURN FALSE;
+			END IF;
+		END IF;*/
+		
+		SET Environment.Variables.Sessiontoken = httpHeader."Sessiontoken";
+		
+		IF httpHeader."Serreqid" = '/geo' THEN --Get Geo Location Details
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			PROPAGATE TO LABEL 'getGeoLocation';
+			RETURN FALSE;		
+		ELSEIF httpHeader."Serreqid" = '/signup' THEN --SIGNUP and Get OTP
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			PROPAGATE TO LABEL 'signup';
+			RETURN FALSE;
+		ELSEIF httpHeader."Serreqid" = '/signupResendOTP' THEN --SIGNUP and Get OTP
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			PROPAGATE TO LABEL 'signupResendOTP';
+			RETURN FALSE;	
+		ELSEIF httpHeader."Serreqid" = '/signup/verifyOtp' THEN --SIGNUP Verify OTP
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			SET Environment.Variables.Location  = httpHeader."Location";
+			SET Environment.Variables.Ipaddress = httpHeader."Ipaddress";
+			PROPAGATE TO LABEL 'signupVerifyOtp';
+			RETURN FALSE;
+		ELSEIF httpHeader."Serreqid" = '/sendEmailVerificaitonToken' THEN --SEND_VERIFICATION_EMAIL After Successful SignUp and OTP Verification
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			PROPAGATE TO LABEL 'sendEmailVerificaitonToken';
+			RETURN FALSE;
+		ELSEIF httpHeader."Serreqid" = '/verifyEmail' THEN --VERIFY_EMAIL
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			PROPAGATE TO LABEL 'verifyEmail';
+			RETURN FALSE;				
+		ELSEIF httpHeader."Serreqid" = '/login' THEN --LOGIN With Password
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			SET Environment.Variables.Location  = httpHeader."Location";
+			SET Environment.Variables.Ipaddress = httpHeader."Ipaddress";
+			PROPAGATE TO LABEL 'login';
+			RETURN FALSE;
+		ELSEIF httpHeader."Serreqid" = '/login/sendOtp' THEN --LOGIN With MobileNo and OTP
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			PROPAGATE TO LABEL 'loginSendOtp';
+			RETURN FALSE;	
+		ELSEIF httpHeader."Serreqid" = '/login/verifyOtp' THEN --LOGIN With MobileNo and OTP
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			SET Environment.Variables.Location  = httpHeader."Location";
+			SET Environment.Variables.Ipaddress = httpHeader."Ipaddress";			
+			PROPAGATE TO LABEL 'loginVerifyOtp';
+			RETURN FALSE;
+		ELSEIF httpHeader."Serreqid" = '/getStudentById' THEN --LOGIN With MobileNo and OTP
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			PROPAGATE TO LABEL 'getStudentById';
+			RETURN FALSE;
+		ELSEIF httpHeader."Serreqid" = '/imageUpload' THEN --IMAGE_UPLOAD (From Logged In Session)
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			PROPAGATE TO LABEL 'imageUpload';
+			RETURN FALSE;	
+		ELSEIF httpHeader."Serreqid" = '/updateProfile' THEN --UPDATE_PROFILE (From Logged In Session)
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			PROPAGATE TO LABEL 'updateProfile';
+			RETURN FALSE;	
+		ELSEIF httpHeader."Serreqid" = '/change/password' THEN --UPDATE_PASSWORD (From Logged In Session)
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			PROPAGATE TO LABEL 'changePassword';
+			RETURN FALSE;			
+		ELSEIF httpHeader."Serreqid" = '/update/updateMobileSendOTP' THEN --UPDATE_MOBILE_NO (From Logged In Session)
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			PROPAGATE TO LABEL 'updateMobileSendOTP';
+			RETURN FALSE;
+		ELSEIF httpHeader."Serreqid" = '/update/mobileNo' THEN --UPDATE_MOBILE_NO (From Logged In Session)
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			PROPAGATE TO LABEL 'updateMobileNo';
+			RETURN FALSE;
+		ELSEIF httpHeader."Serreqid" = '/restAppToken' THEN --Reset App Token (From Logged In Session)
+			SET Environment.Variables.Refreshtoken = httpHeader."Refreshtoken";
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			PROPAGATE TO LABEL 'restAppToken';
+			RETURN FALSE;
+		ELSEIF httpHeader."Serreqid" = '/restWebSessionToken' THEN --Reset Web Session Token (From Logged In Session)
+			SET Environment.Variables.Refreshtoken = httpHeader."Refreshtoken";
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			PROPAGATE TO LABEL 'restWebSessionToken';
+			RETURN FALSE;
+		ELSEIF httpHeader."Serreqid" = '/updatefirebasetoken' THEN --FIREBASE_TOKEN Update (From Logged In Session))
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			PROPAGATE TO LABEL 'updatefirebasetoken';
+			RETURN FALSE;
+		ELSEIF httpHeader."Serreqid" = '/logout' THEN --LOGOUT (From Logged In Session or After Internal Server Error)
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			PROPAGATE TO LABEL 'logout';
+			RETURN FALSE;									
+		ELSEIF httpHeader."Serreqid" = '/forgotPassword' THEN --FORGOT_PASSWORD
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			PROPAGATE TO LABEL 'forgotPassword';
+			RETURN FALSE;			
+		ELSEIF httpHeader."Serreqid" = '/resetPassword' THEN --FORGOT_PASSWORD_UPDATE_PASSWORD
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			PROPAGATE TO LABEL 'resetPassword';
+			RETURN FALSE;											
+		ELSEIF httpHeader."Serreqid" = '/delete' THEN --DELETE STUDENT
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			PROPAGATE TO LABEL 'delete';
+			RETURN FALSE;
+		ELSEIF httpHeader."Serreqid" = '/inactive' THEN --INACTIVE_STUDENT
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			PROPAGATE TO LABEL 'inactive';
+			RETURN FALSE;
+		/*Below Future Impl*/
+		ELSEIF httpHeader."Serreqid" = '/getCountryStateCodes' THEN --DEMO_LOGIN_CONDITION
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			PROPAGATE TO LABEL 'getCountryStateCodes';
+			RETURN FALSE;
+		ELSEIF httpHeader."Serreqid" = '/getColleges' THEN --DEMO_LOGIN
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			PROPAGATE TO LABEL 'getColleges';
+			RETURN FALSE;			
+		ELSEIF httpHeader."Serreqid" = '/validate' THEN --VALIDATE_PRO -- Not in use now.
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			PROPAGATE TO LABEL 'validatePro';
+			RETURN FALSE;
+		ELSEIF httpHeader."Serreqid" = '/blockUser' THEN --blockUser in use now.
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			PROPAGATE TO LABEL 'blockUser';
+			RETURN FALSE;			
+		ELSEIF httpHeader."Serreqid" = '/deleteEvent' THEN --deleteEvent
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			PROPAGATE TO LABEL 'deleteEvent';
+			RETURN FALSE;
+		ELSEIF httpHeader."Serreqid" = '/postEvent' THEN --postEvent
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			PROPAGATE TO LABEL 'postEvent';
+			RETURN FALSE;
+		ELSEIF httpHeader."Serreqid" = '/getCalendarEventData' THEN --getCalendarEventData
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			PROPAGATE TO LABEL 'getCalendarEventData';
+			RETURN FALSE;							
+		ELSEIF httpHeader."Serreqid" = '/update/profileStatus' THEN --ACCOUNT_STATUS -- Not in use now.
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			PROPAGATE TO LABEL 'updateProfileStatus';
+			RETURN FALSE;
+		ELSEIF httpHeader."Serreqid" = '/confirm/email/uniqueToken/{uniqueToken}' THEN --CONFIRM_EMAIL Not in use now.
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			PROPAGATE TO LABEL 'confirmEmail';
+			RETURN FALSE;
+		ELSEIF httpHeader."Serreqid" = '/dashboard/{studentId}/forgotpassword/{token}' THEN --FORGOT_PASSWORD_PAGE -- Not in user now.
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			PROPAGATE TO LABEL 'forgotPasswordPage';
+			RETURN FALSE;
+		ELSEIF httpHeader."Serreqid" = '/{studentId}/forgotpassword/{token}/verify' THEN --FORGOT_PASSWORD_PAGE_VERIFY -- Not in use now.
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			PROPAGATE TO LABEL 'forgotPasswordPageVerify';
+			RETURN FALSE;
+		ELSEIF httpHeader."Serreqid" = '/getUGCurriculumDashboard' THEN --FORGOT_PASSWORD_PAGE_VERIFY
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			PROPAGATE TO LABEL 'getUGCurriculumDashboard';
+			RETURN FALSE;
+		ELSEIF httpHeader."Serreqid" = '/getTestPrepDashboard' THEN --FORGOT_PASSWORD_PAGE_VERIFY
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			PROPAGATE TO LABEL 'getTestPrepDashboard';
+			RETURN FALSE;
+		ELSEIF httpHeader."Serreqid" = '/contactUs' THEN --contactUs
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			PROPAGATE TO LABEL 'contactUs';
+			RETURN FALSE;
+		ELSEIF httpHeader."Serreqid" = '/resetQuestionBank' THEN --resetQuestionBank
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			PROPAGATE TO LABEL 'resetQuestionBank';
+			RETURN FALSE;
+		ELSEIF httpHeader."Serreqid" = '/resetBookmarks' THEN --resetBookmarks
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			PROPAGATE TO LABEL 'resetBookmarks';
+			RETURN FALSE;						
+		ELSEIF httpHeader."Serreqid" = '/getBlockedApps' THEN --getBlockedApps
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			PROPAGATE TO LABEL 'getBlockedApps';
+			RETURN FALSE;
+		ELSEIF httpHeader."Serreqid" = '/setStudentCourse' THEN --setStudentCourse
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			PROPAGATE TO LABEL 'setStudentCourse';
+			RETURN FALSE;
+		ELSEIF httpHeader."Serreqid" = '/updateMissingInfo' THEN --updateMissingInfo
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			PROPAGATE TO LABEL 'updateMissingInfo';
+			RETURN FALSE;
+		/*ELSEIF httpHeader."Serreqid" = '/unsubscribe/{createdAt}--{studentId}' THEN --EMAIL_UNSUBSCRIBE
+			SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
+			PROPAGATE TO LABEL 'emailUnsubscribe';
+			RETURN FALSE;*/																								
+		ELSE
+			CREATE FIELD OutputRoot.JSON.Data.gatewayResponse;
+			DECLARE outRef REFERENCE TO OutputRoot.JSON.Data.gatewayResponse;
+			SET outRef.status.isSuccess = false;
+			SET outRef.status.statusCode = SUBSTRING(Procedures.getAPIResultCode('ER002') BEFORE '-');
+			SET outRef.status.message    = SUBSTRING(Procedures.getAPIResultCode('ER002') AFTER '-');
+			PROPAGATE TO LABEL 'sendHTTPReply';
+			RETURN FALSE;	
+		END IF;
+		
+		RETURN TRUE;
+	END;
+END MODULE;

@@ -1,0 +1,138 @@
+BROKER SCHEMA Procedures
+
+/******************************************************************************
+ *  Student Profile Maintenance	    				 	 prepareAuditMessage  *
+ *                                                                            *
+ *        Author          				   Version             COMMENTS       * 
+ *  DocTutorials EdutTech Pvt Ltd     V1.0 (11/06/202)    created the module  *
+ ******************************************************************************
+ *  Mofication HISTORY                      			                      *    
+ *  DATE               			   USER  	                   COMMENTS       * 
+ *  ---                			   ---        		           ---            * 
+ ******************************************************************************/
+CREATE COMPUTE MODULE ProcessGetStudentById
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		--pass the secret token from the login call response OTP_SIGNUP_TOKEN.
+		-- Set to another hidden value after the successful verification in the student table for above column if successful. So, repeats of the same in future.
+		DECLARE inRef REFERENCE TO InputRoot.JSON.Data.gatewayRequest.request;
+
+		SET OutputRoot.HTTPResponseHeader."requestUUID" = Environment.audit.request_id;
+		SET OutputRoot.HTTPResponseHeader."timeStamp"   = CURRENT_TIMESTAMP;
+		SET OutputRoot.HTTPResponseHeader."Appversion"  = Environment.Variables.Appversion;
+		SET OutputRoot.HTTPResponseHeader."Serreqid"    = Environment.Variables.Serreqid;
+		SET OutputRoot.HTTPResponseHeader."Channelid"   = Environment.Variables.Channelid;
+		SET OutputRoot.HTTPResponseHeader."Deviceid"    = Environment.Variables.Deviceid;
+		SET OutputRoot.HTTPResponseHeader."Modelname"   = Environment.Variables.Modelname;
+		SET OutputRoot.HTTPResponseHeader."Os" 		    = Environment.Variables.Os;
+		SET OutputRoot.HTTPResponseHeader."Osversion"   = Environment.Variables.Osversion;
+		SET OutputRoot.HTTPResponseHeader."Location"    = Environment.Variables.Location;
+		SET OutputRoot.HTTPResponseHeader."Ipaddress"   = Environment.Variables.Ipaddress;
+				
+		IF (inRef.studentId > '') THEN
+		ELSE
+			CREATE FIELD OutputRoot.JSON.Data.gatewayResponse;
+			DECLARE outRef REFERENCE TO OutputRoot.JSON.Data.gatewayResponse;
+			SET outRef.status.isSuccess 	 = false;
+			SET outRef.status.statusCode 	 = SUBSTRING(Procedures.getAPIResultCode('ER112') BEFORE '-');
+			SET outRef.status.message 	 	 = SUBSTRING(Procedures.getAPIResultCode('ER112') AFTER '-');
+			PROPAGATE TO LABEL 'sendHTTPReply';
+			RETURN FALSE;
+		END IF;
+		
+		IF (Environment.Variables.Sessiontoken > '') THEN
+		ELSE
+			CREATE FIELD OutputRoot.JSON.Data.gatewayResponse;
+			DECLARE outRef REFERENCE TO OutputRoot.JSON.Data.gatewayResponse;
+			SET outRef.status.isSuccess 	 = false;
+			SET outRef.status.statusCode 	 = SUBSTRING(Procedures.getAPIResultCode('ER116') BEFORE '-');
+			SET outRef.status.message 	 	 = SUBSTRING(Procedures.getAPIResultCode('ER116') AFTER '-');
+			PROPAGATE TO LABEL 'sendHTTPReply';
+			RETURN FALSE;
+		END IF;
+		
+		DECLARE courseName, o_result, collegeCountryCode, specialization, tokenStatus, name, image, mobileNo, email, education, universityName, college, state, profileStatus, createdAt, updatedAt CHARACTER;
+		DECLARE emailVerified, o_status BOOLEAN;
+		DECLARE studentId, courseId, countryCode, universityId, collegeId, stateId INTEGER;
+		
+		/*Add all the validations*/
+		CALL dt_profile_view_get_student_by_id(inRef.studentId,
+										  Environment.Variables.Channelid,
+										  Environment.Variables.Sessiontoken,
+										  studentId,
+										  name,
+										  countryCode,
+										  mobileNo, 
+										  email,
+										  education,
+										  state,
+										  college,
+										  profileStatus,
+										  emailVerified,
+										  createdAt,
+										  updatedAt,
+										  courseId,
+										  courseName,
+										  specialization,
+										  image,
+										  universityId,
+										  universityName,
+										  collegeId,
+										  stateId,
+										  collegeCountryCode,											  
+										  tokenStatus,
+										  o_status,
+										  o_result);												  
+ 		IF (tokenStatus = 'E') THEN
+			SET OutputLocalEnvironment.Destination.HTTP.ReplyStatusCode = 403;
+		ELSEIF (tokenStatus = 'I') THEN
+			SET OutputLocalEnvironment.Destination.HTTP.ReplyStatusCode = 500;
+		END IF;
+ 		IF (o_status = false) THEN
+			CREATE FIELD OutputRoot.JSON.Data.gatewayResponse;
+			DECLARE outRef REFERENCE TO OutputRoot.JSON.Data.gatewayResponse;
+			SET outRef.status.isSuccess 	 = o_status;
+			SET outRef.status.statusCode 	 = SUBSTRING(o_result BEFORE '-');
+			SET outRef.status.message 	 	 = SUBSTRING(o_result AFTER '-');
+			SET OutputRoot.HTTPResponseHeader."timeStamp"   = CURRENT_TIMESTAMP;
+		ELSE
+			CREATE FIELD OutputRoot.JSON.Data.gatewayResponse;
+			DECLARE outRef REFERENCE TO OutputRoot.JSON.Data.gatewayResponse;
+			SET outRef.status.isSuccess 	 = o_status;
+			SET outRef.status.statusCode 	 = 'ER000';
+			SET outRef.status.message 	 	 = o_result;
+			CREATE FIELD OutputRoot.JSON.Data.gatewayResponse.response;
+			DECLARE respRef REFERENCE TO OutputRoot.JSON.Data.gatewayResponse.response;
+			SET respRef.studentId = studentId;
+			IF(studentId = 76270) THEN
+			  SET respRef.subscription = true;
+			  SET respRef.validUpTo    = '10-03-2025';
+			  SET respRef.invoice 	   = 'https://bvrinvoices.s3.ap-south-1.amazonaws.com/reports/Doctutorials_INV_10041.pdf';
+			END IF;		
+			SET respRef.countryCode = countryCode;
+			SET respRef.mobileNo  = mobileNo;
+			SET respRef.email     = LCASE(email);
+			SET respRef.name      = name;
+			SET respRef.education = education;
+			SET respRef.state     = state;
+			SET respRef.college   = college;
+			SET respRef.profileStatus = profileStatus;
+			SET respRef.emailVerified = emailVerified;
+			SET respRef.createdAt = createdAt;
+			SET respRef.updatedAt = updatedAt;
+			SET respRef.courseId = courseId;
+			SET respRef.courseName = courseName;
+			SET respRef.specialization = specialization;
+			SET respRef.image = image;
+			SET respRef.universityId = universityId;
+			SET respRef.collegeId 	 = collegeId;
+			SET respRef.collegeCountryCode 	 = collegeCountryCode;
+			SET respRef.stateId		 = stateId;			
+			SET respRef.universityName = universityName;			
+			SET OutputRoot.HTTPResponseHeader."timeStamp"   = CURRENT_TIMESTAMP;
+		END IF;
+
+		PROPAGATE TO LABEL 'sendHTTPReply';			
+		RETURN FALSE;
+	END;
+END MODULE;

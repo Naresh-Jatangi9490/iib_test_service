@@ -1,0 +1,153 @@
+BROKER SCHEMA Procedures
+
+/******************************************************************************
+ *  Student Profile Maintenance	    					   getAPIResultCode	  *
+ *                                                                            *
+ *        Author          				   Version             COMMENTS       * 
+ *  DocTutorials EdutTech Pvt Ltd     V1.0 (11/06/202)    created the module  *
+ ******************************************************************************
+ *  Mofication HISTORY                      			                      *    
+ *  DATE               			   USER  	                   COMMENTS       * 
+ *  ---                			   ---        		           ---            * 
+ ******************************************************************************/
+CREATE PROCEDURE getAPIResultCode(IN resultCode CHAR) RETURNS CHAR
+BEGIN
+	DECLARE cResultCodeDesc CHAR;
+	CASE TRIM(resultCode)
+		WHEN 'ER000' THEN SET cResultCodeDesc = 'ER000-success';
+			
+		--Header
+		WHEN 'ER001' THEN SET cResultCodeDesc = 'ER001-channelId is requird';
+		WHEN 'ER002' THEN SET cResultCodeDesc = 'ER002-invalid serReqId';
+		WHEN 'ER003' THEN SET cResultCodeDesc = 'ER003-serReqId is requird';
+		WHEN 'ER004' THEN SET cResultCodeDesc = 'ER004-requestUUID is requird';
+		WHEN 'ER005' THEN SET cResultCodeDesc = 'ER005-timeStamp is requird';
+		WHEN 'ER006' THEN SET cResultCodeDesc = 'ER006-sVersion is requird';
+		WHEN 'ER007' THEN SET cResultCodeDesc = 'ER007-API Version is required.';
+		WHEN 'ER008' THEN SET cResultCodeDesc = 'ER008-APP Version is required.';
+		WHEN 'ER009' THEN SET cResultCodeDesc = 'ER009-deviceId is required.';
+		WHEN 'ER010' THEN SET cResultCodeDesc = 'ER010-modelName is required.';
+		WHEN 'ER011' THEN SET cResultCodeDesc = 'ER011-os is required.';
+		WHEN 'ER012' THEN SET cResultCodeDesc = 'ER012-osVersion is required.';
+		WHEN 'ER013' THEN SET cResultCodeDesc = 'ER013-browser is required.';
+		WHEN 'ER014' THEN SET cResultCodeDesc = 'ER014-location is required.';
+		WHEN 'ER015' THEN SET cResultCodeDesc = 'ER015-Ip address is required.';
+		
+		--SignUp
+		WHEN 'ER101' THEN SET cResultCodeDesc = 'ER101-CountryCode is required';
+		WHEN 'ER102' THEN SET cResultCodeDesc = 'ER102-mobileNo is required';
+		WHEN 'ER103' THEN SET cResultCodeDesc = 'ER103-password is required';
+		WHEN 'ER104' THEN SET cResultCodeDesc = 'ER104-email is required';			
+		WHEN 'ER105' THEN SET cResultCodeDesc = 'ER105-name is required';	
+		WHEN 'ER106' THEN SET cResultCodeDesc = 'ER106-education is required';
+		WHEN 'ER107' THEN SET cResultCodeDesc = 'ER107-state is required';
+		WHEN 'ER108' THEN SET cResultCodeDesc = 'ER108-college is required';
+		WHEN 'ER109' THEN SET cResultCodeDesc = 'ER109-ios is required';
+		WHEN 'ER110' THEN SET cResultCodeDesc = 'ER110-android is required';
+		WHEN 'ER111' THEN SET cResultCodeDesc = 'ER111-courseId is required';
+			
+		WHEN 'ER112' THEN SET cResultCodeDesc = 'ER112-studentId is required';
+		WHEN 'ER113' THEN SET cResultCodeDesc = 'ER113-otp is required';
+		WHEN 'ER114' THEN SET cResultCodeDesc = 'ER114-otpToken is required';
+		WHEN 'ER115' THEN SET cResultCodeDesc = 'ER115-firebaseToken is required';
+		
+		WHEN 'ER116' THEN SET cResultCodeDesc = 'ER116-sessionToken is required';
+			
+		WHEN 'ER117' THEN SET cResultCodeDesc = 'ER117-emailUnSubscribe is required';
+			
+		WHEN 'ER118' THEN SET cResultCodeDesc = 'ER118-imageLinkBase64 is required';
+		
+		WHEN 'ER119' THEN SET cResultCodeDesc = 'ER119-mailVerificationToken is required';	
+		
+		WHEN 'ER121' THEN SET cResultCodeDesc = 'ER121-Device Type must be set to A or I.';	
+				
+		WHEN 'ER125' THEN SET cResultCodeDesc = 'ER125-image name is required';
+			
+		WHEN 'ER126' THEN SET cResultCodeDesc = 'ER126-courseId is Invalid';
+					
+		--Geo Location	
+		WHEN 'ER120' THEN SET cResultCodeDesc = 'ER120-Geo location invalid.';
+		
+		WHEN 'ER122' THEN SET cResultCodeDesc = 'ER122-Password invalid.';
+			
+		WHEN 'ER123' THEN SET cResultCodeDesc = 'ER123-Account with the same email already exists.';
+			
+		WHEN 'ER124' THEN SET cResultCodeDesc = 'ER124-Account with the same mobileNo already exists.';
+			
+		WHEN 'ER125' THEN SET cResultCodeDesc = 'ER125-No Account found with the entered mobileNo.';
+			
+		WHEN 'ER126' THEN SET cResultCodeDesc = 'ER126-No Account found with the entered email.';	
+			
+		WHEN 'ER127' THEN SET cResultCodeDesc = 'ER127-otp invalid';
+			
+		WHEN 'ER128' THEN SET cResultCodeDesc = 'ER128-Message is required';	
+		
+		WHEN 'ER129' THEN SET cResultCodeDesc = 'ER129-OTP invalid unable to proceed';
+			
+		WHEN 'ER130' THEN SET cResultCodeDesc = 'ER130-Update Successful';
+	
+		WHEN 'ER131' THEN SET cResultCodeDesc = 'ER131-State not found, unable to proceed!';
+			
+		WHEN 'ER132' THEN SET cResultCodeDesc = 'ER132-College not found, unable to proceed!';
+		
+		WHEN 'ER133' THEN SET cResultCodeDesc = 'ER133-mobile number must be integer and 10 digits!';
+		
+		WHEN 'ER134' THEN SET cResultCodeDesc = 'ER134-mobile number must be integer and must be between 7-12 digists';
+			
+		WHEN 'ER135' THEN SET cResultCodeDesc = 'ER135-password must be between 6-20 characters, spaces not allowed';
+		
+		WHEN 'ER136' THEN SET cResultCodeDesc = 'ER136-email invalid';
+			
+		WHEN 'ER137' THEN SET cResultCodeDesc = 'ER137-email invalid, must be less than 63 characters';
+
+		WHEN 'ER138' THEN SET cResultCodeDesc = 'ER138-name invalid, only alphabets allowed and must be between 3-45 characters';
+	
+		WHEN 'ER139' THEN SET cResultCodeDesc = 'ER139-isd code invalid, unable to proceed!';
+
+		WHEN 'ER140' THEN SET cResultCodeDesc = 'ER140-Education invalid, unable to proceed!';
+			
+		WHEN 'ER141' THEN SET cResultCodeDesc = 'ER141-Invalid request or token expired';
+			
+		WHEN 'ER143' THEN SET cResultCodeDesc = 'ER143-Account not found, unable to proceed!';
+				
+		WHEN 'ER144' THEN SET cResultCodeDesc = 'ER144-Specialization is required for NEET Ss, must be set to MCh or DM, unable to proceed!';
+
+		WHEN 'ER145' THEN SET cResultCodeDesc = 'ER145-Event Message Is Required!.';
+
+		WHEN 'ER146' THEN SET cResultCodeDesc = 'ER146-Event Date Is Required!.';
+
+		WHEN 'ER147' THEN SET cResultCodeDesc = 'ER147-Event Id Is Required!.';
+		
+		WHEN 'ER148' THEN SET cResultCodeDesc = 'ER148-No change in the password, unable to proceed!.';
+			
+		WHEN 'ER149' THEN SET cResultCodeDesc = 'ER149-State/country id is required, unable to proceed!.';										
+												
+		WHEN 'ER150' THEN SET cResultCodeDesc = 'ER150-College id is required, unable to proceed!.';
+	
+		WHEN 'ER151' THEN SET cResultCodeDesc = 'ER151-Specialization or  State, college, collegeId and education details are required to process the request!.';		
+		
+		WHEN 'DT909' THEN SET cResultCodeDesc = 'DT909-Update Failed, please try agian.';
+				
+		--Exception/Error
+		/*WHEN 'DT901' THEN SET cResultCodeDesc = 'DT901-Failed, please try agian.';
+		WHEN 'DT902' THEN SET cResultCodeDesc = 'DT902-STUDENT Insert Failed, please try agian.';
+		WHEN 'DT903' THEN SET cResultCodeDesc = 'DT903-STUDENT_COURSE Insert Failed, please try agian.';
+		WHEN 'DT904' THEN SET cResultCodeDesc = 'DT904-STUDENT_LOGIN_HISTORY Insert Failed, please try agian.';
+		WHEN 'DT905' THEN SET cResultCodeDesc = 'DT905-STUDENT_APP_SESSION_TOKEN/STUDENT_WEB_SESSION Insert Failed, please try agian.';	
+		WHEN 'DT906' THEN SET cResultCodeDesc = 'DT906-STUDENT_APP_FIREBASE_TOKEN Insert Failed, please try agian.';
+		WHEN 'DT907' THEN SET cResultCodeDesc = 'DT907-Record not found, unable to proceed.';
+	    WHEN 'DT908' THEN SET cResultCodeDesc = 'DT908-STUDENT_TEMP_PROFILE Update failed, unable to proceed.';	
+	   	WHEN 'DT909' THEN SET cResultCodeDesc = 'DT909-STUDENT Update Failed, please try agian.';
+	   	WHEN 'DT910' THEN SET cResultCodeDesc = 'DT910-SUBSCRIPTION_STUDENT Update Failed, please try agian.';
+	   	WHEN 'DT911' THEN SET cResultCodeDesc = 'DT911-STUDENT_TEMP_PROFILE Insert failed, unable to proceed.';	
+	   	WHEN 'DT912' THEN SET cResultCodeDesc = 'DT912-Account with the same email or mobile already exits.';
+	   	WHEN 'DT913' THEN SET cResultCodeDesc = 'DT913-STUDENT_APP_SESSION_TOKEN update failed, please try again.';
+	   	WHEN 'DT914' THEN SET cResultCodeDesc = 'DT914-STUDENT_WEB_SESSION update failed, please try again.';
+	   	
+	   	WHEN 'DT999' THEN SET cResultCodeDesc = 'DT999-Invalid Request.';*/						
+	ELSE
+		SET cResultCodeDesc = 'ER999-Please contact DocTutorials Customer Care';
+	END CASE;
+
+	RETURN cResultCodeDesc;
+END;

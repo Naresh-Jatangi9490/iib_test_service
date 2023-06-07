@@ -1,0 +1,87 @@
+BROKER SCHEMA Procedures
+
+/******************************************************************************
+ *  Student Profile Maintenance	    				 	 prepareAuditMessage  *
+ *                                                                            *
+ *        Author          				   Version             COMMENTS       * 
+ *  DocTutorials EdutTech Pvt Ltd     V1.0 (11/06/202)    created the module  *
+ ******************************************************************************
+ *  Mofication HISTORY                      			                      *    
+ *  DATE               			   USER  	                   COMMENTS       * 
+ *  ---                			   ---        		           ---            * 
+ ******************************************************************************/
+CREATE COMPUTE MODULE ProcessInactive
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		--pass the secret token from the signup call response OTP_SIGNUP_TOKEN.
+		-- Not need and not done now: Set to another hidden value after the successful verification.
+		DECLARE inRef REFERENCE TO InputRoot.JSON.Data.gatewayRequest.request;
+		--DECLARE inRefHeader REFERENCE TO InputRoot.JSON.Data.gatewayRequest.header;
+		
+		CREATE FIELD OutputRoot.JSON.Data.gatewayResponse;
+		DECLARE outRef REFERENCE TO OutputRoot.JSON.Data.gatewayResponse;
+
+		SET OutputRoot.HTTPResponseHeader."requestUUID" = Environment.audit.request_id;
+		SET OutputRoot.HTTPResponseHeader."timeStamp"   = CURRENT_TIMESTAMP;
+		SET OutputRoot.HTTPResponseHeader."Appversion"  = Environment.Variables.Appversion;
+		SET OutputRoot.HTTPResponseHeader."Serreqid"    = Environment.Variables.Serreqid;
+		SET OutputRoot.HTTPResponseHeader."Channelid"   = Environment.Variables.Channelid;
+		SET OutputRoot.HTTPResponseHeader."Deviceid"    = Environment.Variables.Deviceid;
+		SET OutputRoot.HTTPResponseHeader."Modelname"   = Environment.Variables.Modelname;
+		SET OutputRoot.HTTPResponseHeader."Os" 		    = Environment.Variables.Os;
+		SET OutputRoot.HTTPResponseHeader."Osversion"   = Environment.Variables.Osversion;
+		SET OutputRoot.HTTPResponseHeader."Location"    = Environment.Variables.Location;
+		SET OutputRoot.HTTPResponseHeader."Ipaddress"   = Environment.Variables.Ipaddress;
+				
+		IF (inRef.studentId > '') THEN
+		ELSE
+			SET outRef.status.isSuccess 	 = false;
+			SET outRef.status.statusCode 	 = SUBSTRING(Procedures.getAPIResultCode('ER112') BEFORE '-');
+			SET outRef.status.message 	 	 = SUBSTRING(Procedures.getAPIResultCode('ER112') AFTER '-');
+			PROPAGATE TO LABEL 'sendHTTPReply';
+			RETURN FALSE;
+		END IF;
+		
+		IF (Environment.Variables.Sessiontoken > '') THEN
+		ELSE
+			SET outRef.status.isSuccess 	 = false;
+			SET outRef.status.statusCode 	 = SUBSTRING(Procedures.getAPIResultCode('ER116') BEFORE '-');
+			SET outRef.status.message 	 	 = SUBSTRING(Procedures.getAPIResultCode('ER116') AFTER '-');
+			PROPAGATE TO LABEL 'sendHTTPReply';
+			RETURN FALSE;
+		END IF;
+		
+		DECLARE o_result, tokenStatus CHARACTER;
+		DECLARE o_status BOOLEAN;
+		
+		--https://stackoverflow.com/questions/6526883/base64encoder-cannot-be-resolved
+		--https://stackoverflow.com/questions/13992972/how-to-create-a-authentication-token-using-java
+		
+		/*Add all the validations*/
+		CALL dt_profile_inactive(CAST(inRef.studentId AS INTEGER),
+								 Environment.Variables.Sessiontoken,
+								 Environment.Variables.Channelid,
+								 tokenStatus,
+								 o_status,
+								 o_result);												  
+ 		IF (tokenStatus = 'E') THEN
+			SET OutputLocalEnvironment.Destination.HTTP.ReplyStatusCode = 403;
+		ELSEIF (tokenStatus = 'I') THEN
+			SET OutputLocalEnvironment.Destination.HTTP.ReplyStatusCode = 500;
+		END IF;	
+		IF (o_status = false) THEN
+			SET outRef.status.isSuccess 	 = o_status;
+			SET outRef.status.statusCode 	 = SUBSTRING(o_result BEFORE '-');
+			SET outRef.status.message 	 	 = SUBSTRING(o_result AFTER '-');
+			SET OutputRoot.HTTPResponseHeader."timeStamp"   = CURRENT_TIMESTAMP;
+		ELSE
+			SET outRef.status.isSuccess 	 = o_status;
+			SET outRef.status.statusCode 	 = 'ER000';
+			SET outRef.status.message 	 	 = o_result;
+			SET OutputRoot.HTTPResponseHeader."timeStamp"   = CURRENT_TIMESTAMP;
+		END IF;
+
+		PROPAGATE TO LABEL 'sendHTTPReply';			
+		RETURN FALSE;
+	END;
+END MODULE;

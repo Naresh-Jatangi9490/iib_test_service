@@ -1,0 +1,204 @@
+BROKER SCHEMA Procedures
+
+
+/******************************************************************************
+ *  Student Profile Maintenance	    				 	 prepareAuditMessage  *
+ *                                                                            *
+ *        Author          				   Version             COMMENTS       * 
+ *  DocTutorials EdutTech Pvt Ltd     V1.0 (11/06/202)    created the module  *
+ ******************************************************************************
+ *  Mofication HISTORY                      			                      *    
+ *  DATE               			   USER  	                   COMMENTS       * 
+ *  ---                			   ---        		           ---            * 
+ ******************************************************************************/
+CREATE COMPUTE MODULE PUpdateMissingInfo
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		DECLARE inRef REFERENCE TO InputRoot.JSON.Data.gatewayRequest.request;
+
+		CREATE FIELD OutputRoot.JSON.Data.gatewayResponse;
+		DECLARE outRef REFERENCE TO OutputRoot.JSON.Data.gatewayResponse;
+
+		SET OutputRoot.HTTPResponseHeader."requestUUID" = Environment.audit.request_id;
+		SET OutputRoot.HTTPResponseHeader."timeStamp"   = CURRENT_TIMESTAMP;
+		SET OutputRoot.HTTPResponseHeader."Appversion"  = Environment.Variables.Appversion;
+		SET OutputRoot.HTTPResponseHeader."Serreqid"    = Environment.Variables.Serreqid;
+		SET OutputRoot.HTTPResponseHeader."Channelid"   = Environment.Variables.Channelid;
+		SET OutputRoot.HTTPResponseHeader."Deviceid"    = Environment.Variables.Deviceid;
+		SET OutputRoot.HTTPResponseHeader."Modelname"   = Environment.Variables.Modelname;
+		SET OutputRoot.HTTPResponseHeader."Os" 		    = Environment.Variables.Os;
+		SET OutputRoot.HTTPResponseHeader."Osversion"   = Environment.Variables.Osversion;
+		SET OutputRoot.HTTPResponseHeader."Location"    = Environment.Variables.Location;
+		SET OutputRoot.HTTPResponseHeader."Ipaddress"   = Environment.Variables.Ipaddress;
+				
+		IF (inRef.studentId > '') THEN
+		ELSE
+			SET outRef.status.isSuccess 	 = false;
+			SET outRef.status.statusCode 	 = SUBSTRING(Procedures.getAPIResultCode('ER112') BEFORE '-');
+			SET outRef.status.message 	 	 = SUBSTRING(Procedures.getAPIResultCode('ER112') AFTER '-');
+			PROPAGATE TO LABEL 'sendHTTPReply';
+			RETURN FALSE;
+		END IF;
+		
+		IF (inRef.courseId > '') THEN
+			IF (inRef.courseId = 1 OR inRef.courseId = 2 OR inRef.courseId = 3 OR inRef.courseId = 4 OR inRef.courseId = 5) THEN
+				SET outRef.status.isSuccess  = true;
+			ELSE
+				SET outRef.status.isSuccess  = false;
+				SET outRef.status.statusCode = SUBSTRING(Procedures.getAPIResultCode('ER126') BEFORE '-');
+				SET outRef.status.message 	 = SUBSTRING(Procedures.getAPIResultCode('ER126') AFTER '-');
+				PROPAGATE TO LABEL 'sendHTTPReply';					
+			END IF;		
+		ELSE
+			SET outRef.status.isSuccess 	 = false;
+			SET outRef.status.statusCode 	 = SUBSTRING(Procedures.getAPIResultCode('ER111') BEFORE '-');
+			SET outRef.status.message 	 	 = SUBSTRING(Procedures.getAPIResultCode('ER111') AFTER '-');
+			PROPAGATE TO LABEL 'sendHTTPReply';
+			RETURN FALSE;
+		END IF;
+
+		IF (Environment.Variables.Sessiontoken > '') THEN
+		ELSE
+			SET outRef.status.isSuccess 	 = false;
+			SET outRef.status.statusCode 	 = SUBSTRING(Procedures.getAPIResultCode('ER116') BEFORE '-');
+			SET outRef.status.message 	 	 = SUBSTRING(Procedures.getAPIResultCode('ER116') AFTER '-');
+			PROPAGATE TO LABEL 'sendHTTPReply';
+			RETURN FALSE;
+		END IF;			
+		
+		DECLARE o_result, tokenStatus CHARACTER;
+		DECLARE o_status BOOLEAN;
+			
+		IF (inRef.specialization > '') THEN
+		ELSEIF (inRef.education > '' AND inRef.state > '' AND inRef.college > '' AND inRef.collegeId > '') THEN
+			IF (inRef.education > '') THEN
+				IF(inRef.courseId = 1) THEN --NEET PG
+				  IF(inRef.education = 'MBBS Student-1st Year' OR inRef.education = 'MBBS Student-2nd Year' OR inRef.education = 'MBBS Student-3rd Year Part 1' OR inRef.education = 'MBBS Student-3rd Year Part 2' 
+				  	 				    OR inRef.education = 'Intern/House Surgeon' OR inRef.education = 'MBBS Graduate' OR inRef.education = 'DNB' OR inRef.education = 'PG Diploma'
+				  	 				    OR inRef.education = 'MBBS Student-3rd Year' OR inRef.education = 'MBBS Student-4th Year' OR inRef.education = 'MBBS Student-5th Year') THEN
+				     SET outRef.status.isSuccess = true;
+				  ELSE
+					 SET outRef.status.isSuccess  = false;
+					 SET outRef.status.statusCode = SUBSTRING(Procedures.getAPIResultCode('ER140') BEFORE '-');
+					 SET outRef.status.message 	  = SUBSTRING(Procedures.getAPIResultCode('ER140') AFTER '-');
+					 PROPAGATE TO LABEL 'sendHTTPReply';				
+			   	  END IF;    	 				     
+				ELSEIF(inRef.courseId = 2) THEN --NEET SS
+				  IF(inRef.education = 'PG-1st Year' OR inRef.education = 'PG-2nd Year' OR inRef.education = 'PG-3rd Year' OR inRef.education = 'Post-Graduate' 
+				      OR inRef.education = 'DNB' OR inRef.education = 'PG Diploma' OR inRef.education = 'MBBS Graduate' OR inRef.education = 'Intern/House Surgeon') THEN
+				     SET outRef.status.isSuccess = true;
+				  ELSE
+					 SET outRef.status.isSuccess  = false;
+					 SET outRef.status.statusCode = SUBSTRING(Procedures.getAPIResultCode('ER140') BEFORE '-');
+					 SET outRef.status.message 	  = SUBSTRING(Procedures.getAPIResultCode('ER140') AFTER '-');
+					 PROPAGATE TO LABEL 'sendHTTPReply';				
+			   	  END IF;    	 				     
+				ELSEIF(inRef.courseId = 3) THEN --FMGE
+				  IF(inRef.education = 'MBBS Student-1st Year' OR inRef.education = 'MBBS Student-2nd Year' OR inRef.education = 'MBBS Student-3rd Year' 
+				     OR inRef.education = 'MBBS Student-4th Year' OR inRef.education = 'MBBS Student-5th Year' 
+				     OR inRef.education = 'Intern/House Surgeon' OR inRef.education = 'MBBS Graduate' OR inRef.education = 'DNB' OR inRef.education = 'PG Diploma') THEN
+				     SET outRef.status.isSuccess = true;
+				  ELSE
+					 SET outRef.status.isSuccess  = false;
+					 SET outRef.status.statusCode = SUBSTRING(Procedures.getAPIResultCode('ER140') BEFORE '-');
+					 SET outRef.status.message 	  = SUBSTRING(Procedures.getAPIResultCode('ER140') AFTER '-');
+					 PROPAGATE TO LABEL 'sendHTTPReply';				
+			   	  END IF;
+				ELSEIF(inRef.courseId = 4) THEN --UG Curriculum
+				  IF(inRef.education = 'MBBS Student-1st Year' OR inRef.education = 'MBBS Student-2nd Year' OR inRef.education = 'MBBS Student-3rd Year Part 1' OR inRef.education = 'MBBS Student-3rd Year Part 2' 
+				  	 				    OR inRef.education = 'Intern/House Surgeon' OR inRef.education = 'MBBS Graduate' OR inRef.education = 'DNB' OR inRef.education = 'PG Diploma'
+				  	 				    OR inRef.education = 'MBBS Student-3rd Year' OR inRef.education = 'MBBS Student-4th Year' OR inRef.education = 'MBBS Student-5th Year') THEN
+				     SET outRef.status.isSuccess = true;
+				  ELSE
+					 SET outRef.status.isSuccess  = false;
+					 SET outRef.status.statusCode = SUBSTRING(Procedures.getAPIResultCode('ER140') BEFORE '-');
+					 SET outRef.status.message 	  = SUBSTRING(Procedures.getAPIResultCode('ER140') AFTER '-');
+					 PROPAGATE TO LABEL 'sendHTTPReply';
+			   	  END IF;
+				ELSEIF(inRef.courseId = 5) THEN --FMGE PG Residency
+				  IF(inRef.education = 'PG-1st Year' OR inRef.education = 'PG-2nd Year' OR inRef.education = 'PG-3rd Year' 
+				     OR inRef.education = 'Post-Graduate' OR inRef.education = 'DNB' OR inRef.education = 'PG Diploma' OR inRef.education = 'MBBS Graduate' 
+				     OR inRef.education = 'Intern/House Surgeon') THEN
+				     SET outRef.status.isSuccess = true;
+				  ELSE
+					 SET outRef.status.isSuccess  = false;
+					 SET outRef.status.statusCode = SUBSTRING(Procedures.getAPIResultCode('ER140') BEFORE '-');
+					 SET outRef.status.message 	  = SUBSTRING(Procedures.getAPIResultCode('ER140') AFTER '-');
+					 PROPAGATE TO LABEL 'sendHTTPReply';				
+			   	  END IF;  		   	   		   	      	 				     
+			    END IF;		    
+			ELSE
+				SET outRef.status.isSuccess 	 = false;
+				SET outRef.status.statusCode 	 = SUBSTRING(Procedures.getAPIResultCode('ER106') BEFORE '-');
+				SET outRef.status.message 	 	 = SUBSTRING(Procedures.getAPIResultCode('ER106') AFTER '-');
+				PROPAGATE TO LABEL 'sendHTTPReply';
+				RETURN FALSE;
+			END IF;
+		
+			IF (inRef.state > '') THEN --Validated in the Stored Procedure
+			ELSE
+				SET outRef.status.isSuccess 	 = false;
+				SET outRef.status.statusCode 	 = SUBSTRING(Procedures.getAPIResultCode('ER107') BEFORE '-');
+				SET outRef.status.message 	 	 = SUBSTRING(Procedures.getAPIResultCode('ER107') AFTER '-');
+				PROPAGATE TO LABEL 'sendHTTPReply';
+				RETURN FALSE;
+			END IF;
+	
+			IF (inRef.college > '') THEN --Validated in the Stored Procedure
+			ELSE
+				SET outRef.status.isSuccess 	 = false;
+				SET outRef.status.statusCode 	 = SUBSTRING(Procedures.getAPIResultCode('ER108') BEFORE '-');
+				SET outRef.status.message 	 	 = SUBSTRING(Procedures.getAPIResultCode('ER108') AFTER '-');
+				PROPAGATE TO LABEL 'sendHTTPReply';
+				RETURN FALSE;
+			END IF;
+	
+			IF (inRef.collegeId > '') THEN -- College Id
+			ELSE
+				SET outRef.status.isSuccess 	 = false;
+				SET outRef.status.statusCode 	 = SUBSTRING(Procedures.getAPIResultCode('ER150') BEFORE '-');
+				SET outRef.status.message 	 	 = SUBSTRING(Procedures.getAPIResultCode('ER150') AFTER '-');
+				PROPAGATE TO LABEL 'sendHTTPReply';
+				RETURN FALSE;
+			END IF;
+		ELSE
+			SET outRef.status.isSuccess 	 = false;
+			SET outRef.status.statusCode 	 = SUBSTRING(Procedures.getAPIResultCode('ER151') BEFORE '-');
+			SET outRef.status.message 	 	 = SUBSTRING(Procedures.getAPIResultCode('ER151') AFTER '-');
+			PROPAGATE TO LABEL 'sendHTTPReply';
+			RETURN FALSE;							
+		END IF;
+
+		CALL dt_profile_update_missing_infor(CAST(inRef.studentId AS INTEGER),
+							   inRef.education,
+							   inRef.state,
+							   inRef.college,
+							   inRef.courseId,
+							   inRef.specialization,
+							   inRef.collegeId,
+							   Environment.Variables.Sessiontoken,
+							   Environment.Variables.Channelid,
+							   tokenStatus, -- Out
+							   o_status,
+							   o_result);												  
+		IF (tokenStatus = 'E') THEN
+			SET OutputLocalEnvironment.Destination.HTTP.ReplyStatusCode = 403;
+		ELSEIF (tokenStatus = 'I') THEN
+			SET OutputLocalEnvironment.Destination.HTTP.ReplyStatusCode = 500;
+		END IF;
+		IF (o_status = false) THEN
+			SET outRef.status.isSuccess 	 = o_status;
+			SET outRef.status.statusCode 	 = SUBSTRING(o_result BEFORE '-');
+			SET outRef.status.message 	 	 = SUBSTRING(o_result AFTER '-');
+			SET OutputRoot.HTTPResponseHeader."timeStamp"   = CURRENT_TIMESTAMP;
+		ELSE
+			SET outRef.status.isSuccess 	 = o_status;
+			SET outRef.status.statusCode 	 = SUBSTRING(o_result BEFORE '-');
+			SET outRef.status.message 	 	 = SUBSTRING(o_result AFTER '-');
+			SET OutputRoot.HTTPResponseHeader."timeStamp"   = CURRENT_TIMESTAMP;
+		END IF;
+
+		PROPAGATE TO LABEL 'sendHTTPReply';			
+		RETURN FALSE;
+	END;
+END MODULE;

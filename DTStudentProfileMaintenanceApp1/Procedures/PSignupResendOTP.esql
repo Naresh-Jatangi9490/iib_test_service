@@ -1,0 +1,97 @@
+BROKER SCHEMA Procedures
+
+
+/******************************************************************************
+ *  Student Profile Maintenance	    				 	 prepareAuditMessage  *
+ *                                                                            *
+ *        Author          				   Version             COMMENTS       * 
+ *  DocTutorials EdutTech Pvt Ltd     V1.0 (11/06/202)    created the module  *
+ ******************************************************************************
+ *  Mofication HISTORY                      			                      *    
+ *  DATE               			   USER  	                   COMMENTS       * 
+ *  ---                			   ---        		           ---            * 
+ ******************************************************************************/
+CREATE COMPUTE MODULE PSignupResendOTP
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		--Return a secret token for the OTP verification request OTP_SIGNUP_TOKEN.
+		DECLARE inRef REFERENCE TO InputRoot.JSON.Data.gatewayRequest.request;
+		--DECLARE inRefHeader REFERENCE TO InputRoot.JSON.Data.gatewayRequest.header;
+
+		CREATE FIELD OutputRoot.JSON.Data.gatewayResponse;
+		DECLARE outRef REFERENCE TO OutputRoot.JSON.Data.gatewayResponse;
+
+		SET OutputRoot.HTTPResponseHeader."requestUUID" = Environment.audit.request_id;
+		SET OutputRoot.HTTPResponseHeader."timeStamp"   = CURRENT_TIMESTAMP;
+		SET OutputRoot.HTTPResponseHeader."Appversion"  = Environment.Variables.Appversion;
+		SET OutputRoot.HTTPResponseHeader."Serreqid"    = Environment.Variables.Serreqid;
+		SET OutputRoot.HTTPResponseHeader."Channelid"   = Environment.Variables.Channelid;
+		SET OutputRoot.HTTPResponseHeader."Deviceid"    = Environment.Variables.Deviceid;
+		SET OutputRoot.HTTPResponseHeader."Modelname"   = Environment.Variables.Modelname;
+		SET OutputRoot.HTTPResponseHeader."Os" 		    = Environment.Variables.Os;
+		SET OutputRoot.HTTPResponseHeader."Osversion"   = Environment.Variables.Osversion;
+		SET OutputRoot.HTTPResponseHeader."Location"    = Environment.Variables.Location;
+		SET OutputRoot.HTTPResponseHeader."Ipaddress"   = Environment.Variables.Ipaddress;
+		SET OutputRoot.HTTPResponseHeader."Ipaddress"   = Environment.Variables.Ipaddress;
+						
+		IF (inRef.countryCode > '') THEN
+		ELSE
+			SET outRef.status.isSuccess 	 = false;
+			SET outRef.status.statusCode 	 = SUBSTRING(Procedures.getAPIResultCode('ER101') BEFORE '-');
+			SET outRef.status.message 	 	 = SUBSTRING(Procedures.getAPIResultCode('ER101') AFTER '-');
+			PROPAGATE TO LABEL 'sendHTTPReply';
+			RETURN FALSE;
+		END IF;
+		
+		IF (inRef.mobileNo > '') THEN
+		ELSE
+			SET outRef.status.isSuccess 	 = false;
+			SET outRef.status.statusCode 	 = SUBSTRING(Procedures.getAPIResultCode('ER102') BEFORE '-');
+			SET outRef.status.message 	 	 = SUBSTRING(Procedures.getAPIResultCode('ER102') AFTER '-');
+			PROPAGATE TO LABEL 'sendHTTPReply';
+			RETURN FALSE;
+		END IF;
+				
+		DECLARE otpToken, mobileNo, o_result, encKey, encPassword, resultStr, otpStr CHARACTER;
+		DECLARE o_status BOOLEAN;
+		DECLARE countryCode, studentId INTEGER;
+		
+		SET otpToken = UUIDASCHAR;
+
+		/*Add all the validations*/
+		SET countryCode = inRef.countryCode;
+		SET mobileNo = inRef.mobileNo;
+		SET otpStr = getOtp();
+		SET otpStr = '1234'; --Remove this later;
+		
+		CALL dt_profile_signup_resend_otp(countryCode,
+										  mobileNo,
+										  otpStr,
+										  Environment.Variables.Channelid,
+										  otpToken,
+										  studentId, --Out
+										  o_status,  --Out
+									  	  o_result); --Out;	
+		IF (o_status = false) THEN
+			SET outRef.status.isSuccess 	 = o_status;
+			SET outRef.status.statusCode 	 = SUBSTRING(o_result BEFORE '-');
+			SET outRef.status.message 	 	 = SUBSTRING(o_result AFTER '-');
+			SET OutputRoot.HTTPResponseHeader."timeStamp"   = CURRENT_TIMESTAMP;
+		ELSE
+			SET resultStr = sendSMSGupShup(mobileNo,  'Your DocTutorials one time password is ' || otpStr);
+			SET outRef.status.isSuccess 	 = o_status;
+			SET outRef.status.statusCode 	 = SUBSTRING(o_result BEFORE '-');
+			SET outRef.status.message 	 	 = SUBSTRING(o_result AFTER '-');
+			--IF CONTAINS(o_result, 'ER000') THEN
+			   CREATE FIELD OutputRoot.JSON.Data.gatewayResponse.response;
+			   DECLARE respRef REFERENCE TO OutputRoot.JSON.Data.gatewayResponse.response;
+			   SET respRef.otpToken  = otpToken;
+		       SET respRef.studentId = studentId;
+			--END IF;
+			SET OutputRoot.HTTPResponseHeader."timeStamp"   = CURRENT_TIMESTAMP;
+		END IF;
+		
+		PROPAGATE TO LABEL 'sendHTTPReply';			
+		RETURN FALSE;		
+	END;		
+END MODULE;

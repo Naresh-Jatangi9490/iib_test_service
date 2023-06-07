@@ -1,0 +1,135 @@
+BROKER SCHEMA Procedures
+
+/******************************************************************************
+ *  Student Profile Maintenance	    				 	 prepareAuditMessage  *
+ *                                                                            *
+ *        Author          				   Version             COMMENTS       * 
+ *  DocTutorials EdutTech Pvt Ltd     V1.0 (11/06/202)    created the module  *
+ ******************************************************************************
+ *  Mofication HISTORY                      			                      *    
+ *  DATE               			   USER  	                   COMMENTS       * 
+ *  ---                			   ---        		           ---            * 
+ ******************************************************************************/
+CREATE COMPUTE MODULE ProcessGetCalendarEventData
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		DECLARE inRef REFERENCE TO InputRoot.JSON.Data.gatewayRequest.request;		
+		
+		CREATE FIELD OutputRoot.JSON.Data.gatewayResponse;
+		DECLARE outRef REFERENCE TO OutputRoot.JSON.Data.gatewayResponse;
+		
+		DECLARE sqlStmt CHARACTER;
+		DECLARE i INTEGER 1;
+				
+		IF (inRef.courseId > '') THEN
+		ELSE
+			SET outRef.status.isSuccess 	 = false;
+			SET outRef.status.statusCode 	 = SUBSTRING(Procedures.getAPIResultCode('ER111') BEFORE '-');
+			SET outRef.status.message 	 	 = SUBSTRING(Procedures.getAPIResultCode('ER111') AFTER '-');
+			PROPAGATE TO LABEL 'sendHTTPReply';
+			RETURN FALSE;
+		END IF;
+		
+		IF (inRef.studentId > '') THEN
+		ELSE
+			SET outRef.status.isSuccess 	 = false;
+			SET outRef.status.statusCode 	 = SUBSTRING(Procedures.getAPIResultCode('ER102') BEFORE '-');
+			SET outRef.status.message 	 	 = SUBSTRING(Procedures.getAPIResultCode('ER102') AFTER '-');
+			PROPAGATE TO LABEL 'sendHTTPReply';
+			RETURN FALSE;
+		END IF;
+		
+--		IF (Environment.Variables.Sessiontoken > '') THEN
+--		ELSE
+--			SET outRef.status.isSuccess 	 = false;
+--			SET outRef.status.statusCode 	 = SUBSTRING(Procedures.getAPIResultCode('ER116') BEFORE '-');
+--			SET outRef.status.message 	 	 = SUBSTRING(Procedures.getAPIResultCode('ER116') AFTER '-');
+--			PROPAGATE TO LABEL 'sendHTTPReply';
+--			RETURN FALSE;
+--		END IF;
+		
+		SET OutputRoot.HTTPResponseHeader."requestUUID" = Environment.audit.request_id;
+		SET OutputRoot.HTTPResponseHeader."timeStamp"   = CURRENT_TIMESTAMP;
+		SET OutputRoot.HTTPResponseHeader."Appversion"  = Environment.Variables.Appversion;
+		SET OutputRoot.HTTPResponseHeader."Serreqid"    = Environment.Variables.Serreqid;
+		SET OutputRoot.HTTPResponseHeader."Channelid"   = Environment.Variables.Channelid;
+		SET OutputRoot.HTTPResponseHeader."Deviceid"    = Environment.Variables.Deviceid;
+		SET OutputRoot.HTTPResponseHeader."Modelname"   = Environment.Variables.Modelname;
+		SET OutputRoot.HTTPResponseHeader."Os" 		    = Environment.Variables.Os;
+		SET OutputRoot.HTTPResponseHeader."Osversion"   = Environment.Variables.Osversion;
+		SET OutputRoot.HTTPResponseHeader."Location"    = Environment.Variables.Location;
+		SET OutputRoot.HTTPResponseHeader."Ipaddress"   = Environment.Variables.Ipaddress;
+		SET OutputRoot.HTTPResponseHeader."Ipaddress"   = Environment.Variables.Ipaddress;
+
+		DECLARE o_result, tokenStatus  CHARACTER;
+		DECLARE o_status BOOLEAN;
+
+		/*CALL dt_validate_session_token(CAST(inRef.studentId AS INTEGER),
+							 		   Environment.Variables.Sessiontoken,
+							   		   Environment.Variables.Channelid,
+							   		   tokenStatus, -- Out
+							   		   o_status,
+							   		   o_result);												  
+		IF (tokenStatus = 'E') THEN
+			SET OutputLocalEnvironment.Destination.HTTP.ReplyStatusCode = 403;
+		ELSEIF (tokenStatus = 'I') THEN
+			SET OutputLocalEnvironment.Destination.HTTP.ReplyStatusCode = 500;
+		END IF;
+		IF (o_status = false) THEN
+			SET outRef.status.isSuccess 	 = o_status;
+			SET outRef.status.statusCode 	 = SUBSTRING(o_result BEFORE '-');
+			SET outRef.status.message 	 	 = SUBSTRING(o_result AFTER '-');
+			SET OutputRoot.HTTPResponseHeader."timeStamp"   = CURRENT_TIMESTAMP;
+			PROPAGATE TO LABEL 'sendHTTPReply';
+			RETURN FALSE;
+		END IF;*/
+		
+		DECLARE count, currrentMonthNo, currentYearNo INTEGER;
+		IF (inRef.monthNo > '' AND inRef.yearNo > '') THEN
+			SET	currrentMonthNo  = inRef.monthNo;
+			SET	currentYearNo    = inRef.yearNo;
+		ELSE
+			SET	currentYearNo   = EXTRACT(YEAR FROM CURRENT_DATE);
+			SET	currrentMonthNo = EXTRACT(MONTH FROM CURRENT_DATE);
+		END IF;
+			
+		SET count = 0;
+		
+		SET sqlStmt = 'SELECT a.dt, a.dayName, a.monthName, a.m as monthNo,  a.y as year, a.d as dayOfMonth, a.dw as dayOfWeek, 
+					   e.EVENT_ID, e.MESSAGE AS EVENT_MESSAGE, ns.MESSAGE AS STUDENT_NOTES_MSG, ns.SEQNO 
+					   FROM LB_SCHEDULE_CALENDAR a 
+				       LEFT JOIN LB_SCHEDULE_CALENDAR_EVENT e ON e.dt = a.dt AND e.REC_STATUS = 1 AND e.COURSE_ID = ?
+					   LEFT JOIN LB_SCHEDULE_CALENDAR_EVENT_NOTES ns ON ns.dt = a.dt AND ns.IS_ACTIVE = 1 
+					   WHERE a.m = ? AND a.y = ?;';
+						
+					   --LEFT JOIN LB_SCHEDULE_CALENDAR_EVENT_NOTES ns ON ns.dt = a.dt AND ns.IS_ACTIVE = 1 AND ns.STUDENT_ID = ?
+					    	
+		--SET Environment.Variables.Rec[] = PASSTHRU(sqlStmt, inRef.courseId, inRef.studentId, currrentMonthNo, currentYearNo);
+		SET Environment.Variables.Rec[] = PASSTHRU(sqlStmt, inRef.courseId, currrentMonthNo, currentYearNo);
+		
+		IF EXISTS(Environment.Variables.Rec[]) THEN
+			CREATE FIELD OutputRoot.JSON.Data.gatewayResponse.response.schedule IDENTITY(JSON.Array);
+			DECLARE outRefa REFERENCE TO OutputRoot.JSON.Data.gatewayResponse.response.schedule;			
+			FOR src as Environment.Variables.Rec[] DO
+				SET outRefa.schedule[i].date					= src.dt;
+				SET outRefa.schedule[i].monthNumber				= src.monthNo;
+				SET outRefa.schedule[i].yearNo					= src.year;
+				SET outRefa.schedule[i].notes					= src.STUDENT_NOTES_MSG;
+				SET outRefa.schedule[i].eventMessage	 		= src.EVENT_MESSAGE;
+				SET outRefa.schedule[i].seqNo					= src.SEQNO;
+				SET i = i + 1;
+			END FOR;
+			SET outRef.status.isSuccess = TRUE;
+			SET outRef.status.message = 'Success';
+			SET outRef.status.statusCode = 'ER000';
+		ELSE
+			SET outRef.status.isSuccess = FALSE;
+			SET outRef.status.message = 'No DocTutorials Schedule Record(s) found';
+			SET outRef.status.statusCode = 'ER099';
+		END IF;	
+		SET OutputRoot.HTTPResponseHeader."timeStamp"   = CURRENT_TIMESTAMP;
+		
+		PROPAGATE TO LABEL 'sendHTTPReply';			
+		RETURN FALSE;
+	END;
+END MODULE;

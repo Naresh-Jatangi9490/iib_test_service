@@ -1,0 +1,37 @@
+BROKER SCHEMA Procedures
+
+/******************************************************************************
+ *  Student Profile Maintenance	    					    inBoundAuditRes	  *
+ *                                                                            *
+ *        Author          				   Version             COMMENTS       * 
+ *  DocTutorials EdutTech Pvt Ltd     V1.0 (11/06/202)    created the module  *
+ ******************************************************************************
+ *  Mofication HISTORY                      			                      *    
+ *  DATE               			   USER  	                   COMMENTS       * 
+ *  ---                			   ---        		           ---            * 
+ ******************************************************************************/
+CREATE COMPUTE MODULE inBoundAuditRes
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		SET OutputRoot.Properties = InputRoot.Properties;
+		CREATE NEXTSIBLING OF OutputRoot.Properties DOMAIN 'MQMD';
+		SET OutputRoot.MQMD.Version		   = MQMD_CURRENT_VERSION;		
+		SET OutputRoot.MQMD.CodedCharSetId = MQCCSI_Q_MGR;	
+		
+		CREATE LASTCHILD OF OutputRoot DOMAIN 'XMLNSC';
+		CREATE FIELD OutputRoot.XMLNSC.Audit.Inbound;
+		DECLARE outRef REFERENCE TO OutputRoot.XMLNSC.Audit.Inbound;
+		
+		DECLARE auditRef REFERENCE TO OutputRoot.XMLNSC.Audit.Inbound;
+		SET auditRef.request_id              	  = Environment.audit.request_id;
+		SET auditRef.msg_type      		    	  = 'S';
+		SET auditRef.status     		          = 'Y';
+		SET auditRef.currentTime 			  	  = CURRENT_TIMESTAMP;
+		
+		DECLARE payLoadBlob	BLOB ASBITSTREAM(InputRoot.JSON);
+		DECLARE httpPayLoad	CHARACTER CAST(payLoadBlob AS CHAR CCSID Environment.audit.inbound.CodedCharSetId ENCODING Environment.audit.inbound.Encoding);
+		SET outRef.msg = httpPayLoad;
+		
+		RETURN TRUE;
+	END;
+END MODULE;	

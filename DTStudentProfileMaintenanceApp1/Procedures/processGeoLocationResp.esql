@@ -1,0 +1,60 @@
+BROKER SCHEMA Procedures
+
+/******************************************************************************
+ *  Student Profile Maintenance  					  processGeoLocationResp  *
+ *                                                                            *
+ *        Author          				   Version             COMMENTS       * 
+ *  DocTutorials EdutTech Pvt Ltd     V1.0 (11/06/202)    created the module  *
+ ******************************************************************************
+ *  Mofication HISTORY                      			                      *    
+ *  DATE               			   USER  	                   COMMENTS       * 
+ *  ---                			   ---        		           ---            * 
+ ******************************************************************************/
+CREATE COMPUTE MODULE processGeoLocationResp
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		DECLARE inRef REFERENCE TO InputRoot.JSON.Data;
+		
+		CREATE FIELD OutputRoot.JSON.Data.gatewayResponse;
+		DECLARE outRef REFERENCE TO OutputRoot.JSON.Data.gatewayResponse;
+
+		CREATE FIELD OutputRoot.JSON.Data.gatewayResponse.Response;
+		DECLARE respRef REFERENCE TO OutputRoot.JSON.Data.gatewayResponse.Response;
+
+		SET OutputRoot.HTTPResponseHeader."requestUUID" = Environment.audit.request_id;
+		SET OutputRoot.HTTPResponseHeader."timeStamp"   = CURRENT_TIMESTAMP;
+		SET OutputRoot.HTTPResponseHeader."Appversion"  = Environment.Variables.Appversion;
+		SET OutputRoot.HTTPResponseHeader."Serreqid"    = Environment.Variables.Serreqid;
+		SET OutputRoot.HTTPResponseHeader."Channelid"   = Environment.Variables.Channelid;
+		SET OutputRoot.HTTPResponseHeader."Deviceid"    = Environment.Variables.Deviceid;
+		SET OutputRoot.HTTPResponseHeader."Modelname"   = Environment.Variables.Modelname;
+		SET OutputRoot.HTTPResponseHeader."Os" 		    = Environment.Variables.Os;
+		SET OutputRoot.HTTPResponseHeader."Osversion"   = Environment.Variables.Osversion;
+		SET OutputRoot.HTTPResponseHeader."Location"    = Environment.Variables.Location;
+		SET OutputRoot.HTTPResponseHeader."Ipaddress"   = Environment.Variables.Ipaddress;
+				
+		IF (inRef.country > '') THEN
+			SET outRef.status.isSuccess 	 = true;
+			SET outRef.status.statusCode 	 = SUBSTRING(Procedures.getAPIResultCode('ER000') BEFORE '-');
+			SET outRef.status.message 	 	 = SUBSTRING(Procedures.getAPIResultCode('ER000') AFTER '-');
+			SET respRef.ip 	   	 = inRef.ip;
+			SET respRef.hostname = inRef.hostname;
+			SET respRef.city     = inRef.city;
+			SET respRef.region   = inRef.region;
+			SET respRef.loc      = inRef.loc;
+			SET respRef.org 	 = inRef.org;
+			SET respRef.postal   = inRef.postal;
+			SET respRef.timezone = inRef.timezone;
+			SET respRef.country  = inRef.country;
+		ELSE
+			SET OutputRoot.JSON.Data.gatewayResponse.Response.country  = 'IN'; /*Default to India if GEO failes*/
+			SET outRef.status.isSuccess 	 = false;
+			SET outRef.status.statusCode 	 = SUBSTRING(Procedures.getAPIResultCode('ER120') BEFORE '-');
+			SET outRef.status.message 	 	 = SUBSTRING(Procedures.getAPIResultCode('ER120') AFTER '-');			
+		END IF;	
+		
+		PROPAGATE TO LABEL 'sendHTTPReply';
+		
+		RETURN FALSE;
+	END; 
+END MODULE;

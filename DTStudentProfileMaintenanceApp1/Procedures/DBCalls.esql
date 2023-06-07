@@ -1,0 +1,489 @@
+BROKER SCHEMA Procedures
+/******************************************************************************
+ *  Student Profile Maintenance	    				 	 prepareAuditMessage  *
+ *                                                                            *
+ *        Author          				   Version             COMMENTS       * 
+ *  DocTutorials EdutTech Pvt Ltd     V1.0 (11/06/202)    created the module  *
+ ******************************************************************************
+ *  Mofication HISTORY                      			                      *    
+ *  DATE               			   USER  	                   COMMENTS       * 
+ *  ---                			   ---        		           ---            * 
+ ******************************************************************************/
+CREATE PROCEDURE dt_profile_create_student(
+      IN name    	     		CHARACTER,
+      IN countryCode        	INTEGER,
+      IN mobileNo			   	CHARACTER,
+      IN email 			        CHARACTER,
+      IN education		 		CHARACTER,
+      IN state		 		    CHARACTER,
+      IN college         		CHARACTER,
+      IN password	 		    CHARACTER,
+      IN uniqueToken 			CHARACTER,
+      IN deviceId 				CHARACTER,
+      IN otp 					CHARACTER,
+      IN android 				BOOLEAN,
+      IN ios 					BOOLEAN,      
+      IN courseId 				INTEGER,
+      IN otpToken               CHARACTER,
+      IN referralCode           CHARACTER,
+      IN specialization			CHARACTER,
+      IN collegeId				INTEGER,
+      OUT studentId				INTEGER,
+      OUT o_status			   	BOOLEAN,
+      OUT o_result       		CHARACTER)
+LANGUAGE DATABASE EXTERNAL NAME "dt_profile_create_student";
+
+CREATE PROCEDURE dt_profile_create_student_verify_otp(
+      IN studentId    	     	INTEGER,
+      IN otp		        	CHARACTER,
+      IN otpToken				CHARACTER,
+      IN firebaseToken			CHARACTER,
+      IN channelId              CHARACTER, 
+      IN location		       	CHARACTER,
+      IN ipAddress		       	CHARACTER,
+      IN sessionToken           CHARACTER,
+      IN refreshToken			CHARACTER,
+      IN deviceType				CHARACTER,
+      IN mailVerificationToken	CHARACTER,
+      OUT studentId				INTEGER,
+      OUT name    	     		CHARACTER,
+      OUT countryCode        	INTEGER,
+      OUT mobileNo			   	CHARACTER,
+      OUT email 		        CHARACTER,
+      OUT education			 	CHARACTER,
+      OUT state		 			CHARACTER,
+      OUT college         		CHARACTER,
+      OUT profileStatus         CHARACTER,
+      OUT emailVerified			BOOLEAN,
+	  OUT createdAt             CHARACTER,
+	  OUT updatedAt             CHARACTER,  
+      OUT courseId              INTEGER,
+      OUT courseName            CHARACTER,
+      OUT specialization		CHARACTER,
+      OUT image					CHARACTER,
+ 	  OUT universityId			INTEGER,
+      OUT universityName 		CHARACTER,
+      OUT collegeId				INTEGER,
+      OUT stateId     			INTEGER,
+      OUT nextRotationAt		INTEGER,
+      OUT collegeCountryCode	CHARACTER,     
+      OUT o_status			   	BOOLEAN,
+      OUT o_result       		CHARACTER)
+LANGUAGE DATABASE EXTERNAL NAME "dt_profile_create_student_verify_otp";
+
+CREATE PROCEDURE dt_profile_signup_resend_otp(
+      IN countryCode        	INTEGER,
+      IN mobileNo			   	CHARACTER,
+      IN otp	 		        CHARACTER,
+      IN channelId   			CHARACTER,
+      IN otpToken				CHARACTER,
+      OUT studentId				INTEGER,      
+      OUT o_status			   	BOOLEAN,
+      OUT o_result       		CHARACTER)
+LANGUAGE DATABASE EXTERNAL NAME "dt_profile_signup_resend_otp";
+												  		  
+CREATE PROCEDURE dt_profile_signin_student_send_otp(
+      IN countryCode        	INTEGER,
+      IN mobileNo			   	CHARACTER,
+      IN otp	 		        CHARACTER,
+      IN channelId   			CHARACTER,
+      IN otpToken				CHARACTER,
+      OUT studentId				INTEGER,      
+      OUT o_status			   	BOOLEAN,
+      OUT o_result       		CHARACTER)
+LANGUAGE DATABASE EXTERNAL NAME "dt_profile_signin_student_send_otp";
+										        
+CREATE PROCEDURE dt_profile_signin_student_verify_otp(
+      IN studentId	        	INTEGER,
+      IN otp	 		        CHARACTER,
+      IN otpToken               CHARACTER,
+      IN firebaseToken			CHARACTER,
+      IN deviceType				CHARACTER,
+      IN channelId	 		    CHARACTER,
+      IN location 		        CHARACTER,
+      IN ipAddress 		        CHARACTER,
+      IN sessionToken			CHARACTER,
+      IN refreshToken			CHARACTER,
+      OUT studentId				INTEGER,
+      OUT name    	     		CHARACTER,
+      OUT countryCode        	INTEGER,
+      OUT mobileNo			   	CHARACTER,
+      OUT email 		        CHARACTER,
+      OUT education			 	CHARACTER,
+      OUT state		 			CHARACTER,
+      OUT college         		CHARACTER,
+      OUT profileStatus         CHARACTER,
+      OUT emailVerified			BOOLEAN,
+	  OUT createdAt             CHARACTER,
+	  OUT updatedAt             CHARACTER,  
+      OUT courseId              INTEGER,
+      OUT courseName			CHARACTER,
+      OUT specialization		CHARACTER,
+      OUT image					CHARACTER,
+      OUT universityId    		INTEGER,   
+	  OUT universityName		CHARACTER,
+	  OUT collegeId				INTEGER,
+	  OUT stateId  				INTEGER,	       
+      OUT nextRotationAt		INTEGER,
+      OUT collegeCountryCode    CHARACTER,
+      OUT o_status			   	BOOLEAN,
+      OUT o_result       		CHARACTER)
+LANGUAGE DATABASE EXTERNAL NAME "dt_profile_signin_student_verify_otp";
+												  												  		  
+CREATE PROCEDURE dt_profile_create_student_sign_get_token(
+      IN email       	      	CHARACTER,
+      OUT uniqueToken   	    CHARACTER,
+      OUT password              CHARACTER,
+      OUT studentId             INTEGER,
+      OUT o_status			   	BOOLEAN,
+      OUT o_result       		CHARACTER)
+LANGUAGE DATABASE EXTERNAL NAME "dt_profile_create_student_sign_get_token";
+
+CREATE PROCEDURE dt_profile_change_password_get_token(
+      IN studentId             INTEGER,
+      OUT uniqueToken   	    CHARACTER,
+      OUT password              CHARACTER,
+      OUT o_status			   	BOOLEAN,
+      OUT o_result       		CHARACTER)
+LANGUAGE DATABASE EXTERNAL NAME "dt_profile_change_password_get_token";
+
+CREATE PROCEDURE dt_profile_signin_student_get_by_id(
+      IN studentId				INTEGER,
+      IN firebaseToken          CHARACTER,
+	  IN channelId				CHARACTER,
+	  IN location				CHARACTER,
+	  IN ipAddress				CHARACTER,
+	  IN deviceType				CHARACTER,
+	  IN sessionToken			CHARACTER,
+	  IN refreshToken			CHARACTER,
+	  OUT studentIdOut			INTEGER,														 													  
+      OUT name    	     		CHARACTER,
+      OUT countryCode        	INTEGER,
+      OUT mobileNo			   	CHARACTER,
+      OUT email 		        CHARACTER,
+      OUT education			 	CHARACTER,
+      OUT state		 			CHARACTER,
+      OUT college         		CHARACTER,
+      OUT profileStatus         CHARACTER,
+	  OUT emailVerified         BOOLEAN,
+	  OUT createdAt             CHARACTER,
+	  OUT updatedAt             CHARACTER,  
+      OUT courseId              INTEGER,
+      OUT specialization        CHARACTER,
+      OUT courseName            CHARACTER,
+      OUT image					CHARACTER,
+      OUT universityId    		INTEGER,   
+	  OUT universityName		CHARACTER,	
+	  OUT collegeId				INTEGER,
+	  OUT stateId  				INTEGER,
+      OUT nextRotationAt		INTEGER,
+      OUT collegeCountryCode	CHARACTER,
+      OUT o_status			   	BOOLEAN,
+      OUT o_result       		CHARACTER)
+LANGUAGE DATABASE EXTERNAL NAME "dt_profile_signin_student_get_by_id";
+												  	  
+CREATE PROCEDURE dt_profile_get_student_by_id(
+      IN studentId    	     	INTEGER,
+      IN sessionTokenIn        	CHARACTER,
+      OUT studentId				INTEGER,
+      OUT name    	     		CHARACTER,
+      OUT countryCode        	INTEGER,
+      OUT mobileNo			   	CHARACTER,
+      OUT email 		        CHARACTER,
+      OUT education			 	CHARACTER,
+      OUT state		 			CHARACTER,
+      OUT college         		CHARACTER,
+      OUT profileStatus         CHARACTER,
+      OUT emailVerified			BOOLEAN,
+	  OUT createdAt             CHARACTER,
+	  OUT updatedAt             CHARACTER,  
+      OUT courseId              INTEGER,
+      OUT courseName            CHARACTER,
+      OUT o_status			   	BOOLEAN,
+      OUT o_result       		CHARACTER)
+LANGUAGE DATABASE EXTERNAL NAME "dt_profile_get_student_by_id";
+
+CREATE PROCEDURE dt_profile_view_get_student_by_id(
+      IN studentId    	     	INTEGER,
+      IN channelId				CHARACTER,
+      IN sessionTokenIn        	CHARACTER,
+      OUT studentId				INTEGER,
+      OUT name    	     		CHARACTER,
+      OUT countryCode        	INTEGER,
+      OUT mobileNo			   	CHARACTER,
+      OUT email 		        CHARACTER,
+      OUT education			 	CHARACTER,
+      OUT state		 			CHARACTER,
+      OUT college         		CHARACTER,
+      OUT profileStatus         CHARACTER,
+      OUT emailVerified			BOOLEAN,
+	  OUT createdAt             CHARACTER,
+	  OUT updatedAt             CHARACTER,  
+      OUT courseId              INTEGER,
+      OUT courseName            CHARACTER,
+      OUT specialization        CHARACTER,
+      OUT image					CHARACTER,
+      OUT universityId			INTEGER,
+      OUT universityName 		CHARACTER,
+      OUT collegeId				INTEGER,
+      OUT stateId				INTEGER,
+      OUT collegeCountryCode	CHARACTER,
+      OUT tokenStatus			CHARACTER,
+      OUT o_status			   	BOOLEAN,
+      OUT o_result       		CHARACTER)
+LANGUAGE DATABASE EXTERNAL NAME "dt_profile_view_get_student_by_id";
+		  
+CREATE PROCEDURE dt_profile_student_logout(
+      IN studentId	        	INTEGER,
+      IN sessionToken        	CHARACTER,
+      IN channelId              CHARACTER,
+      OUT tokenStatus			CHARACTER,
+      OUT o_status			   	BOOLEAN,
+      OUT o_result       		CHARACTER)
+LANGUAGE DATABASE EXTERNAL NAME "dt_profile_student_logout";
+
+CREATE PROCEDURE dt_profile_update(
+      IN  studentId    	     	INTEGER,
+      IN  name        			CHARACTER,
+      IN  email				   	CHARACTER,
+      IN  education 		    CHARACTER,
+      IN  state         		CHARACTER,
+      IN  college		 		CHARACTER,      
+      IN  emailUnSubscribe		BOOLEAN,
+      IN  courseId 				INTEGER,
+      IN specialization			CHARACTER,
+      IN collegeId				INTEGER,
+      IN  sessionToken 			CHARACTER,
+      IN  channelId	 		    CHARACTER, 
+      OUT tokenStatus			CHARACTER,
+      OUT o_status			   	BOOLEAN,
+      OUT o_result       		CHARACTER)
+LANGUAGE DATABASE EXTERNAL NAME "dt_profile_update";
+												  
+CREATE PROCEDURE dt_profile_update_password(
+      IN  studentId    	     	INTEGER,
+      IN  uniqueToken        	CHARACTER,
+      IN  newPassword			CHARACTER,
+      IN  sessionToken 			CHARACTER,
+      IN  channelId	 		    CHARACTER,
+      OUT tokenStatus			CHARACTER,   
+      OUT name					CHARACTER,
+      OUT email 				CHARACTER,  
+      OUT o_status			   	BOOLEAN,
+      OUT o_result       		CHARACTER)
+LANGUAGE DATABASE EXTERNAL NAME "dt_profile_update_password";
+												  
+CREATE PROCEDURE dt_profile_send_forgot_password_otp(
+      IN  countryCode      	  	INTEGER,
+      IN  mobileNo				CHARACTER,
+      IN  channelId 			CHARACTER,
+      IN  otp					CHARACTER,
+      IN  otpToken 				CHARACTER,
+      OUT studentId    	   		INTEGER,      
+      OUT o_status			   	BOOLEAN,
+      OUT o_result       		CHARACTER)
+LANGUAGE DATABASE EXTERNAL NAME "dt_profile_send_forgot_password_otp";
+
+CREATE PROCEDURE dt_profile_reset_password(
+      IN  studentId    	     	INTEGER,
+      IN  passwordStr      	  	CHARACTER,
+      IN  otp					CHARACTER,
+      IN  otpToken	 			CHARACTER,
+      IN  uniqueToken			CHARACTER,
+      IN  channelId 			CHARACTER,
+      OUT o_status			   	BOOLEAN,
+      OUT o_result       		CHARACTER)
+LANGUAGE DATABASE EXTERNAL NAME "dt_profile_reset_password";	
+									   
+CREATE PROCEDURE dt_profile_send_mail_verification_token(
+      IN  studentId    	     	INTEGER,
+      IN  mailVerificationToken	CHARACTER,
+      IN  sessionToken	 		CHARACTER,
+      IN  channelId 			CHARACTER,
+      OUT email					CHARACTER,
+      OUT name					CHARACTER,
+      OUT tokenStatus			CHARACTER,
+      OUT o_status			   	BOOLEAN,
+      OUT o_result       		CHARACTER)
+LANGUAGE DATABASE EXTERNAL NAME "dt_profile_send_mail_verification_token";
+
+CREATE PROCEDURE dt_profile_verify_mail_verification_token(
+      IN  mailVerificationToken	CHARACTER,
+      OUT o_status			   	BOOLEAN,
+      OUT o_result       		CHARACTER)
+LANGUAGE DATABASE EXTERNAL NAME "dt_profile_verify_mail_verification_token";
+
+CREATE PROCEDURE dt_profile_mobile_update_send_otp(
+      IN studentId    	     	INTEGER,
+      IN otp					CHARACTER,
+      IN otpToken				CHARACTER,
+      IN sessionToken	 		CHARACTER,
+      IN channelId 				CHARACTER,
+      OUT countryCode			INTEGER,
+      OUT mobileNo				CHARACTER,
+      OUT tokenStatus			CHARACTER,
+      OUT o_status			   	BOOLEAN,
+      OUT o_result       		CHARACTER)
+LANGUAGE DATABASE EXTERNAL NAME "dt_profile_mobile_update_send_otp";
+
+CREATE PROCEDURE dt_profile_update_mobile_no(
+      IN  studentId    	     	INTEGER,
+      IN  newCountryCode		INTEGER,
+	  IN  newMobileNo			CHARACTER,
+	  IN  otp					CHARACTER,
+	  IN  otpToken				CHARACTER,
+      IN  sessionToken 			CHARACTER,
+      IN  channelId 			CHARACTER,
+      OUT tokenStatus			CHARACTER,
+      OUT name					CHARACTER,
+      OUT email 				CHARACTER,
+      OUT o_status			   	BOOLEAN,
+      OUT o_result       		CHARACTER)
+LANGUAGE DATABASE EXTERNAL NAME "dt_profile_update_mobile_no";
+			
+CREATE PROCEDURE dt_profile_contact_us(
+      IN  studentId    	     	INTEGER,     
+      IN  message		 		CHARACTER,
+      IN  sessionToken	 		CHARACTER,
+      IN  channelId 			CHARACTER,
+      OUT tokenStatus			CHARACTER,
+      OUT name					CHARACTER,
+      OUT email					CHARACTER,
+      OUT o_status			   	BOOLEAN,
+      OUT o_result       		CHARACTER)
+LANGUAGE DATABASE EXTERNAL NAME "dt_profile_contact_us";
+							 
+CREATE PROCEDURE dt_profile_reset_questionbank(
+      IN  studentId    	     	INTEGER,
+      IN  courseId				INTEGER,     
+      IN  sessionToken	 		CHARACTER,
+      IN  channelId 			CHARACTER,
+      OUT tokenStatus			CHARACTER,
+      OUT o_status			   	BOOLEAN,
+      OUT o_result       		CHARACTER)
+LANGUAGE DATABASE EXTERNAL NAME "dt_profile_reset_questionbank";
+
+CREATE PROCEDURE dt_profile_reset_bookmarks(
+      IN  studentId    	     	INTEGER,
+      IN  courseId				INTEGER,     
+      IN  sessionToken	 		CHARACTER,
+      IN  channelId 			CHARACTER,
+      OUT tokenStatus			CHARACTER,
+      OUT o_status			   	BOOLEAN,
+      OUT o_result       		CHARACTER)
+LANGUAGE DATABASE EXTERNAL NAME "dt_profile_reset_bookmarks";
+
+CREATE PROCEDURE dt_profile_delete_block(
+      IN  studentId    	     	INTEGER,     
+      IN  sessionToken	 		CHARACTER,
+      IN  channelId 			CHARACTER,
+      OUT tokenStatus			CHARACTER,
+      OUT name					CHARACTER,
+      OUT email					CHARACTER,
+      OUT o_status			   	BOOLEAN,
+      OUT o_result       		CHARACTER)
+LANGUAGE DATABASE EXTERNAL NAME "dt_profile_delete_block";
+
+CREATE PROCEDURE dt_profile_inactive(
+      IN  studentId    	     	INTEGER,     
+      IN  sessionToken	 		CHARACTER,
+      IN  channelId 			CHARACTER,
+      OUT tokenStatus			CHARACTER,
+      OUT o_status			   	BOOLEAN,
+      OUT o_result       		CHARACTER)
+LANGUAGE DATABASE EXTERNAL NAME "dt_profile_inactive";
+
+CREATE PROCEDURE dt_profile_image_upload(
+      IN  studentId    	     	INTEGER,  
+	  IN  profileImageURL		CHARACTER,	   
+      IN  sessionToken	 		CHARACTER,
+      IN  channelId 			CHARACTER,
+      OUT tokenStatus			CHARACTER,
+      OUT o_status			   	BOOLEAN,
+      OUT o_result       		CHARACTER)
+LANGUAGE DATABASE EXTERNAL NAME "dt_profile_image_upload";
+
+CREATE PROCEDURE dt_profile_reset_app_websession_token(
+      IN  studentId    	     	INTEGER,  
+	  IN  sessionToken			CHARACTER,
+	  IN  refreshtoken			CHARACTER,
+	  IN  newSessionToken		CHARACTER,
+	  IN  newRefreshToken		CHARACTER,	
+      IN  channelId 			CHARACTER,
+      OUT tokenStatus			CHARACTER,
+      OUT nextRotationAt		INTEGER,
+      OUT o_status			   	BOOLEAN,
+      OUT o_result       		CHARACTER)
+LANGUAGE DATABASE EXTERNAL NAME "dt_profile_reset_app_websession_token";
+
+CREATE PROCEDURE dt_profile_update_firebase_token(
+      IN  studentId    	     	INTEGER,  
+	  IN  firebaseToken			CHARACTER,
+	  IN  deviceType			CHARACTER,
+	  IN  sessionToken			CHARACTER,
+      IN  channelId 			CHARACTER,
+      OUT tokenStatus			CHARACTER,
+      OUT o_status			   	BOOLEAN,
+      OUT o_result       		CHARACTER)
+LANGUAGE DATABASE EXTERNAL NAME "dt_profile_update_firebase_token";
+
+CREATE PROCEDURE dt_validate_session_token(
+      IN  studentId    	     	INTEGER,
+      IN  sessionToken 			CHARACTER,
+      IN  channelId	 		    CHARACTER, 
+      OUT tokenStatus			CHARACTER,
+      OUT o_status			   	BOOLEAN,
+      OUT o_result       		CHARACTER)
+LANGUAGE DATABASE EXTERNAL NAME "dt_validate_session_token";
+
+ CREATE PROCEDURE dt_profile_student_post_event_data(
+      IN  studentId    	     	INTEGER,
+      IN  message    		    CHARACTER,
+      IN  dateStr			    CHARACTER,
+      IN  sessionToken 			CHARACTER,
+      IN  channelId	 		    CHARACTER, 
+      OUT tokenStatus			CHARACTER,
+      OUT o_status			   	BOOLEAN,
+      OUT o_result       		CHARACTER)
+ LANGUAGE DATABASE EXTERNAL NAME "dt_profile_student_post_event_data";
+ 
+  CREATE PROCEDURE dt_profile_student_delete_event_data(
+      IN  studentId    	     	INTEGER,
+      IN  seqNo	    		    INTEGER,
+      IN  sessionToken 			CHARACTER,
+      IN  channelId	 		    CHARACTER, 
+      OUT tokenStatus			CHARACTER,
+      OUT o_status			   	BOOLEAN,
+      OUT o_result       		CHARACTER)
+ LANGUAGE DATABASE EXTERNAL NAME "dt_profile_student_delete_event_data";
+ 
+   CREATE PROCEDURE dt_profile_set_student_course(
+      IN  studentId    	     	INTEGER,
+      IN  courseId    		    INTEGER,
+      IN  sessionToken 			CHARACTER,
+      IN  channelId	 		    CHARACTER, 
+      OUT tokenStatus			CHARACTER,
+      OUT o_status			   	BOOLEAN,
+      OUT o_result       		CHARACTER)
+ LANGUAGE DATABASE EXTERNAL NAME "dt_profile_set_student_course";
+ 
+   CREATE PROCEDURE dt_profile_delete_block_student(
+      IN  studentId    	     	INTEGER,
+      OUT o_status			   	BOOLEAN,
+      OUT o_result       		CHARACTER)
+ LANGUAGE DATABASE EXTERNAL NAME "dt_profile_delete_block_student";
+ 
+ CREATE PROCEDURE dt_profile_update_missing_infor(
+      IN  studentId    	     	INTEGER,
+      IN  education 		    CHARACTER,
+      IN  state         		CHARACTER,
+      IN  college		 		CHARACTER,      
+      IN  courseId 				INTEGER,
+      IN specialization			CHARACTER,
+      IN collegeId				INTEGER,
+      IN  sessionToken 			CHARACTER,
+      IN  channelId	 		    CHARACTER, 
+      OUT tokenStatus			CHARACTER,
+      OUT o_status			   	BOOLEAN,
+      OUT o_result       		CHARACTER)
+LANGUAGE DATABASE EXTERNAL NAME "dt_profile_update_missing_infor";

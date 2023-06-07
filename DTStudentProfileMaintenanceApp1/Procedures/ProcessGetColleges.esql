@@ -1,0 +1,113 @@
+BROKER SCHEMA Procedures
+
+/******************************************************************************
+ *  Student Profile Maintenance	    				 	 prepareAuditMessage  *
+ *                                                                            *
+ *        Author          				   Version             COMMENTS       * 
+ *  DocTutorials EdutTech Pvt Ltd     V1.0 (11/06/202)    created the module  *
+ ******************************************************************************
+ *  Mofication HISTORY                      			                      *    
+ *  DATE               			   USER  	                   COMMENTS       * 
+ *  ---                			   ---        		           ---            * 
+ ******************************************************************************/
+CREATE COMPUTE MODULE ProcessGetColleges
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+
+	DECLARE inRef REFERENCE TO InputRoot.JSON.Data.gatewayRequest.request;		
+		
+		CREATE FIELD OutputRoot.JSON.Data.gatewayResponse;
+		DECLARE outRef REFERENCE TO OutputRoot.JSON.Data.gatewayResponse;
+		
+		DECLARE sqlStmt CHARACTER;
+		DECLARE i INTEGER 1;
+
+		/*IF (inRef.courseId > '') THEN
+		ELSE
+			SET outRef.status.isSuccess 	 = false;
+			SET outRef.status.statusCode 	 = SUBSTRING(Procedures.getAPIResultCode('ER111') BEFORE '-');
+			SET outRef.status.message 	 	 = SUBSTRING(Procedures.getAPIResultCode('ER111') AFTER '-');
+			PROPAGATE TO LABEL 'sendHTTPReply';
+			RETURN FALSE;
+		END IF;*/
+						
+		IF (inRef.id > '') THEN
+		ELSE
+			SET outRef.status.isSuccess 	 = false;
+			SET outRef.status.statusCode 	 = SUBSTRING(Procedures.getAPIResultCode('ER149') BEFORE '-');
+			SET outRef.status.message 	 	 = SUBSTRING(Procedures.getAPIResultCode('ER149') AFTER '-');
+			PROPAGATE TO LABEL 'sendHTTPReply';
+			RETURN FALSE;
+		END IF;
+		
+		SET OutputRoot.HTTPResponseHeader."requestUUID" = Environment.audit.request_id;
+		SET OutputRoot.HTTPResponseHeader."timeStamp"   = CURRENT_TIMESTAMP;
+		SET OutputRoot.HTTPResponseHeader."Appversion"  = Environment.Variables.Appversion;
+		SET OutputRoot.HTTPResponseHeader."Serreqid"    = Environment.Variables.Serreqid;
+		SET OutputRoot.HTTPResponseHeader."Channelid"   = Environment.Variables.Channelid;
+		SET OutputRoot.HTTPResponseHeader."Deviceid"    = Environment.Variables.Deviceid;
+		SET OutputRoot.HTTPResponseHeader."Modelname"   = Environment.Variables.Modelname;
+		SET OutputRoot.HTTPResponseHeader."Os" 		    = Environment.Variables.Os;
+		SET OutputRoot.HTTPResponseHeader."Osversion"   = Environment.Variables.Osversion;
+		SET OutputRoot.HTTPResponseHeader."Location"    = Environment.Variables.Location;
+		SET OutputRoot.HTTPResponseHeader."Ipaddress"   = Environment.Variables.Ipaddress;
+		SET OutputRoot.HTTPResponseHeader."Ipaddress"   = Environment.Variables.Ipaddress;
+
+		DECLARE o_result, tokenStatus  CHARACTER;
+		DECLARE o_status BOOLEAN;
+
+		--NEET PG: All neet pg and fmge colleges with course id 1 and 2.
+		--NEET SS: Only colleges with course Id = 2.
+		--FMGE: Only colleges with course id = 3.
+		--MBBS Curriculum- All states neet pg and fmge colleges exist course id 1 and 3. Education will depend on the country returned in this.				
+	    /*SET sqlStmt = 'SELECT COLLEGE_ID, UNIVERSITY_ID, COLLEGE_NAME FROM COLLEGE_MAPPING WHERE STATE_ID = ? AND IS_ACTIVE = 1 ORDER BY COLLEGE_NAME';*/
+
+		IF (inRef.courseId = 1) THEN
+			SET sqlStmt = 'SELECT coll.COLLEGE_ID, coll.UNIVERSITY_ID, coll.COLLEGE_NAME, c.ISO FROM DT_COLLEGE coll, DT_COUNTRY c, DT_COUNTRY_STATE s 
+						   WHERE coll.COURSE_ID IN(?, ?) AND coll.STATE_ID = ? AND coll.IS_ACTIVE = 1 AND s.COUNTRY_ID = c.COUNTRY_ID AND s.STATE_ID = coll.STATE_ID ORDER BY coll.COLLEGE_NAME';
+	   	 	/*SET sqlStmt = 'SELECT COLLEGE_ID, UNIVERSITY_ID, COLLEGE_NAME FROM DT_COLLEGE WHERE COURSE_ID IN(?,?) AND STATE_ID = ? AND IS_ACTIVE = 1 ORDER BY COLLEGE_NAME';*/
+			SET Environment.Variables.Rec[] = PASSTHRU(sqlStmt, inRef.courseId, 3, inRef.id);	
+		ELSEIF (inRef.courseId = 2) THEN
+			SET sqlStmt = 'SELECT COLLEGE_ID, UNIVERSITY_ID, COLLEGE_NAME FROM DT_COLLEGE WHERE COURSE_ID = ? AND STATE_ID = ? AND IS_ACTIVE = 1 ORDER BY COLLEGE_NAME';
+			SET Environment.Variables.Rec[] = PASSTHRU(sqlStmt, inRef.courseId, inRef.id);	
+		ELSEIF (inRef.courseId = 3) THEN
+			SET sqlStmt = 'SELECT COLLEGE_ID, UNIVERSITY_ID, COLLEGE_NAME FROM DT_COLLEGE WHERE COURSE_ID = ? AND STATE_ID = ? AND IS_ACTIVE = 1 ORDER BY COLLEGE_NAME';
+			SET Environment.Variables.Rec[] = PASSTHRU(sqlStmt,  inRef.courseId, inRef.id);	
+		ELSEIF (inRef.courseId = 4) THEN
+			/*SET sqlStmt = 'SELECT COLLEGE_ID, UNIVERSITY_ID, COLLEGE_NAME FROM DT_COLLEGE WHERE COURSE_ID IN(?, ?) AND STATE_ID = ? AND IS_ACTIVE = 1 ORDER BY COLLEGE_NAME';*/
+			SET sqlStmt = 'SELECT coll.COLLEGE_ID, coll.UNIVERSITY_ID, coll.COLLEGE_NAME, c.ISO FROM DT_COLLEGE coll, DT_COUNTRY c, DT_COUNTRY_STATE s 
+						   WHERE coll.COURSE_ID IN(?, ?) AND coll.STATE_ID = ? AND coll.IS_ACTIVE = 1 AND s.COUNTRY_ID = c.COUNTRY_ID AND s.STATE_ID = coll.STATE_ID ORDER BY coll.COLLEGE_NAME';
+			SET Environment.Variables.Rec[] = PASSTHRU(sqlStmt, 1, 3, inRef.id);									
+		ELSE
+			SET outRef.status.isSuccess  = false;
+			SET outRef.status.statusCode = SUBSTRING(Procedures.getAPIResultCode('ER126') BEFORE '-');
+			SET outRef.status.message 	 = SUBSTRING(Procedures.getAPIResultCode('ER126') AFTER '-');
+			PROPAGATE TO LABEL 'sendHTTPReply';
+		END IF;	     
+	
+		IF EXISTS(Environment.Variables.Rec[]) THEN
+			CREATE FIELD OutputRoot.JSON.Data.gatewayResponse.response IDENTITY(JSON.Array);
+			DECLARE outRefa REFERENCE TO OutputRoot.JSON.Data.gatewayResponse.response;			
+			FOR src as Environment.Variables.Rec[] DO
+				SET outRefa.item[i].universityId = src.UNIVERSITY_ID;
+				SET outRefa.item[i].collegeId	 = src.COLLEGE_ID;
+				SET outRefa.item[i].collegeName  = src.COLLEGE_NAME;
+				IF (inRef.courseId = 1 OR inRef.courseId = 4) THEN
+					SET outRefa.item[i].countryCode  = src.ISO;
+				END IF;								
+				SET i = i + 1;
+			END FOR;
+			SET outRef.status.isSuccess = TRUE;
+			SET outRef.status.message = 'Success';
+			SET outRef.status.statusCode = 'ER000';
+		ELSE
+			SET outRef.status.isSuccess = FALSE;
+			SET outRef.status.message = 'No Coleges found in state/country selected, unable to proceed!';
+			SET outRef.status.statusCode = 'ER099';
+		END IF;	
+		SET OutputRoot.HTTPResponseHeader."timeStamp"   = CURRENT_TIMESTAMP;
+		
+		PROPAGATE TO LABEL 'sendHTTPReply';			
+		RETURN FALSE;
+	END;
+END MODULE;

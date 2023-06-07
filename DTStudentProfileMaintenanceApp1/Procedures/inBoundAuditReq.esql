@@ -1,0 +1,60 @@
+BROKER SCHEMA Procedures
+
+/******************************************************************************
+ *  Student Profile Maintenance	    						inBoundAuditReq	  *
+ *                                                                            *
+ *        Author          				   Version             COMMENTS       * 
+ *  DocTutorials EdutTech Pvt Ltd     V1.0 (11/06/202)    created the module  *
+ ******************************************************************************
+ *  Mofication HISTORY                      			                      *    
+ *  DATE               			   USER  	                   COMMENTS       * 
+ *  ---                			   ---        		           ---            * 
+ ******************************************************************************/
+CREATE COMPUTE MODULE inBoundAuditReq
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		SET OutputRoot.Properties = InputRoot.Properties;
+		SET Environment.audit.inbound.CodedCharSetId = InputRoot.Properties.CodedCharSetId;
+		SET Environment.audit.inbound.Encoding       = InputRoot.Properties.Encoding;
+		--SET Environment.audit.clientIp			 = COALESCE(InputRoot.HTTPInputHeader."X-Client-Ip",InputRoot.HTTPInputHeader."X-Remote-Host");
+		
+		DECLARE inRefHdr REFERENCE TO InputRoot.HTTPInputHeader;
+		SET Environment.audit.request_id             = UUIDASCHAR;
+		IF (inRefHdr.ChannelId > '') THEN
+			SET Environment.audit.channelId       	 = inRefHdr.ChannelId;
+		ELSE
+			SET Environment.audit.channelId       	 = inRefHdr.Channelid;
+		END IF;
+		IF (inRefHdr.SerReqId > '') THEN
+			SET Environment.audit.serReqId           = inRefHdr.SerReqId;
+		ELSE 
+			SET Environment.audit.serReqId           = inRefHdr.Serreqid;
+		END IF;
+		SET Environment.audit.studentId              = InputRoot.JSON.Data.gatewayRequest.request.studentId;
+		SET Environment.audit.paymentId              = InputRoot.JSON.Data.gatewayRequest.request.paymentId;
+		SET Environment.audit.drmId           	  	 = InputRoot.JSON.Data.gatewayRequest.request.drmId;	
+		
+		CREATE NEXTSIBLING OF OutputRoot.Properties DOMAIN 'MQMD';
+		SET OutputRoot.MQMD.Version		   = MQMD_CURRENT_VERSION;		
+		SET OutputRoot.MQMD.CodedCharSetId = MQCCSI_Q_MGR;
+		
+		CREATE LASTCHILD OF OutputRoot DOMAIN 'XMLNSC';
+		CREATE FIELD OutputRoot.XMLNSC.Audit.Inbound;
+		DECLARE auditRef REFERENCE TO OutputRoot.XMLNSC.Audit.Inbound;
+		SET auditRef.request_id               = Environment.audit.request_id;
+		SET auditRef.channelId  	          = Environment.audit.channelId;
+		SET auditRef.serReqId  	  			  = Environment.audit.serReqId;
+		SET auditRef.studentId 				  = Environment.audit.studentId;
+		SET auditRef.paymentId 				  = Environment.audit.paymentId;
+		SET auditRef.drmId 				 	  = Environment.audit.drmId;
+		SET auditRef.msg_type      		      = 'R';
+		SET auditRef.status     		      = 'Y';
+		SET auditRef.currentTime 			  = CURRENT_TIMESTAMP;
+		--SET auditRef.clientIp 			  = Environment.audit.clientIp;		
+		DECLARE httpPayLoadBlob	BLOB ASBITSTREAM(InputRoot.JSON);
+		DECLARE httpPayLoad CHARACTER CAST(httpPayLoadBlob AS CHAR CCSID Environment.audit.inbound.CodedCharSetId ENCODING Environment.audit.inbound.Encoding);
+		SET auditRef.msg =  httpPayLoad;	
+		
+		RETURN TRUE;
+	END;
+END MODULE;

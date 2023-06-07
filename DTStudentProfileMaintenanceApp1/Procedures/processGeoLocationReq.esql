@@ -1,0 +1,25 @@
+BROKER SCHEMA Procedures
+
+/******************************************************************************
+ *  Student Profile Maintenance  						processGeoLocationReq *
+ *                                                                            *
+ *        Author          				   Version             COMMENTS       * 
+ *  DocTutorials EdutTech Pvt Ltd     V1.0 (11/06/202)    created the module  *
+ ******************************************************************************
+ *  Mofication HISTORY                      			                      *    
+ *  DATE               			   USER  	                   COMMENTS       * 
+ *  ---                			   ---        		           ---            * 
+ ******************************************************************************/
+CREATE COMPUTE MODULE processGeoLocationReq
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		DECLARE inRef REFERENCE TO InputRoot.JSON.Data.gatewayRequest.request;
+		SET OutputRoot.HTTPInputHeader = InputRoot.HTTPInputHeader;
+		--https://ipinfo.io/developers/data-types#geolocation-data
+		--https://ipinfo.io/49.204.177.80?token=de1d8e92514a89
+		SET OutputLocalEnvironment.Destination.HTTP.RequestLine.Method = 'GET';
+		SET OutputRoot.HTTPRequestHeader."Content-Type" = 'application/x-www-form-urlencoded';
+		SET OutputLocalEnvironment.Destination.HTTP.RequestURL = 'https://ipinfo.io/' || inRef.geo || '?token=de1d8e92514a89';
+		RETURN TRUE;
+	END;
+END MODULE;
