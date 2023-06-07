@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "Transaction_ID": {
+      "type": "string"
+    },
+    "Res_Code": {
+      "type": "string"
+    },
+    "Res_Desc": {
+      "type": "string"
+    },
+    "Lan_NO": {
+      "type": "string"
+    },
+    "Mobile_Number": {
+      "type": "string"
+    },
+    "Email": {
+      "type": "string"
+    },
+    "Residence_Address": {
+      "type": "string"
+    },
+    "Permanent_Address": {
+      "type": "string"
+    },
+    "Correspondence_Address": {
+      "type": "string"
+    },
+    "Customer_Salutation": {
+      "type": "string"
+    },
+    "Customer_Full_Name": {
+      "type": "string"
+    },
+    "Customer_Type": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "Transaction_ID",
+    "Res_Code",
+    "Res_Desc",
+    "Lan_NO",
+    "Mobile_Number",
+    "Email",
+    "Residence_Address",
+    "Permanent_Address",
+    "Correspondence_Address",
+    "Customer_Salutation",
+    "Customer_Full_Name",
+    "Customer_Type"
+  ]
+}

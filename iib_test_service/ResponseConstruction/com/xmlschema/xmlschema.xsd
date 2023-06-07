@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <xsd:element name="employeeInfo">
+    	<xsd:complexType>
+    		<xsd:sequence>
+    			<xsd:element name="AlInfo">
+    				<xsd:complexType>
+    					<xsd:sequence>
+    						<xsd:element name="name" maxOccurs="1"
+    							minOccurs="1">
+    							<xsd:simpleType>
+    								<xsd:restriction
+    									base="xsd:string">
+    									<xsd:minLength value="3"></xsd:minLength>
+    									<xsd:maxLength value="5"></xsd:maxLength>
+    								</xsd:restriction>
+    							</xsd:simpleType>
+    						</xsd:element>
+    						<xsd:element name="native_location" type="xsd:string" maxOccurs="unbounded" minOccurs="0">
+    						</xsd:element>
+    						<xsd:element name="job" minOccurs="1"
+    							maxOccurs="1" type="xsd:string">
+    						</xsd:element>
+    						<xsd:element name="Job_location"
+    							minOccurs="1" maxOccurs="1" type="xsd:string">
+    						</xsd:element>
+    						<xsd:element name="Salary" minOccurs="1"
+    							maxOccurs="1" type="xsd:int">
+    						</xsd:element>
+    					</xsd:sequence>
+    				</xsd:complexType>
+    			</xsd:element>
+    			
+    		</xsd:sequence>
+    	</xsd:complexType>
+    </xsd:element>
+    
+
+    <xsd:complexType name="AlInfo">
+    	<xsd:sequence>
+    		<xsd:element name="name" minOccurs="1" maxOccurs="1"
+    			type="xsd:string">
+    		</xsd:element>
+    		<xsd:element name="native_location" type="xsd:string"
+    			minOccurs="1" maxOccurs="1">
+    		</xsd:element>
+    		<xsd:element name="job" minOccurs="1" maxOccurs="1" type="xsd:string">
+    		</xsd:element>
+    		<xsd:element name="Job_location" minOccurs="1" maxOccurs="1"
+    			type="xsd:string">
+    		</xsd:element>
+    		<xsd:element name="Salary" minOccurs="1" maxOccurs="1" type="xsd:int">
+    		</xsd:element>
+    	</xsd:sequence>
+    </xsd:complexType>
+
+</xsd:schema>
